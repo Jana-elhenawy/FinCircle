@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinCircle App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --beige:   #F5EFE0;
+  --beige2:  #EDE5CE;
+  --beige3:  #D9CEAF;
+  --green:   #1E3D2F;
+  --green2:  #2B5240;
+  --green3:  #3A6B52;
+  --green4:  #4E8A6A;
+  --orange:  #E8894A;
+  --orange2: #F2A86F;
+  --orange3: #FBC99A;
+  --red:     #D15555;
+  --yellow:  #E8C84A;
+  --text:    #1A2E23;
+  --text2:   #3A5244;
+  --r:       14px;
+  --r2:      20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--green);color:var(--text);overflow:hidden}
+
+/* ─── LAYOUT ─── */
+.app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;height:100vh}
+
+/* ─── TOPBAR ─── */
+.topbar{
+  grid-column:1/-1;
+  background:var(--green);
+  border-bottom:1px solid rgba(245,239,224,.1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+}
+.logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--beige);letter-spacing:.02em}
+.logo span{color:var(--orange)}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar-right .notif-btn{
+  position:relative;background:rgba(245,239,224,.08);border:none;
+  width:34px;height:34px;border-radius:10px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  transition:background .15s;
+}
+.topbar-right .notif-btn:hover{background:rgba(245,239,224,.15)}
+.notif-dot{position:absolute;top:6px;right:7px;width:7px;height:7px;background:var(--orange);border-radius:50%;border:2px solid var(--green)}
+.user-chip{display:flex;align-items:center;gap:8px;background:rgba(245,239,224,.08);border-radius:50px;padding:4px 12px 4px 4px;cursor:pointer}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green)}
+.user-name{font-size:13px;color:var(--beige);font-weight:500}
+
+/* ─── SIDEBAR ─── */
+.sidebar{
+  background:var(--green2);
+  border-right:1px solid rgba(245,239,224,.07);
+  padding:16px 12px;
+  display:flex;flex-direction:column;gap:4px;
+  overflow-y:auto;
+}
+.nav-section-label{font-size:9px;color:rgba(245,239,224,.3);text-transform:uppercase;letter-spacing:.1em;padding:8px 10px 4px;font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:10px;cursor:pointer;
+  font-size:13px;font-weight:500;color:rgba(245,239,224,.6);
+  transition:all .15s;border:none;background:none;width:100%;text-align:left;
+}
+.nav-item:hover{background:rgba(245,239,224,.07);color:var(--beige)}
+.nav-item.active{background:var(--orange);color:var(--green)}
+.nav-item .ni{font-size:15px;flex-shrink:0}
+.nav-badge{margin-left:auto;background:rgba(232,137,74,.25);color:var(--orange2);border-radius:10px;padding:2px 7px;font-size:10px;font-weight:600}
+.nav-item.active .nav-badge{background:rgba(30,61,47,.2);color:var(--green)}
+.sidebar-footer{margin-top:auto;padding-top:12px;border-top:1px solid rgba(245,239,224,.08)}
+
+/* ─── MAIN ─── */
+.main{background:var(--beige);overflow-y:auto;position:relative}
+.page{display:none;padding:28px;animation:fadeIn .25s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── COMMON ─── */
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--green);margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:24px;font-weight:300}
+.card{background:white;border-radius:var(--r2);border:1px solid var(--beige2);padding:20px}
+.card.green{background:var(--green);border-color:var(--green)}
+.card.orange{background:var(--orange);border-color:var(--orange)}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--text2);margin-bottom:6px}
+.label.light{color:rgba(245,239,224,.5)}
+.val{font-family:'DM Serif Display',serif}
+.val.lg{font-size:36px;color:var(--green);line-height:1}
+.val.md{font-size:22px;color:var(--green);line-height:1}
+.val.light{color:var(--beige)}
+.val.orange{color:var(--orange)}
+.sub{font-size:11px;color:#999;margin-top:3px}
+.sub.green{color:#7FC99E}
+.sub.orange{color:var(--orange2)}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600}
+.tag.green{background:rgba(78,138,106,.15);color:#2E7D52}
+.tag.orange{background:rgba(232,137,74,.15);color:var(--orange)}
+.tag.red{background:rgba(209,85,85,.12);color:var(--red)}
+.tag.yellow{background:rgba(232,200,74,.15);color:#8A7200}
+.tag.light{background:rgba(245,239,224,.15);color:var(--orange2)}
+.progress-bg{background:var(--beige2);border-radius:4px;height:7px;overflow:hidden;margin-top:8px}
+.progress-fill{background:var(--orange);height:7px;border-radius:4px;transition:width .4s}
+.progress-fill.green{background:var(--green3)}
+.btn{border:none;border-radius:50px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--orange);color:var(--green)}
+.btn.primary:hover{background:var(--orange2);transform:translateY(-1px)}
+.btn.secondary{background:var(--beige2);color:var(--text)}
+.btn.secondary:hover{background:var(--beige3)}
+.btn.ghost{background:rgba(245,239,224,.1);color:var(--beige);border:1px solid rgba(245,239,224,.15)}
+.btn.ghost:hover{background:rgba(245,239,224,.18)}
+.btn.danger{background:rgba(209,85,85,.12);color:var(--red)}
+.btn.sm{padding:7px 14px;font-size:12px}
+.divider{height:1px;background:var(--beige2);margin:16px 0}
+input,select,textarea{font-family:'DM Sans',sans-serif;font-size:13px;border:1.5px solid var(--beige3);border-radius:10px;padding:9px 12px;width:100%;background:white;color:var(--text);outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--green3)}
+.input-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.input-label{font-size:12px;font-weight:600;color:var(--text2)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.flex-row{display:flex;align-items:center;gap:12px}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.row-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--beige2)}
+.row-item:last-child{border-bottom:none}
+.icon-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+
+/* ─── SCORE RING ─── */
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.score-ring{position:relative;width:100px;height:100px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-ring-val .num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--beige);line-height:1}
+.score-ring-val .lbl{font-size:9px;color:rgba(245,239,224,.5);text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── CHARTS ─── */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:80px;padding-bottom:4px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar-col .bar{width:100%;border-radius:4px 4px 0 0;transition:opacity .2s;cursor:default}
+.bar-col .bar:hover{opacity:.8}
+.bar-col .bl{font-size:8px;color:#999}
+
+/* ─── TRANSACTIONS ─── */
+.tx-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;transition:background .15s;cursor:default}
+.tx-row:hover{background:var(--beige)}
+.tx-info{flex:1}
+.tx-name{font-size:13px;font-weight:600;color:var(--text)}
+.tx-cat{font-size:11px;color:#999;margin-top:1px}
+.tx-amt{font-size:14px;font-weight:700}
+
+/* ─── BNPL RISK ─── */
+.risk-meter{display:flex;gap:4px;margin:12px 0}
+.risk-seg{flex:1;height:8px;border-radius:4px}
+.risk-indicator{display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:12px;font-size:13px;font-weight:500}
+
+/* ─── AI CHAT ─── */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 56px - 56px - 56px);min-height:400px}
+.chat-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-bottom:8px;scroll-behavior:smooth}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-track{background:transparent}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--beige3);border-radius:4px}
+.msg{display:flex;gap:10px;max-width:85%}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-bubble{padding:11px 14px;border-radius:16px;font-size:13px;line-height:1.6}
+.msg.ai .msg-bubble{background:white;border:1px solid var(--beige2);color:var(--text);border-radius:4px 16px 16px 16px}
+.msg.user .msg-bubble{background:var(--green);color:var(--beige);border-radius:16px 4px 16px 16px}
+.msg-avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.msg.ai .msg-avatar{background:var(--orange);color:var(--green);font-weight:700;font-size:11px}
+.msg.user .msg-avatar{background:var(--green);color:var(--beige);font-size:12px;font-weight:700}
+.chat-input-row{display:flex;gap:10px;padding-top:12px;border-top:1px solid var(--beige2)}
+.chat-input{flex:1;border-radius:50px;padding:10px 18px;font-size:13px;resize:none;border:1.5px solid var(--beige3)}
+.chat-input:focus{border-color:var(--green3)}
+.send-btn{width:40px;height:40px;border-radius:50%;background:var(--orange);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;flex-shrink:0;margin-top:1px}
+.send-btn:hover{background:var(--orange2);transform:scale(1.05)}
+.quick-chips{display:flex;gap:8px;flex-wrap:wrap;padding:8px 0 10px}
+.chip{background:white;border:1.5px solid var(--beige2);border-radius:50px;padding:5px 12px;font-size:11px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--orange);color:var(--orange);background:rgba(232,137,74,.05)}
+.typing-dots{display:flex;gap:4px;align-items:center;padding:4px 0}
+.typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--beige3);animation:bounce .9s infinite}
+.typing-dots span:nth-child(2){animation-delay:.15s}
+.typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+/* ─── MODALS ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:24px;padding:28px;width:420px;max-width:90vw;max-height:80vh;overflow-y:auto;animation:fadeIn .2s ease}
+.modal-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green);margin-bottom:16px}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--beige2);border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+
+/* ─── GAMEYEA ─── */
+.gam-card{background:white;border:1px solid var(--beige2);border-radius:var(--r2);padding:18px;cursor:pointer;transition:all .2s}
+.gam-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,61,47,.08)}
+.member-dots{display:flex;gap:-4px;margin-top:10px}
+.mdot{width:26px;height:26px;border-radius:50%;background:var(--green3);border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--beige);font-weight:600;margin-left:-6px}
+.mdot:first-child{margin-left:0}
+
+/* ─── EGX ─── */
+.stock-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;cursor:pointer;transition:background .15s}
+.stock-row:hover{background:var(--beige)}
+.stock-ticker{font-weight:700;font-size:13px;color:var(--green);width:60px}
+.stock-name{flex:1;font-size:12px;color:var(--text2)}
+.stock-price{font-size:13px;font-weight:700;color:var(--text);text-align:right}
+.stock-change{font-size:11px;font-weight:600;text-align:right;min-width:50px}
+.stock-up{color:#2E7D52}
+.stock-down{color:var(--red)}
+.mini-chart{display:flex;align-items:flex-end;gap:2px;height:28px}
+.mc-bar{width:5px;border-radius:2px 2px 0 0}
+
+/* ─── GOALS ─── */
+.goal-card{background:white;border:1px solid var(--beige2);border-radius:var(--r2);padding:18px}
+
+/* scrollbar */
+.sidebar::-webkit-scrollbar,.main::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track,.main::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(245,239,224,.1);border-radius:4px}
+.main::-webkit-scrollbar-thumb{background:var(--beige3);border-radius:4px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo">Fin<span>Circle</span></div>
+  <div class="topbar-right">
+    <button class="notif-btn">🔔<span class="notif-dot"></span></button>
+    <div class="user-chip">
+      <div class="user-avatar">J</div>
+      <span class="user-name">Jana</span>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="nav-section-label">Main</div>
+  <button class="nav-item active" onclick="showPage('dashboard',this)"><span class="ni"></span>Dashboard</button>
+  <button class="nav-item" onclick="showPage('expenses',this)"><span class="ni"></span>Expense Tracker</button>
+  <button class="nav-item" onclick="showPage('installments',this)"><span class="ni"></span>Installments<span class="nav-badge">3</span></button>
+  <button class="nav-item" onclick="showPage('savings',this)"><span class="ni"></span>Savings Goals</button>
+  <button class="nav-item" onclick="showPage('gameya',this)"><span class="ni"></span>Gam'eya</button>
+
+  <div class="nav-section-label">Smart Tools</div>
+  <button class="nav-item" onclick="showPage('bnpl',this)"><span class="ni"></span>BNPL Advisor</button>
+  <button class="nav-item" onclick="showPage('insights',this)"><span class="ni"></span>Insights</button>
+  <button class="nav-item" onclick="showPage('ai',this)"><span class="ni"></span>AI Advisor</button>
+
+  <div class="nav-section-label">Invest</div>
+  <button class="nav-item" onclick="showPage('egx',this)"><span class="ni"></span>EGX Trading</button>
+  <button class="nav-item" onclick="showPage('portfolio',this)"><span class="ni"></span>Portfolio</button>
+
+  <div class="nav-section-label">Account</div>
+  <button class="nav-item" onclick="showPage('health',this)"><span class="ni"></span>Health Score</button>
+  <button class="nav-item" onclick="showPage('settings',this)"><span class="ni"></span>Settings</button>
+
+  <div class="sidebar-footer">
+    <button class="nav-item" style="color:rgba(209,85,85,.7)"><span class="ni"></span>Log Out</button>
+  </div>
+</div>
+
+<!-- MAIN PAGES -->
+<div class="main">
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div class="page active" id="page-dashboard">
+  <div class="page-title">Good morning, Jana 👋</div>
+  <div class="page-sub">Here's your financial overview for April 2026</div>
+
+  <!-- top row -->
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="card green">
+      <div class="label light">Net Balance</div>
+      <div class="val lg light">4,180</div>
+      <div class="sub" style="color:var(--beige3)">EGP available</div>
+    </div>
+    <div class="card">
+      <div class="label">Total Income</div>
+      <div class="val md" style="color:var(--green3)">8,500</div>
+      <div class="sub green">EGP this month</div>
+    </div>
+    <div class="card">
+      <div class="label">Total Spent</div>
+      <div class="val md orange">4,320</div>
+      <div class="sub orange">of 6,000 EGP budget</div>
+    </div>
+    <div class="card orange">
+      <div class="label" style="color:rgba(30,61,47,.6)">Health Score</div>
+      <div class="val lg" style="color:var(--green);font-size:36px">78</div>
+      <div class="sub" style="color:rgba(30,61,47,.55)">↑ +3 this month</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:18px">
+    <!-- spending chart -->
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:14px">
+        <div>
+          <div class="label">Spending by Category</div>
+        </div>
+        <span class="tag orange">April</span>
+      </div>
+      <div class="bar-chart">
+        <div class="bar-col"><div class="bar" style="height:55px;background:var(--green3)"></div><div class="bl">Food</div></div>
+        <div class="bar-col"><div class="bar" style="height:68px;background:var(--orange)"></div><div class="bl">Install.</div></div>
+        <div class="bar-col"><div class="bar" style="height:30px;background:var(--green4)"></div><div class="bl">Bills</div></div>
+        <div class="bar-col"><div class="bar" style="height:46px;background:var(--orange2)"></div><div class="bl">Shopping</div></div>
+        <div class="bar-col"><div class="bar" style="height:20px;background:var(--beige3)"></div><div class="bl">Health</div></div>
+        <div class="bar-col"><div class="bar" style="height:36px;background:var(--green3)"></div><div class="bl">Transport</div></div>
+        <div class="bar-col"><div class="bar" style="height:25px;background:var(--orange3)"></div><div class="bl">Other</div></div>
+      </div>
+    </div>
+
+    <!-- upcoming -->
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">Upcoming Obligations</div>
+      <div class="row-item">
+        <div class="icon-box" style="background:#FFF0E6">📱</div>
+        <div style="flex:1"><div class="tx-name">iPhone Installment</div><div class="tx-cat">Due Apr 15</div></div>
+        <span class="tag orange">850 EGP</span>
+      </div>
+      <div class="row-item">
+        <div class="icon-box" style="background:#E8F5EC">🔄</div>
+        <div style="flex:1"><div class="tx-name">Gam'eya – Round 3</div><div class="tx-cat">Due Apr 18</div></div>
+        <span class="tag green">500 EGP</span>
+      </div>
+      <div class="row-item">
+        <div class="icon-box" style="background:#FFF0E6">🛋️</div>
+        <div style="flex:1"><div class="tx-name">Furniture – B.TECH</div><div class="tx-cat">Due Apr 20</div></div>
+        <span class="tag orange">600 EGP</span>
+      </div>
+      <div class="row-item">
+        <div class="icon-box" style="background:#FEF9E7">💡</div>
+        <div style="flex:1"><div class="tx-name">Electricity Bill</div><div class="tx-cat">Due Apr 25</div></div>
+        <span class="tag yellow">280 EGP</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- recent transactions -->
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label">Recent Transactions</div>
+      <button class="btn secondary sm" onclick="showPage('expenses',document.querySelector('[onclick*=expenses]'))">View All</button>
+    </div>
+    <div class="tx-row"><div class="icon-box" style="background:#E8F5EC">🛒</div><div class="tx-info"><div class="tx-name">Supermarket</div><div class="tx-cat">Food & Dining · Today 2:30 PM</div></div><div class="tx-amt" style="color:var(--red)">– 320 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#FFF0E6">📱</div><div class="tx-info"><div class="tx-name">Phone Installment</div><div class="tx-cat">Installment · Yesterday</div></div><div class="tx-amt" style="color:var(--red)">– 850 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#E8F5EC">💰</div><div class="tx-info"><div class="tx-name">Salary – CIB Transfer</div><div class="tx-cat">Income · Apr 1</div></div><div class="tx-amt" style="color:var(--green3)">+ 8,500 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#F0EBF8">🍕</div><div class="tx-info"><div class="tx-name">Domino's Pizza</div><div class="tx-cat">Food & Dining · Mar 31</div></div><div class="tx-amt" style="color:var(--red)">– 180 EGP</div></div>
+  </div>
+</div>
+
+<!-- ══════════ EXPENSES ══════════ -->
+<div class="page" id="page-expenses">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Expense Tracker</div>
+    <button class="btn primary" onclick="document.getElementById('addExpenseModal').classList.add('open')">+ Add Transaction</button>
+  </div>
+  <div class="page-sub">Track every pound. Know where it goes.</div>
+
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card green"><div class="label light">Balance</div><div class="val lg light">4,180</div><div class="sub" style="color:var(--beige3)">EGP</div></div>
+    <div class="card"><div class="label">Income</div><div class="val md" style="color:var(--green3)">8,500</div><div class="sub">EGP this month</div></div>
+    <div class="card"><div class="label">Expenses</div><div class="val md orange">4,320</div><div class="sub">EGP this month</div></div>
+  </div>
+
+  <!-- filters -->
+  <div class="card" style="margin-bottom:16px;padding:14px 18px">
+    <div class="flex-row" style="flex-wrap:wrap;gap:8px">
+      <input placeholder="Search transactions…" style="max-width:220px">
+      <select style="max-width:150px"><option>All Categories</option><option>Food & Dining</option><option>Transport</option><option>Bills</option><option>Shopping</option><option>Entertainment</option><option>Health</option><option>Education</option><option>Housing</option></select>
+      <select style="max-width:130px"><option>This Month</option><option>This Week</option><option>Last Month</option><option>Custom</option></select>
+      <select style="max-width:130px"><option>All Types</option><option>Income</option><option>Expense</option></select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tx-row"><div class="icon-box" style="background:#E8F5EC">🛒</div><div class="tx-info"><div class="tx-name">Supermarket – Carrefour</div><div class="tx-cat">Food & Dining · Apr 10, 2:30 PM</div></div><div class="tx-amt" style="color:var(--red)">– 320 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#FFF0E6">📱</div><div class="tx-info"><div class="tx-name">iPhone 15 Installment</div><div class="tx-cat">Installment · Apr 9</div></div><div class="tx-amt" style="color:var(--red)">– 850 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#E8F5EC">💰</div><div class="tx-info"><div class="tx-name">Salary – CIB</div><div class="tx-cat">Income · Apr 1</div></div><div class="tx-amt" style="color:var(--green3)">+ 8,500 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#F0EBF8">🍕</div><div class="tx-info"><div class="tx-name">Domino's Pizza</div><div class="tx-cat">Food & Dining · Mar 31</div></div><div class="tx-amt" style="color:var(--red)">– 180 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#EBF4FB">🚗</div><div class="tx-info"><div class="tx-name">Uber</div><div class="tx-cat">Transport · Mar 30</div></div><div class="tx-amt" style="color:var(--red)">– 95 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#FFF0E6">🛍️</div><div class="tx-info"><div class="tx-name">H&M – City Stars</div><div class="tx-cat">Shopping · Mar 29</div></div><div class="tx-amt" style="color:var(--red)">– 650 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#FEF9E7">💡</div><div class="tx-info"><div class="tx-name">Electricity Bill</div><div class="tx-cat">Bills & Utilities · Mar 28</div></div><div class="tx-amt" style="color:var(--red)">– 280 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:#E8F5EC">💊</div><div class="tx-info"><div class="tx-name">Pharmacy – Seif</div><div class="tx-cat">Health & Medical · Mar 27</div></div><div class="tx-amt" style="color:var(--red)">– 145 EGP</div></div>
+  </div>
+</div>
+
+<!-- ══════════ INSTALLMENTS ══════════ -->
+<div class="page" id="page-installments">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Installment Manager</div>
+    <button class="btn primary">+ Add Plan</button>
+  </div>
+  <div class="page-sub">All your taqseet plans in one place.</div>
+
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card green"><div class="label light">Monthly Obligation</div><div class="val md light">1,950</div><div class="sub" style="color:var(--orange2)">EGP / month</div></div>
+    <div class="card"><div class="label">Active Plans</div><div class="val md">3</div><div class="sub">plans running</div></div>
+    <div class="card"><div class="label">Next Due</div><div class="val" style="font-size:16px;font-weight:600;color:var(--orange);margin-top:6px">Apr 15</div><div class="sub orange">iPhone · 850 EGP</div></div>
+  </div>
+
+  <!-- Active -->
+  <div style="margin-bottom:10px;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em">Active</div>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+    <div class="card" style="padding:18px 20px">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:#FFF0E6">📱</div><div><div style="font-weight:600;font-size:14px">iPhone 15 – Vodafone</div><div style="font-size:11px;color:#999">Started Oct 2024 · Monthly</div></div></div>
+        <span class="tag orange">Due Apr 15</span>
+      </div>
+      <div class="grid-4">
+        <div><div class="label">Monthly</div><div style="font-weight:700;font-size:14px;color:var(--orange)">850 EGP</div></div>
+        <div><div class="label">Remaining</div><div style="font-weight:700;font-size:14px">18 / 24</div></div>
+        <div><div class="label">Total Left</div><div style="font-weight:700;font-size:14px">15,300 EGP</div></div>
+        <div><div class="label">Status</div><span class="tag green" style="margin-top:6px">On Time</span></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill green" style="width:25%"></div></div>
+      <div style="font-size:10px;color:#999;margin-top:4px">6 of 24 payments completed</div>
+    </div>
+    <div class="card" style="padding:18px 20px">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:#F0EBF8">🛋️</div><div><div style="font-weight:600;font-size:14px">Furniture Set – B.TECH</div><div style="font-size:11px;color:#999">Started Feb 2026 · Monthly</div></div></div>
+        <span class="tag orange">Due Apr 20</span>
+      </div>
+      <div class="grid-4">
+        <div><div class="label">Monthly</div><div style="font-weight:700;font-size:14px;color:var(--orange)">600 EGP</div></div>
+        <div><div class="label">Remaining</div><div style="font-weight:700;font-size:14px">9 / 12</div></div>
+        <div><div class="label">Total Left</div><div style="font-weight:700;font-size:14px">5,400 EGP</div></div>
+        <div><div class="label">Status</div><span class="tag green" style="margin-top:6px">On Time</span></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill green" style="width:25%"></div></div>
+      <div style="font-size:10px;color:#999;margin-top:4px">3 of 12 payments completed</div>
+    </div>
+    <div class="card" style="padding:18px 20px">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:#EBF4FB">💻</div><div><div style="font-weight:600;font-size:14px">MacBook Air – eXtra</div><div style="font-size:11px;color:#999">Started Jan 2026 · Monthly</div></div></div>
+        <span class="tag red">Overdue!</span>
+      </div>
+      <div class="grid-4">
+        <div><div class="label">Monthly</div><div style="font-weight:700;font-size:14px;color:var(--red)">500 EGP</div></div>
+        <div><div class="label">Remaining</div><div style="font-weight:700;font-size:14px">21 / 24</div></div>
+        <div><div class="label">Total Left</div><div style="font-weight:700;font-size:14px">10,500 EGP</div></div>
+        <div><div class="label">Status</div><span class="tag red" style="margin-top:6px">Overdue</span></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill" style="width:12.5%;background:var(--red)"></div></div>
+      <div style="font-size:10px;color:var(--red);margin-top:4px">3 of 24 payments completed — payment was missed</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SAVINGS ══════════ -->
+<div class="page" id="page-savings">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Savings Goals</div>
+    <button class="btn primary">+ New Goal</button>
+  </div>
+  <div class="page-sub">Turn your intentions into habits.</div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card green"><div class="label light">Total Saved</div><div class="val lg light">8,250</div><div class="sub" style="color:var(--beige3)">EGP across all goals</div></div>
+    <div class="card"><div class="label">Total Target</div><div class="val md">32,000</div><div class="sub">EGP combined</div></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="goal-card">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:#E8F5EC">✈️</div><div><div style="font-weight:600;font-size:15px">Europe Trip 2027</div><div style="font-size:11px;color:#999">Target: Dec 2026</div></div></div>
+        <span class="tag green">On Track</span>
+      </div>
+      <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px;color:var(--text2)">Saved: <b>4,500 EGP</b></span><span style="font-size:13px;color:var(--text2)">Target: <b>15,000 EGP</b></span></div>
+      <div class="progress-bg"><div class="progress-fill" style="width:30%"></div></div>
+      <div style="font-size:11px;color:#999;margin-top:6px">30% complete · ~18 months at current rate</div>
+      <div style="margin-top:12px;display:flex;gap:8px"><button class="btn secondary sm">+ Add Contribution</button><button class="btn secondary sm">Edit Goal</button></div>
+    </div>
+    <div class="goal-card">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:#FFF0E6">🚗</div><div><div style="font-weight:600;font-size:15px">Car Down Payment</div><div style="font-size:11px;color:#999">Target: Jun 2027</div></div></div>
+        <span class="tag yellow">Needs Boost</span>
+      </div>
+      <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px;color:var(--text2)">Saved: <b>2,200 EGP</b></span><span style="font-size:13px;color:var(--text2)">Target: <b>12,000 EGP</b></span></div>
+      <div class="progress-bg"><div class="progress-fill" style="width:18%"></div></div>
+      <div style="font-size:11px;color:var(--orange);margin-top:6px">18% complete · increase monthly contribution to stay on track</div>
+      <div style="margin-top:12px;display:flex;gap:8px"><button class="btn secondary sm">+ Add Contribution</button><button class="btn secondary sm">Edit Goal</button></div>
+    </div>
+    <div class="goal-card">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:#E8F5EC">🏠</div><div><div style="font-weight:600;font-size:15px">Emergency Fund</div><div style="font-size:11px;color:#999">No target date</div></div></div>
+        <span class="tag green">Healthy</span>
+      </div>
+      <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px;color:var(--text2)">Saved: <b>1,550 EGP</b></span><span style="font-size:13px;color:var(--text2)">Target: <b>5,000 EGP</b></span></div>
+      <div class="progress-bg"><div class="progress-fill green" style="width:31%"></div></div>
+      <div style="font-size:11px;color:#999;margin-top:6px">31% complete</div>
+      <div style="margin-top:12px;display:flex;gap:8px"><button class="btn secondary sm">+ Add Contribution</button><button class="btn secondary sm">Edit Goal</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ GAM'EYA ══════════ -->
+<div class="page" id="page-gameya">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Digital Gam'eya</div>
+    <button class="btn primary">+ Create Group</button>
+  </div>
+  <div class="page-sub">Egypt's rotating savings system, managed digitally.</div>
+
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card green"><div class="label light">Active Groups</div><div class="val lg light">2</div><div class="sub" style="color:var(--beige3)">groups joined</div></div>
+    <div class="card"><div class="label">Monthly Contribution</div><div class="val md orange">500</div><div class="sub">EGP / month</div></div>
+    <div class="card"><div class="label">You Collect</div><div class="val" style="font-size:16px;font-weight:600;color:var(--green);margin-top:6px">June 2026</div><div class="sub green">Round 6 · Family Group</div></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="gam-card">
+      <div class="flex-between" style="margin-bottom:12px">
+        <div><div style="font-weight:700;font-size:16px;color:var(--green)">Family Savings Circle</div><div style="font-size:12px;color:#999;margin-top:2px">Started Jan 2026 · 12 members · Monthly</div></div>
+        <span class="tag green">Admin</span>
+      </div>
+      <div class="grid-4" style="margin-bottom:12px">
+        <div><div class="label">Contribution</div><div style="font-weight:700;font-size:14px">500 EGP</div></div>
+        <div><div class="label">Pool Size</div><div style="font-weight:700;font-size:14px">6,000 EGP</div></div>
+        <div><div class="label">Current Round</div><div style="font-weight:700;font-size:14px">3 / 12</div></div>
+        <div><div class="label">Next Collection</div><div style="font-weight:700;font-size:14px;color:var(--orange)">Apr 18</div></div>
+      </div>
+      <div class="member-dots">
+        <div class="mdot">JM</div><div class="mdot">AK</div><div class="mdot">SR</div><div class="mdot">MH</div><div class="mdot" style="background:var(--beige3);color:var(--text2)">+8</div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px"><button class="btn secondary sm">View Schedule</button><button class="btn secondary sm">Record Payment</button></div>
+    </div>
+    <div class="gam-card">
+      <div class="flex-between" style="margin-bottom:12px">
+        <div><div style="font-weight:700;font-size:16px;color:var(--green)">Friends Circle</div><div style="font-size:12px;color:#999;margin-top:2px">Started Mar 2026 · 6 members · Monthly</div></div>
+        <span class="tag orange">Member</span>
+      </div>
+      <div class="grid-4" style="margin-bottom:12px">
+        <div><div class="label">Contribution</div><div style="font-weight:700;font-size:14px">300 EGP</div></div>
+        <div><div class="label">Pool Size</div><div style="font-weight:700;font-size:14px">1,800 EGP</div></div>
+        <div><div class="label">Current Round</div><div style="font-weight:700;font-size:14px">1 / 6</div></div>
+        <div><div class="label">You Collect</div><div style="font-weight:700;font-size:14px;color:var(--green3)">Aug 2026</div></div>
+      </div>
+      <div class="member-dots">
+        <div class="mdot">JM</div><div class="mdot">NK</div><div class="mdot">LO</div><div class="mdot">PR</div><div class="mdot">AS</div><div class="mdot">YB</div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px"><button class="btn secondary sm">View Schedule</button><button class="btn secondary sm">Record Payment</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ BNPL ADVISOR ══════════ -->
+<div class="page" id="page-bnpl">
+  <div class="page-title">BNPL Advisor</div>
+  <div class="page-sub">Know before you owe. Calculate if you can afford this installment.</div>
+
+  <div class="grid-2">
+    <!-- form -->
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:16px">New Purchase Assessment</div>
+      <div class="input-group"><div class="input-label">Item Name</div><input id="bnplItem" placeholder="e.g. Samsung TV" value="Samsung 65″ TV"></div>
+      <div class="grid-2">
+        <div class="input-group"><div class="input-label">Total Price (EGP)</div><input id="bnplPrice" type="number" value="18000"></div>
+        <div class="input-group"><div class="input-label">Down Payment (EGP)</div><input id="bnplDown" type="number" value="3000"></div>
+      </div>
+      <div class="grid-2">
+        <div class="input-group"><div class="input-label">Monthly Instalment (EGP)</div><input id="bnplMonthly" type="number" value="1000"></div>
+        <div class="input-group"><div class="input-label">Duration (months)</div><input id="bnplMonths" type="number" value="15"></div>
+      </div>
+      <div class="input-group"><div class="input-label">Your Monthly Income (EGP)</div><input id="bnplIncome" type="number" value="8500"></div>
+      <button class="btn primary" style="width:100%;justify-content:center;margin-top:4px" onclick="calcBNPL()">Calculate Risk →</button>
+    </div>
+
+    <!-- result -->
+    <div class="card" id="bnplResult">
+      <div style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:16px">Risk Assessment</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7;padding:30px 0;text-align:center;opacity:.5">Fill in the form and click Calculate to see your risk assessment.</div>
+    </div>
+  </div>
+
+  <!-- existing obligations -->
+  <div class="card" style="margin-top:16px">
+    <div class="label" style="margin-bottom:12px">Your Current Monthly Obligations</div>
+    <div class="grid-3">
+      <div class="row-item" style="border:none;padding:8px 0"><div class="icon-box" style="background:#FFF0E6">📱</div><div style="flex:1"><div class="tx-name">iPhone 15</div><div class="tx-cat">Installment</div></div><div style="font-weight:600;color:var(--orange)">850 EGP</div></div>
+      <div class="row-item" style="border:none;padding:8px 0"><div class="icon-box" style="background:#F0EBF8">🛋️</div><div style="flex:1"><div class="tx-name">Furniture</div><div class="tx-cat">Installment</div></div><div style="font-weight:600;color:var(--orange)">600 EGP</div></div>
+      <div class="row-item" style="border:none;padding:8px 0"><div class="icon-box" style="background:#E8F5EC">🔄</div><div style="flex:1"><div class="tx-name">Gam'eya</div><div class="tx-cat">Contribution</div></div><div style="font-weight:600;color:var(--green3)">500 EGP</div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="flex-between"><span style="font-size:13px;font-weight:600;color:var(--text2)">Total existing monthly obligations</span><span style="font-weight:700;font-size:16px;color:var(--orange)">1,950 EGP</span></div>
+  </div>
+</div>
+
+<!-- ══════════ INSIGHTS ══════════ -->
+<div class="page" id="page-insights">
+  <div class="page-title">Predictive Insights</div>
+  <div class="page-sub">AI-powered forecasts from your spending patterns.</div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div class="flex-row" style="margin-bottom:8px"><span style="font-size:22px">⚠️</span><div style="font-weight:700;font-size:15px;color:var(--orange)">Budget Burnout Alert</div></div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6">At your current spending rate of <b>144 EGP/day</b>, you will exhaust your monthly budget <b>6 days before</b> the end of April. Reduce dining out by 20% to stay safe.</div>
+      <div style="margin-top:10px"><span class="tag orange">Estimated · 87% confidence</span></div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--green3)">
+      <div class="flex-row" style="margin-bottom:8px"><span style="font-size:22px">💡</span><div style="font-weight:700;font-size:15px;color:var(--green3)">Savings Opportunity</div></div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6">You could save an extra <b>620 EGP/month</b> by reducing Food & Dining (top overspend) and Shopping (2nd) by 20%. That's <b>7,440 EGP/year</b>.</div>
+      <div style="margin-top:10px"><span class="tag green">Forecast · Based on 3-month average</span></div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--yellow)">
+      <div class="flex-row" style="margin-bottom:8px"><span style="font-size:22px">📅</span><div style="font-weight:700;font-size:15px;color:#A07800">High Obligation Month Ahead</div></div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6">May 2026 will be your heaviest installment month with <b>2,450 EGP</b> in obligations due. Plan now by setting aside extra savings in April.</div>
+      <div style="margin-top:10px"><span class="tag yellow">3-month forecast</span></div>
+    </div>
+    <div class="card" style="border-left:4px solid #9B59B6">
+      <div class="flex-row" style="margin-bottom:8px"><span style="font-size:22px">📌</span><div style="font-weight:700;font-size:15px;color:#6C3483">Persistent Overspend</div></div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6">You've exceeded your <b>Food & Dining</b> average for 3 consecutive months. Your average spend is 920 EGP vs. a healthier target of 700 EGP.</div>
+      <div style="margin-top:10px"><span class="tag" style="background:rgba(155,89,182,.1);color:#6C3483">3-month pattern</span></div>
+    </div>
+  </div>
+
+  <!-- forecast chart -->
+  <div class="card">
+    <div class="label" style="margin-bottom:14px">Monthly Instalment Load — Next 3 Months</div>
+    <div class="grid-3">
+      <div style="text-align:center">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:6px">April 2026</div>
+        <div style="height:80px;background:var(--beige);border-radius:10px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;border:1px solid var(--beige2)"><div style="width:40px;background:var(--orange);border-radius:4px 4px 0 0;height:46%"></div></div>
+        <div style="font-weight:700;color:var(--orange);margin-top:6px">1,950 EGP</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:6px">May 2026</div>
+        <div style="height:80px;background:var(--beige);border-radius:10px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;border:1px solid var(--beige2)"><div style="width:40px;background:var(--red);border-radius:4px 4px 0 0;height:58%"></div></div>
+        <div style="font-weight:700;color:var(--red);margin-top:6px">2,450 EGP ⚠️</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:6px">June 2026</div>
+        <div style="height:80px;background:var(--beige);border-radius:10px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;border:1px solid var(--beige2)"><div style="width:40px;background:var(--green3);border-radius:4px 4px 0 0;height:35%"></div></div>
+        <div style="font-weight:700;color:var(--green3);margin-top:6px">1,450 EGP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ AI ADVISOR ══════════ -->
+<div class="page" id="page-ai" style="padding:20px 28px;display:flex;flex-direction:column;height:calc(100vh - 56px)">
+  <div class="page-title">AI Financial Advisor ✨</div>
+  <div class="page-sub" style="margin-bottom:12px">Ask anything about your finances. Powered by your real data.</div>
+
+  <div class="quick-chips">
+    <div class="chip" onclick="sendChip(this)">Can I afford a new laptop?</div>
+    <div class="chip" onclick="sendChip(this)">Why is my score 78?</div>
+    <div class="chip" onclick="sendChip(this)">How do I save faster?</div>
+    <div class="chip" onclick="sendChip(this)">Am I overspending on food?</div>
+    <div class="chip" onclick="sendChip(this)">Best installment plan for a TV?</div>
+    <div class="chip" onclick="sendChip(this)">Summarize my April finances</div>
+  </div>
+
+  <div style="background:white;border-radius:var(--r2);border:1px solid var(--beige2);padding:20px;display:flex;flex-direction:column;flex:1;overflow:hidden">
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg ai">
+        <div class="msg-avatar">FC</div>
+        <div class="msg-bubble">Hello Jana! 👋 I'm your FinCircle AI Advisor. I have full access to your financial data — your balance, installments, savings goals, Gam'eya groups, and spending history.<br><br>How can I help you today? You can ask me anything from "can I afford this?" to "why did I overspend last month."</div>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="Ask about your finances…" onkeydown="if(event.key==='Enter')sendMsg()">
+      <button class="send-btn" onclick="sendMsg()">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ EGX TRADING ══════════ -->
+<div class="page" id="page-egx">
+  <div class="page-title">EGX Paper Trading</div>
+  <div class="page-sub">Practice investing on Egypt's stock exchange. Zero risk, real learning.</div>
+
+  <div style="background:rgba(209,85,85,.06);border:1px solid rgba(209,85,85,.2);border-radius:12px;padding:10px 16px;margin-bottom:20px;font-size:12px;color:var(--red)">⚠️ All trading is simulated for educational purposes only. No real money is involved.</div>
+
+  <div class="grid-4" style="margin-bottom:18px">
+    <div class="card green"><div class="label light">Virtual Balance</div><div class="val md light">50,000</div><div class="sub" style="color:var(--beige3)">EGP</div></div>
+    <div class="card"><div class="label">Portfolio Value</div><div class="val md" style="color:var(--green3)">12,450</div><div class="sub green">+ 450 unrealised</div></div>
+    <div class="card"><div class="label">Total Return</div><div class="val md" style="color:var(--green3)">+3.75%</div><div class="sub green">Since start</div></div>
+    <div class="card"><div class="label">Positions</div><div class="val md">4</div><div class="sub">open trades</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:14px">
+        <div class="label">EGX30 Stocks</div>
+        <input placeholder="Search stocks…" style="max-width:150px">
+      </div>
+      <div class="stock-row"><div class="stock-ticker">COMI</div><div class="stock-name">Commercial International Bank</div><div><div class="stock-price">67.45 EGP</div><div class="stock-change stock-up">+1.2%</div></div></div>
+      <div class="stock-row"><div class="stock-ticker">HRHO</div><div class="stock-name">El Sewedy Electric</div><div><div class="stock-price">23.80 EGP</div><div class="stock-change stock-down">-0.8%</div></div></div>
+      <div class="stock-row"><div class="stock-ticker">SWDY</div><div class="stock-name">Telecom Egypt</div><div><div class="stock-price">18.50 EGP</div><div class="stock-change stock-up">+2.1%</div></div></div>
+      <div class="stock-row"><div class="stock-ticker">ETEL</div><div class="stock-name">Egyptian Kuwaiti Holding</div><div><div class="stock-price">9.12 EGP</div><div class="stock-change stock-down">-0.3%</div></div></div>
+      <div class="stock-row"><div class="stock-ticker">EKHO</div><div class="stock-name">EFG Hermes</div><div><div class="stock-price">34.60 EGP</div><div class="stock-change stock-up">+0.9%</div></div></div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:14px">Quick Trade — COMI</div>
+      <div class="grid-2">
+        <div class="input-group"><div class="input-label">Order Type</div><select><option>Market Buy</option><option>Market Sell</option><option>Limit Buy</option><option>Limit Sell</option></select></div>
+        <div class="input-group"><div class="input-label">Quantity (shares)</div><input type="number" value="10"></div>
+      </div>
+      <div style="background:var(--beige);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px">
+        <div class="flex-between" style="margin-bottom:4px"><span style="color:var(--text2)">Price per share</span><span style="font-weight:600">67.45 EGP</span></div>
+        <div class="flex-between" style="margin-bottom:4px"><span style="color:var(--text2)">Estimated total</span><span style="font-weight:600">674.50 EGP</span></div>
+        <div class="flex-between"><span style="color:var(--text2)">Available balance</span><span style="font-weight:600;color:var(--green3)">50,000 EGP</span></div>
+      </div>
+      <button class="btn primary" style="width:100%;justify-content:center">Execute Simulated Buy</button>
+      <div style="font-size:11px;color:#999;text-align:center;margin-top:8px">Last updated: 11:30 AM · EGX trading hours Sun–Thu 10:00–14:30</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PORTFOLIO ══════════ -->
+<div class="page" id="page-portfolio">
+  <div class="page-title">My Portfolio</div>
+  <div class="page-sub">Your simulated holdings on the Egyptian Exchange.</div>
+
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card green"><div class="label light">Total Value</div><div class="val lg light">12,450</div><div class="sub" style="color:var(--beige3)">EGP</div></div>
+    <div class="card"><div class="label">Unrealised Gain</div><div class="val md" style="color:var(--green3)">+450</div><div class="sub green">+3.75%</div></div>
+    <div class="card"><div class="label">Cash Available</div><div class="val md">37,550</div><div class="sub">EGP</div></div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:12px">Holdings</div>
+    <div class="stock-row" style="background:var(--beige);border-radius:12px;margin-bottom:6px;padding:14px">
+      <div class="stock-ticker">COMI</div><div class="stock-name">Commercial Int'l Bank<br><span style="font-size:10px;color:#999">50 shares · Avg. 65.20 EGP</span></div>
+      <div class="mini-chart"><div class="mc-bar" style="height:10px;background:var(--green3)"></div><div class="mc-bar" style="height:14px;background:var(--green3)"></div><div class="mc-bar" style="height:12px;background:var(--green3)"></div><div class="mc-bar" style="height:18px;background:var(--green3)"></div><div class="mc-bar" style="height:20px;background:var(--green3)"></div></div>
+      <div><div class="stock-price">3,372.50 EGP</div><div class="stock-change stock-up">+110 EGP (+3.4%)</div></div>
+    </div>
+    <div class="stock-row" style="background:var(--beige);border-radius:12px;margin-bottom:6px;padding:14px">
+      <div class="stock-ticker">SWDY</div><div class="stock-name">Telecom Egypt<br><span style="font-size:10px;color:#999">200 shares · Avg. 17.90 EGP</span></div>
+      <div class="mini-chart"><div class="mc-bar" style="height:18px;background:var(--green3)"></div><div class="mc-bar" style="height:12px;background:var(--orange)"></div><div class="mc-bar" style="height:15px;background:var(--green3)"></div><div class="mc-bar" style="height:14px;background:var(--orange)"></div><div class="mc-bar" style="height:20px;background:var(--green3)"></div></div>
+      <div><div class="stock-price">3,700 EGP</div><div class="stock-change stock-up">+120 EGP (+3.4%)</div></div>
+    </div>
+    <div class="stock-row" style="background:var(--beige);border-radius:12px;padding:14px">
+      <div class="stock-ticker">HRHO</div><div class="stock-name">El Sewedy Electric<br><span style="font-size:10px;color:#999">220 shares · Avg. 24.10 EGP</span></div>
+      <div class="mini-chart"><div class="mc-bar" style="height:20px;background:var(--orange)"></div><div class="mc-bar" style="height:16px;background:var(--orange)"></div><div class="mc-bar" style="height:18px;background:var(--orange)"></div><div class="mc-bar" style="height:14px;background:var(--orange)"></div><div class="mc-bar" style="height:12px;background:var(--orange)"></div></div>
+      <div><div class="stock-price">5,236 EGP</div><div class="stock-change stock-down">-66 EGP (-1.2%)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ HEALTH SCORE ══════════ -->
+<div class="page" id="page-health">
+  <div class="page-title">Financial Health Score</div>
+  <div class="page-sub">Your real-time financial reliability indicator.</div>
+
+  <div class="grid-2" style="margin-bottom:18px">
+    <div class="card green" style="display:flex;align-items:center;gap:24px">
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(245,239,224,.1)" stroke-width="10"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#E8894A" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="55.3" stroke-linecap="round"/>
+          </svg>
+          <div class="score-ring-val"><div class="num">78</div><div class="lbl">/100</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:rgba(245,239,224,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Overall Rating</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--beige)">Healthy</div>
+        <div style="font-size:12px;color:#7FC99E;margin-top:4px">↑ +3 points this month</div>
+        <div style="margin-top:12px"><span class="tag" style="background:rgba(78,138,106,.25);color:#7FC99E">75–100 = Healthy</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:14px">Score Breakdown</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><div class="flex-between" style="margin-bottom:4px"><span style="font-size:13px;font-weight:600">Payment Punctuality</span><span style="font-size:13px;font-weight:700;color:var(--green3)">88/100 · 40%</span></div><div class="progress-bg"><div class="progress-fill green" style="width:88%"></div></div></div>
+        <div><div class="flex-between" style="margin-bottom:4px"><span style="font-size:13px;font-weight:600">Savings Consistency</span><span style="font-size:13px;font-weight:700;color:var(--orange)">62/100 · 30%</span></div><div class="progress-bg"><div class="progress-fill" style="width:62%"></div></div></div>
+        <div><div class="flex-between" style="margin-bottom:4px"><span style="font-size:13px;font-weight:600">Spending Control</span><span style="font-size:13px;font-weight:700;color:var(--green3)">74/100 · 20%</span></div><div class="progress-bg"><div class="progress-fill green" style="width:74%"></div></div></div>
+        <div><div class="flex-between" style="margin-bottom:4px"><span style="font-size:13px;font-weight:600">Gam'eya Reliability</span><span style="font-size:13px;font-weight:700;color:var(--green3)">95/100 · 10%</span></div><div class="progress-bg"><div class="progress-fill green" style="width:95%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:12px">Personalised Tips to Improve Your Score</div>
+    <div class="row-item"><div class="icon-box" style="background:#FFF0E6">⚡</div><div style="flex:1"><div class="tx-name">Pay the MacBook instalment immediately</div><div class="tx-cat">Overdue payment is reducing your score by ~8 points. Clearing it will bring you to ~86.</div></div><span class="tag red">High Impact</span></div>
+    <div class="row-item"><div class="icon-box" style="background:#E8F5EC">💰</div><div style="flex:1"><div class="tx-name">Increase savings contribution by 200 EGP/month</div><div class="tx-cat">Your savings consistency sub-score is 62 — this would push it to ~72 over 2 months.</div></div><span class="tag orange">Medium Impact</span></div>
+    <div class="row-item"><div class="icon-box" style="background:#EBF4FB">📊</div><div style="flex:1"><div class="tx-name">Reduce Food & Dining overspend</div><div class="tx-cat">You've overspent this category 3 months running. Staying within budget improves spending control.</div></div><span class="tag yellow">Low Impact</span></div>
+  </div>
+</div>
+
+<!-- ══════════ SETTINGS ══════════ -->
+<div class="page" id="page-settings">
+  <div class="page-title">Settings</div>
+  <div class="page-sub">Manage your account, notifications, and preferences.</div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:16px">Profile</div>
+      <div class="grid-2">
+        <div class="input-group"><div class="input-label">Full Name</div><input value="Jana Mohamed Elhenawy"></div>
+        <div class="input-group"><div class="input-label">Email</div><input value="20240142@stud.fci-cu.edu.eg"></div>
+        <div class="input-group"><div class="input-label">Phone</div><input value="01553152753"></div>
+        <div class="input-group"><div class="input-label">Language</div><select><option>English</option><option>العربية</option></select></div>
+      </div>
+      <button class="btn primary sm">Save Changes</button>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:16px">Notifications</div>
+      <div class="row-item"><div style="flex:1"><div class="tx-name">Instalment Due Reminders</div><div class="tx-cat">3 days and 1 day before due date</div></div><label style="cursor:pointer"><input type="checkbox" checked style="width:auto;accent-color:var(--orange)"></label></div>
+      <div class="row-item"><div style="flex:1"><div class="tx-name">Budget Burnout Alerts</div><div class="tx-cat">When predicted to exceed monthly budget</div></div><label><input type="checkbox" checked style="width:auto;accent-color:var(--orange)"></label></div>
+      <div class="row-item"><div style="flex:1"><div class="tx-name">Gam'eya Deadlines</div><div class="tx-cat">5 days and 1 day before collection</div></div><label><input type="checkbox" checked style="width:auto;accent-color:var(--orange)"></label></div>
+      <div class="row-item"><div style="flex:1"><div class="tx-name">Savings Goal Milestones</div><div class="tx-cat">When you hit 25%, 50%, 75%, 100%</div></div><label><input type="checkbox" style="width:auto;accent-color:var(--orange)"></label></div>
+      <div class="row-item" style="border:none"><div style="flex:1"><div class="tx-name">Health Score Changes</div><div class="tx-cat">When your score moves significantly</div></div><label><input type="checkbox" checked style="width:auto;accent-color:var(--orange)"></label></div>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:16px">Security</div>
+      <div class="row-item"><div style="flex:1"><div class="tx-name">Two-Factor Authentication</div><div class="tx-cat">OTP via SMS or email</div></div><span class="tag green">Enabled</span></div>
+      <div class="row-item" style="border:none"><div style="flex:1"><div class="tx-name">Change Password</div><div class="tx-cat">Last changed 30 days ago</div></div><button class="btn secondary sm">Update</button></div>
+    </div>
+    <div class="card" style="border-color:rgba(209,85,85,.2)">
+      <div style="font-size:15px;font-weight:600;color:var(--red);margin-bottom:12px">Danger Zone</div>
+      <div class="flex-row"><button class="btn danger sm">Export My Data</button><button class="btn danger sm">Delete Account</button></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main -->
+</div><!-- end app -->
+
+<!-- ── ADD EXPENSE MODAL ── -->
+<div class="modal-overlay" id="addExpenseModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="document.getElementById('addExpenseModal').classList.remove('open')">✕</button>
+    <div class="modal-title">Add Transaction</div>
+    <div class="input-group">
+      <div class="input-label">Type</div>
+      <select><option>Expense</option><option>Income</option></select>
+    </div>
+    <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
+    <div class="input-group"><div class="input-label">Category</div><select><option>Food & Dining</option><option>Transport</option><option>Bills & Utilities</option><option>Shopping</option><option>Entertainment</option><option>Health & Medical</option><option>Education</option><option>Housing</option><option>Other</option></select></div>
+    <div class="input-group"><div class="input-label">Description (optional)</div><input placeholder="What was this for?"></div>
+    <div class="input-group"><div class="input-label">Date</div><input type="date" value="2026-04-10"></div>
+    <div class="flex-row" style="justify-content:flex-end">
+      <button class="btn secondary" onclick="document.getElementById('addExpenseModal').classList.remove('open')">Cancel</button>
+      <button class="btn primary" onclick="document.getElementById('addExpenseModal').classList.remove('open')">Save Transaction</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PAGE NAVIGATION ──
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const p = document.getElementById('page-' + id);
+  if (p) p.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ── BNPL CALCULATOR ──
+function calcBNPL() {
+  const income = +document.getElementById('bnplIncome').value || 8500;
+  const monthly = +document.getElementById('bnplMonthly').value || 1000;
+  const item = document.getElementById('bnplItem').value || 'Item';
+  const existing = 1950;
+  const newTotal = existing + monthly;
+  const ratio = (newTotal / income * 100).toFixed(1);
+  let risk, riskColor, msg, bg, tip;
+  if (ratio <= 35) { risk='Low'; riskColor='#2E7D52'; msg='✅ Safe to proceed'; bg='rgba(78,138,106,.08)'; tip='Your income-to-obligation ratio stays within the healthy range. You can comfortably take this plan.'; }
+  else if (ratio <= 50) { risk='Medium'; riskColor='#A07800'; msg='⚠️ Proceed with caution'; bg='rgba(232,200,74,.08)'; tip='You\'re approaching the upper safe limit. Monitor your spending closely and avoid any additional obligations.'; }
+  else { risk='High'; riskColor='#D15555'; msg='🚫 Not recommended'; bg='rgba(209,85,85,.08)'; tip='Over 50% of your income would go to obligations. FinCircle recommends a higher down payment or longer duration to reduce monthly amount.'; }
+
+  const altMonthly = Math.floor(income * 0.35 - existing);
+  document.getElementById('bnplResult').innerHTML = `
+    <div style="font-size:15px;font-weight:600;color:var(--green);margin-bottom:16px">Risk Assessment — ${item}</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text2)">Existing monthly obligations</span><span style="font-weight:700">${existing.toLocaleString()} EGP</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text2)">New instalment</span><span style="font-weight:700;color:var(--orange)">${monthly.toLocaleString()} EGP</span></div>
+      <div style="height:1px;background:var(--beige2)"></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text2)">Total obligations</span><span style="font-weight:700">${newTotal.toLocaleString()} EGP</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text2)">Income-to-Obligation Ratio</span><span style="font-weight:700;color:${riskColor}">${ratio}%</span></div>
+    </div>
+    <div style="background:${bg};border:1px solid ${riskColor}33;border-radius:12px;padding:14px;margin-bottom:12px">
+      <div style="font-weight:700;font-size:15px;color:${riskColor};margin-bottom:6px">${msg} — <span style="text-transform:uppercase;font-size:13px">${risk} Risk</span></div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6">${tip}</div>
+    </div>
+    ${risk !== 'Low' ? `<div style="background:rgba(78,138,106,.06);border:1px solid rgba(78,138,106,.2);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--text2)"><b style="color:var(--green3)">Suggested alternative:</b> To keep risk Low, reduce monthly instalment to <b>${altMonthly > 0 ? altMonthly.toLocaleString() : 0} EGP or less</b>, or increase your down payment.</div>` : ''}
+  `;
+}
+
+// ── AI CHAT ──
+const aiResponses = {
+  "can i afford a new laptop": "Looking at your data: you have <b>4,180 EGP</b> net balance and <b>1,950 EGP/month</b> in existing obligations.<br><br>If a laptop costs ~15,000 EGP at 700 EGP/month over 24 months, your new obligation ratio would be <b>31%</b> — which is <span style='color:#2E7D52;font-weight:600'>Low Risk ✅</span>.<br><br>However, you currently have an overdue MacBook payment. I'd recommend clearing that first before adding a new plan.",
+  "why is my score 78": "Your score of 78 breaks down as:<br><br>• <b>Payment Punctuality (88/100)</b> — mostly on time, but the MacBook instalment is overdue<br>• <b>Savings Consistency (62/100)</b> — your biggest drag. You missed contributions in Feb<br>• <b>Spending Control (74/100)</b> — slight overspend in Food for 3 months<br>• <b>Gam'eya Reliability (95/100)</b> — excellent! Always on time<br><br>💡 Fixing the overdue MacBook payment alone would bring you to approximately <b>86</b>.",
+  "how do i save faster": "Based on your spending, here are 3 actionable steps:<br><br>1. <b>Reduce Food & Dining by 200 EGP/month</b> — you're consistently 220 EGP over your average. Easy wins: cook 2 extra days a week.<br>2. <b>Automate 500 EGP to your Europe Trip goal</b> on salary day (Apr 1) before you spend it.<br>3. <b>Pause shopping for May</b> — you have a high obligation month ahead. That frees ~650 EGP.",
+  "am i overspending on food": "Yes — and it's been 3 months in a row. Your Food & Dining average is <b>920 EGP/month</b>, but a healthy target for your income is around <b>700 EGP</b>.<br><br>That's <b>220 EGP overspend monthly</b>, or <b>2,640 EGP per year</b> that could go toward your Europe Trip goal.<br><br>I'd classify this as a <b>Persistent Overspend</b> pattern. Would you like me to set a monthly food budget alert?",
+  "best installment plan for a tv": "For a 65\" Samsung at ~18,000 EGP, here's my analysis:<br><br>• <b>3,000 EGP down + 1,000 EGP/month × 15 months</b> → Ratio: <b>34.7% — Low Risk ✅</b><br>• <b>0 down + 1,500 EGP/month × 12 months</b> → Ratio: <b>40.6% — Medium Risk ⚠️</b><br>• <b>0 down + 1,800 EGP/month × 10 months</b> → Ratio: <b>44.7% — Medium Risk ⚠️</b><br><br>💡 <b>Recommendation:</b> Option 1 keeps you in the safe zone. But wait until May's high-obligation month passes before committing.",
+  "summarize my april finances": "Here's your April 2026 snapshot:<br><br>📥 <b>Income:</b> 8,500 EGP<br>📤 <b>Spent so far:</b> 4,320 EGP (51% of income)<br>💰 <b>Net balance:</b> 4,180 EGP<br>📋 <b>Monthly obligations:</b> 1,950 EGP (3 plans + Gam'eya)<br>🎯 <b>Savings this month:</b> 0 EGP (no contributions logged yet)<br>💚 <b>Health Score:</b> 78 — Healthy, up 3 points<br><br>⚠️ <b>Watch out:</b> MacBook instalment is overdue. Top spending category: Installments (850 EGP).",
+};
+
+function getAIResponse(msg) {
+  const lower = msg.toLowerCase();
+  for (const [key, val] of Object.entries(aiResponses)) {
+    if (lower.includes(key.split(' ')[0]) && lower.includes(key.split(' ')[1] || key.split(' ')[0])) return val;
+  }
+  return "Great question! Based on your financial profile — <b>4,180 EGP balance</b>, <b>78 health score</b>, and <b>1,950 EGP/month</b> in obligations — I'd need a bit more context to give you the best advice. Try asking something specific like <i>\"can I afford X?\"</i> or <i>\"why did I overspend?\"</i> and I'll pull your real data to answer.";
+}
+
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addMsg(msg, 'user');
+  input.value = '';
+  showTyping();
+  setTimeout(() => { removeTyping(); addMsg(getAIResponse(msg), 'ai'); }, 1400);
+}
+
+function sendChip(chip) {
+  const msg = chip.textContent;
+  addMsg(msg, 'user');
+  showTyping();
+  setTimeout(() => { removeTyping(); addMsg(getAIResponse(msg), 'ai'); }, 1400);
+}
+
+function addMsg(text, type) {
+  const wrap = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  div.innerHTML = `<div class="msg-avatar">${type === 'ai' ? 'FC' : 'J'}</div><div class="msg-bubble">${text}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping() {
+  const wrap = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ai'; div.id = 'typingIndicator';
+  div.innerHTML = `<div class="msg-avatar">FC</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+// initial BNPL calc
+calcBNPL();
+</script>
+</body>
+</html>
