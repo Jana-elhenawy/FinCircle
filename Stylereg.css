@@ -1,0 +1,24 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:linear-gradient(135deg,#062830,#0A4250);font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.register-container{max-width:560px;width:100%;background:white;border-radius:40px;padding:40px;box-shadow:0 25px 50px rgba(0,0,0,0.25)}
+.logo{text-align:center;margin-bottom:28px}
+.logo h1{font-family:'DM Serif Display',serif;font-size:32px;color:#0B4650}
+.logo span{color:#C2DC08}
+.tagline{text-align:center;color:#6E6F72;margin-bottom:32px;font-size:14px}
+.toggle-type{display:flex;gap:12px;margin-bottom:32px}
+.type-btn{flex:1;padding:14px;border-radius:60px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s;font-size:15px}
+.type-btn.personal{background:#E6FF2B;color:#0B4650}
+.type-btn.business{background:#EDE9E0;color:#0B4650}
+.type-btn.active{background:#E6FF2B;box-shadow:0 4px 12px rgba(230,255,43,0.3)}
+.input-group{margin-bottom:20px}
+.input-group label{display:block;font-size:12px;font-weight:600;color:#0B4650;margin-bottom:6px}
+.input-group input,.input-group select{width:100%;padding:12px 16px;border-radius:16px;border:1.5px solid #DDD8CC;font-size:14px;transition:0.2s}
+.input-group input:focus{border-color:#0D5260;outline:none}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.method-card{border:2px solid #EDE9E0;border-radius:20px;padding:16px;cursor:pointer;transition:all 0.2s;margin-bottom:12px}
+.method-card.selected{border-color:#E6FF2B;background:#F9F7F2}
+.method-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.method-desc{font-size:12px;color:#898A8D}
+.register-btn{width:100%;background:#E6FF2B;border:none;padding:14px;border-radius:60px;font-weight:700;font-size:16px;color:#0B4650;cursor:pointer;margin-top:16px;transition:0.2s}
+.register-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(230,255,43,0.3)}
+.legal{font-size:11px;color:#B0B1B4;text-align:center;margin-top:24px}

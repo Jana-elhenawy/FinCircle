@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinCircle – دائرتك المالية</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="StyleVirtual.css" rel="stylesheet">
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="logo">
+    <svg width="28" height="28" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="26" cy="26" r="26" fill="#0B4650"/>
+      <path d="M26,7 A19,19 0 1,1 7.5,33" stroke="#E6FF2B" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M26,13 A13,13 0 1,0 13.2,33" stroke="#F9F7F2" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>
+      <circle cx="26" cy="26" r="4.5" fill="#E6FF2B"/>
+    </svg>
+    Fin<span>Circle</span>
+  </div>
+  <div class="topbar-center">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div style="display:flex;align-items:center;gap:6px;background:rgba(249,247,242,.08);border-radius:8px;padding:4px 10px">
+      <div class="currency-pill">
+        <button class="curr-btn active" onclick="setCurrency('EGP',this)">EGP</button>
+        <button class="curr-btn" onclick="setCurrency('USD',this)">USD</button>
+        <button class="curr-btn" onclick="setCurrency('EUR',this)">EUR</button>
+        <button class="curr-btn" onclick="setCurrency('SAR',this)">SAR</button>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="toggleNFC()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg>
+    </button>
+    <button class="icon-btn" style="position:relative" onclick="showPage('notifications',null)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="user-chip">
+      <div class="user-avatar">J</div>
+      <span class="user-name" data-en="Jana M." data-ar="جنا م.">Jana M.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SIDEBAR ── -->
+<div class="sidebar">
+  <div class="nav-section" data-en="MAIN" data-ar="رئيسي">MAIN</div>
+  <button class="nav-item active" onclick="showPage('dashboard',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span data-en="Dashboard" data-ar="الرئيسية">Dashboard</span>
+  </button>
+  <button class="nav-item" onclick="showPage('expenses',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5V2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+    <span data-en="Expenses" data-ar="المصروفات">Expenses</span>
+  </button>
+  <button class="nav-item" onclick="showPage('installments',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    <span data-en="Installments" data-ar="التقسيط">Installments</span>
+    <span class="nav-badge">3</span>
+  </button>
+  <button class="nav-item" onclick="showPage('savings',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="5"/></svg>
+    <span data-en="Savings Goals" data-ar="أهداف التوفير">Savings Goals</span>
+  </button>
+  <button class="nav-item" onclick="showPage('pockets',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="8" width="20" height="13" rx="2"/><path d="M16 8V6a4 4 0 00-8 0v2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>
+    <span data-en="Pockets" data-ar="الجيوب">Pockets</span>
+  </button>
+  <button class="nav-item" onclick="showPage('gameya',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5.5" r="2"/><circle cx="18.5" cy="12" r="2"/><circle cx="12" cy="18.5" r="2"/><circle cx="5.5" cy="12" r="2"/><path d="M13.4 7.2 Q17 7 17 10.6M17 13.4 Q17 17 13.4 17M10.6 17 Q7 17 7 13.4M7 10.6 Q7 7 10.6 7.2"/></svg>
+    <span data-en="Gam'eya" data-ar="الجمعية">Gam'eya</span>
+  </button>
+
+  <div class="nav-section" data-en="SMART TOOLS" data-ar="أدوات ذكية">SMART TOOLS</div>
+
+  <button class="nav-item" onclick="showPage('future',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 L12 12"/><path d="M16 2h6v6"/></svg>
+    <span data-en="Future Me AI" data-ar="المستشار المستقبلي">Future Me AI</span>
+    <span class="nav-badge">✨</span>
+  </button>
+
+  <button class="nav-item" onclick="showPage('health',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.9 17A9 9 0 1,1 19.1 17"/><line x1="12" y1="12" x2="16" y2="9"/><circle cx="12" cy="12" r="2"/></svg>
+    <span data-en="Health Score" data-ar="نقاط الصحة">Health Score</span>
+  </button>
+  <button class="nav-item" onclick="showPage('bnpl',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3h10M7 21h10M8 3 L12 10 L16 3M8 21 L12 14 L16 21"/><circle cx="12" cy="12" r="1.5"/></svg>
+    <span data-en="BNPL Advisor" data-ar="مستشار التقسيط">BNPL Advisor</span>
+  </button>
+  <button class="nav-item" onclick="showPage('insights',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="13" width="4" height="8"/><rect x="9" y="8" width="4" height="13"/><rect x="15" y="4" width="4" height="17"/><path d="M5 13 L11 8 L17 4" stroke-dasharray="2 2"/></svg>
+    <span data-en="Analytics" data-ar="التحليلات">Analytics</span>
+  </button>
+  <button class="nav-item" onclick="showPage('ai',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v12a2 2 0 01-2 2H8l-4 3V4z"/><line x1="12" y1="7" x2="12" y2="13" stroke="#E6FF2B"/><line x1="9.5" y1="8.8" x2="14.5" y2="11.2" stroke="#E6FF2B"/><line x1="14.5" y1="8.8" x2="9.5" y2="11.2" stroke="#E6FF2B"/></svg>
+    <span data-en="AI Advisor" data-ar="المستشار الذكي">AI Advisor</span>
+  </button>
+
+  <div class="nav-section" data-en="FINANCE" data-ar="المالية">FINANCE</div>
+  <button class="nav-item" onclick="showPage('wallet',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M16 13h.01"/><path d="M2 10h20"/></svg>
+    <span data-en="Virtual Card" data-ar="البطاقة الافتراضية">Virtual Card</span>
+  </button>
+  <button class="nav-item" onclick="showPage('intl',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M17 7l-5 5-5-5"/></svg>
+    <span data-en="International" data-ar="تحويل دولي">International</span>
+  </button>
+  <button class="nav-item" onclick="showPage('invest',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 18 7 13 11 15 16 8 21 5"/><circle cx="21" cy="5" r="2"/></svg>
+    <span data-en="Invest" data-ar="الاستثمار">Invest</span>
+  </button>
+  <button class="nav-item" onclick="showPage('salary',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>
+    <span data-en="Salary Advance" data-ar="سلفة الراتب">Salary Advance</span>
+  </button>
+  <button class="nav-item" onclick="showPage('p2p',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span data-en="P2P Lending" data-ar="الإقراض">P2P Lending</span>
+  </button>
+  <button class="nav-item" onclick="showPage('egx',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="8" width="4" height="7" rx="1"/><rect x="10" y="6" width="4" height="9" rx="1"/><rect x="15" y="9" width="4" height="6" rx="1"/></svg>
+    <span data-en="EGX Trading" data-ar="البورصة">EGX Trading</span>
+  </button>
+
+  <div class="nav-section" data-en="COMMUNITY" data-ar="المجتمع">COMMUNITY</div>
+  <button class="nav-item" onclick="showPage('zakat',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22C12 22 3 17 3 10a9 9 0 0 1 18 0c0 7-9 12-9 12z"/><path d="M12 6v6l4 2"/></svg>
+    <span data-en="Zakat & Sadaqa" data-ar="زكاة وصدقة">Zakat & Sadaqa</span>
+  </button>
+  <button class="nav-item" onclick="showPage('sme',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+    <span data-en="Business Hub" data-ar="ركن الأعمال">Business Hub</span>
+  </button>
+
+  <div class="sidebar-footer">
+    <button class="nav-item" onclick="openModal('customizeModal')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <span data-en="Customize" data-ar="تخصيص">Customize</span>
+    </button>
+    <div class="customize-hint" data-en="Drag items above to reorder" data-ar="اسحب للترتيب">Drag items above to reorder</div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main">
+
+<div id="globalAlerts" style="display:none;position:sticky;top:0;z-index:50;padding:10px 26px 0">
+  <div class="alert-banner warning" onclick="this.parentElement.style.display='none'">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(230,255,43,.12);border-radius:50%;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E6FF2B" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+    <div style="flex:1"><b data-en="Unusual Transaction Detected" data-ar="معاملة غير اعتيادية">Unusual Transaction Detected</b><div style="font-size:11px;opacity:.85;margin-top:2px" data-en="A payment of 3,200 EGP to Unknown Merchant is 4x higher than your average. Tap to review." data-ar="دفعة 3,200 ج.م لتاجر غير معروف أعلى 4 مرات من متوسطك. اضغط للمراجعة.">A payment of 3,200 EGP to Unknown Merchant is 4x higher than your average. Tap to review.</div></div>
+    <span style="opacity:.7;font-size:18px">×</span>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div class="page active" id="page-dashboard">
+  <div class="flex-between" style="margin-bottom:16px">
+    <div>
+      <div class="page-title" data-en="Good Morning, Jana" data-ar="صباح الخير، جنا">Good Morning, Jana</div>
+      <div class="page-sub" data-en="Here's your financial circle overview" data-ar="إليك نظرة عامة على دائرتك المالية">Here's your financial circle overview</div>
+    </div>
+    <button class="btn primary" onclick="document.getElementById('globalAlerts').style.display='block'" style="font-size:12px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span data-en="3 Alerts" data-ar="3 تنبيهات">3 Alerts</span>
+    </button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+    <div class="card green" style="padding:20px">
+      <div class="label light" data-en="Net Balance" data-ar="الرصيد الصافي">Net Balance</div>
+      <div class="val lg light" id="balVal">4,180</div>
+      <div style="font-size:11px;color:rgba(249,247,242,.5);margin-top:3px" id="balCurr">EGP</div>
+      <div style="font-size:10px;color:rgba(249,247,242,.4);margin-top:8px">+320 EGP today</div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="label" data-en="Monthly Income" data-ar="الدخل الشهري">Monthly Income</div>
+      <div class="val md" style="color:var(--teal3)">8,500</div>
+      <div class="sub" id="incomeCurr">EGP this month</div>
+      <div class="progress-bg" style="margin-top:10px"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="label" data-en="Spent" data-ar="المصروف">Spent</div>
+      <div class="val md" style="color:var(--teal2)">4,320</div>
+      <div class="sub">EGP (50.8%)</div>
+      <div class="progress-bg" style="margin-top:10px"><div class="progress-fill" style="width:51%"></div></div>
+    </div>
+    <div class="card green" style="padding:20px;display:flex;align-items:center;justify-content:center;gap:16px">
+      <div class="score-ring">
+        <svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" stroke="rgba(249,247,242,0.1)" stroke-width="7" fill="none"/><circle cx="48" cy="48" r="40" stroke="#E6FF2B" stroke-width="7" fill="none" stroke-dasharray="200.6" stroke-dashoffset="44" stroke-linecap="round"/></svg>
+        <div class="score-ring-val"><span class="num">78</span><span class="lbl" data-en="Score" data-ar="نقاط">Score</span></div>
+      </div>
+      <div><div style="font-size:10px;color:rgba(249,247,242,.5);text-transform:uppercase;letter-spacing:.07em" data-en="Health Score" data-ar="نقاط الصحة">Health Score</div><div style="font-size:12px;color:var(--lime);font-weight:600;margin-top:4px">↑ +3 pts</div></div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:10px;margin-bottom:18px">
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('expenses',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Add Expense" data-ar="مصروف">Add Expense</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('wallet',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="9" y2="15"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Pay" data-ar="دفع">Pay</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="toggleNFC()">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="var(--teal3)"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="NFC Pay" data-ar="دفع NFC">NFC Pay</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('bnpl',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="8" y2="6" stroke-width="3"/><line x1="12" y1="6" x2="12" y2="6" stroke-width="3"/><line x1="16" y1="6" x2="16" y2="6" stroke-width="3"/><line x1="8" y1="10" x2="8" y2="10" stroke-width="3"/><line x1="12" y1="10" x2="12" y2="10" stroke-width="3"/><line x1="16" y1="10" x2="16" y2="10" stroke-width="3"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="BNPL Check" data-ar="تحقق تقسيط">BNPL Check</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('savings',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Save" data-ar="وفر">Save</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('salary',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Advance" data-ar="سلفة">Advance</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('zakat',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><path d="M17 8a6 6 0 10-6 10 6 6 0 01-6-10"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Zakat" data-ar="زكاة">Zakat</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('pockets',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="8" width="20" height="13" rx="2"/><path d="M16 8V6a4 4 0 00-8 0v2"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Pockets" data-ar="الجيوب">Pockets</div>
+    </button>
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('intl',null)">
+      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Send Intl" data-ar="تحويل دولي">Send Intl</div>
+    </button>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:12px"><div class="label" data-en="Spending by Category" data-ar="المصروف حسب الفئة">Spending by Category</div><span class="tag orange">April</span></div>
+      <div class="bar-chart">
+        <div class="bar-col"><div class="bar" style="height:55px;background:var(--teal3)"></div><div class="bl">Food</div></div>
+        <div class="bar-col"><div class="bar" style="height:68px;background:var(--lime)"></div><div class="bl">Install.</div></div>
+        <div class="bar-col"><div class="bar" style="height:30px;background:var(--teal2)"></div><div class="bl">Bills</div></div>
+        <div class="bar-col"><div class="bar" style="height:46px;background:var(--lime2)"></div><div class="bl">Shop</div></div>
+        <div class="bar-col"><div class="bar" style="height:20px;background:var(--offwhite3)"></div><div class="bl">Health</div></div>
+        <div class="bar-col"><div class="bar" style="height:36px;background:var(--teal3)"></div><div class="bl">Trans.</div></div>
+        <div class="bar-col"><div class="bar" style="height:15px;background:var(--teal)"></div><div class="bl">Invest</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:10px" data-en="Upcoming Obligations" data-ar="الالتزامات القادمة">Upcoming Obligations</div>
+      <div class="row-item"><div class="icon-box" style="background:rgba(230,255,43,.12)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg></div><div style="flex:1"><div class="tx-name">iPhone Installment</div><div class="tx-cat">Due Apr 15</div></div><span class="tag orange">850 EGP</span></div>
+      <div class="row-item"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div><div style="flex:1"><div class="tx-name" data-en="Gam'eya – Round 3" data-ar="جمعية - الدور 3">Gam'eya – Round 3</div><div class="tx-cat">Due Apr 18</div></div><span class="tag green">500 EGP</span></div>
+      <div class="row-item"><div class="icon-box" style="background:rgba(230,255,43,.12)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><rect x="2" y="9" width="20" height="8" rx="2"/><path d="M6 17v3M18 17v3M2 13h20"/></svg></div><div style="flex:1"><div class="tx-name">Furniture – B.TECH</div><div class="tx-cat">Due Apr 20</div></div><span class="tag orange">600 EGP</span></div>
+      <div class="row-item"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0116 0"/></svg></div><div style="flex:1"><div class="tx-name" data-en="P2P Loan – Ahmed" data-ar="قرض - أحمد">P2P Loan – Ahmed</div><div class="tx-cat">Due Apr 25</div></div><span class="tag teal">300 EGP</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:12px"><div class="label" data-en="Recent Transactions" data-ar="آخر المعاملات">Recent Transactions</div><button class="btn secondary sm" onclick="showPage('expenses',null)" data-en="View All" data-ar="عرض الكل">View All</button></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.95-1.55l1.66-7.45H6"/></svg></div><div class="tx-info"><div class="tx-name">Supermarket – Carrefour</div><div class="tx-cat">Food & Dining · Today 2:30 PM</div></div><div class="tx-amt" style="color:var(--red)">– 320 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/></svg></div><div class="tx-info"><div class="tx-name">iPhone 15 Installment</div><div class="tx-cat">Installment · Yesterday</div></div><div class="tx-amt" style="color:var(--red)">– 850 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div class="tx-info"><div class="tx-name">Salary – CIB Transfer</div><div class="tx-cat">Income · Apr 1</div></div><div class="tx-amt" style="color:var(--teal3)">+ 8,500 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div><div class="tx-info"><div class="tx-name">Invest – Gold Fund</div><div class="tx-cat">Investment · Apr 1</div></div><div class="tx-amt" style="color:var(--teal)">– 100 EGP</div></div>
+  </div>
+</div>
+
+<!-- ══ VIRTUAL CARD ══ -->
+<div class="page" id="page-wallet">
+  <div class="page-title" data-en="Virtual Card" data-ar="البطاقة الافتراضية">Virtual Card</div>
+  <div class="page-sub" data-en="Your digital wallet & NFC payments" data-ar="محفظتك الرقمية ودفع NFC">Your digital wallet & NFC payments</div>
+  <div class="grid-2" style="margin-bottom:20px;align-items:start">
+    <div>
+      <div class="virtual-card" onclick="toggleNFC()">
+        <div class="vc-chip">CHIP</div>
+        <div class="vc-number">•••• •••• •••• 4821</div>
+        <div class="vc-footer">
+          <div><div class="vc-label">CARD HOLDER</div><div class="vc-val">JANA M. ELHENAWY</div></div>
+          <div><div class="vc-label">EXPIRES</div><div class="vc-val">12/28</div></div>
+          <div><div class="vc-nfc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg> NFC</div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn primary" onclick="toggleNFC()" style="flex:1">Tap to Pay (NFC)</button>
+        <button class="btn secondary" style="flex:1">Freeze Card</button>
+      </div>
+      <div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.15);border-radius:12px;padding:12px;margin-top:10px;font-size:12px;color:var(--teal)">
+        <b>Offline NFC available</b> — Transactions sync when connected
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="label">WALLET BALANCE</div>
+        <div class="val lg">2,450 <span style="font-size:16px;font-family:'DM Sans'">EGP</span></div>
+        <div class="divider"></div>
+        <div class="grid-2">
+          <button class="btn primary sm">+ Top Up</button>
+          <button class="btn secondary sm">→ Transfer</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label" style="margin-bottom:10px">MULTI-CURRENCY</div>
+        <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:var(--offwhite2);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0">EG</div><div style="flex:1"><div class="tx-name">Egyptian Pound</div><div class="tx-cat">Primary</div></div><div class="tx-amt">2,450 EGP</div></div>
+        <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(11,70,80,.08);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0">US</div><div style="flex:1"><div class="tx-name">US Dollar</div><div class="tx-cat">Rate: 49.80</div></div><div class="tx-amt">49.20 USD</div></div>
+        <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(230,255,43,.1);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal2);flex-shrink:0">SA</div><div style="flex:1"><div class="tx-name">Saudi Riyal</div><div class="tx-cat">Rate: 13.27</div></div><div class="tx-amt">184.60 SAR</div></div>
+        <button class="btn secondary sm" style="margin-top:8px;width:100%">+ Add Currency</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXPENSES ══ -->
+<div class="page" id="page-expenses">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title" data-en="Expense Tracker" data-ar="متتبع المصروفات">Expense Tracker</div>
+    <button class="btn primary" onclick="openModal('addExpenseModal')">+ Add Transaction</button>
+  </div>
+  <div class="page-sub">Track every pound. Know where it goes.</div>
+  <div class="grid-3" style="margin-bottom:18px">
+    <div class="card green"><div class="label light">Balance</div><div class="val lg light">4,180</div><div class="sub" style="color:rgba(249,247,242,.5)">EGP</div></div>
+    <div class="card"><div class="label">Income</div><div class="val md" style="color:var(--teal3)">8,500</div><div class="sub">EGP this month</div></div>
+    <div class="card"><div class="label">Expenses</div><div class="val md" style="color:var(--teal2)">4,320</div><div class="sub">EGP this month</div></div>
+  </div>
+  <div class="card" style="margin-bottom:14px;padding:12px 16px">
+    <div class="flex-row">
+      <input placeholder="Search…" style="max-width:200px">
+      <select style="max-width:140px"><option>All Categories</option><option>Food</option><option>Transport</option><option>Bills</option><option>Shopping</option></select>
+      <select style="max-width:120px"><option>This Month</option><option>This Week</option><option>Last Month</option></select>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tx-row"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.95-1.55l1.66-7.45H6"/></svg></div><div class="tx-info"><div class="tx-name">Supermarket – Carrefour</div><div class="tx-cat">Food & Dining · Apr 10</div></div><div class="tx-amt" style="color:var(--red)">– 320 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/></svg></div><div class="tx-info"><div class="tx-name">iPhone 15 Installment</div><div class="tx-cat">Installment · Apr 9</div></div><div class="tx-amt" style="color:var(--red)">– 850 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div class="tx-info"><div class="tx-name">Salary – CIB</div><div class="tx-cat">Income · Apr 1</div></div><div class="tx-amt" style="color:var(--teal3)">+ 8,500 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(11,70,80,.06)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h1l3-4h8l3 4h1a2 2 0 012 2v6a2 2 0 01-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg></div><div class="tx-info"><div class="tx-name">Uber</div><div class="tx-cat">Transport · Mar 30</div></div><div class="tx-amt" style="color:var(--red)">– 95 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/></svg></div><div class="tx-info"><div class="tx-name">H&M – City Stars</div><div class="tx-cat">Shopping · Mar 29</div></div><div class="tx-amt" style="color:var(--red)">– 650 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(11,70,80,.06)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.74V17h8v-2.26A7 7 0 0012 2z"/></svg></div><div class="tx-info"><div class="tx-name">Electricity Bill</div><div class="tx-cat">Bills & Utilities · Mar 28</div></div><div class="tx-amt" style="color:var(--red)">– 280 EGP</div></div>
+  </div>
+</div>
+
+<!-- ══ INSTALLMENTS ══ -->
+<div class="page" id="page-installments">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Installment Manager</div>
+    <button class="btn primary">+ Add Plan</button>
+  </div>
+  <div class="page-sub">All your taqseet plans in one place.</div>
+  <div class="grid-3" style="margin-bottom:18px">
+    <div class="card green"><div class="label light">Monthly Obligation</div><div class="val md light">1,950</div><div class="sub" style="color:rgba(249,247,242,.6)">EGP / month</div></div>
+    <div class="card"><div class="label">Active Plans</div><div class="val md">3</div><div class="sub">plans running</div></div>
+    <div class="card"><div class="label">Next Due</div><div class="val" style="font-size:16px;font-weight:600;color:var(--teal2);margin-top:5px">Apr 15</div><div class="sub">iPhone · 850 EGP</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card" style="padding:16px 18px">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/></svg></div><div><div style="font-weight:600;font-size:13.5px">iPhone 15 – Vodafone</div><div style="font-size:11px;color:var(--gray)">Started Oct 2024 · Monthly</div></div></div>
+        <span class="tag orange">Due Apr 15</span>
+      </div>
+      <div class="grid-4">
+        <div><div class="label">Monthly</div><div style="font-weight:700;font-size:13.5px;color:var(--teal2)">850 EGP</div></div>
+        <div><div class="label">Remaining</div><div style="font-weight:700;font-size:13.5px">18 / 24</div></div>
+        <div><div class="label">Total Left</div><div style="font-weight:700;font-size:13.5px">15,300 EGP</div></div>
+        <div><div class="label">Status</div><span class="tag green" style="margin-top:4px">On Time</span></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill green" style="width:25%"></div></div>
+    </div>
+    <div class="card" style="padding:16px 18px;border-color:rgba(193,18,31,.3)">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div class="flex-row"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="14" rx="2"/></svg></div><div><div style="font-weight:600;font-size:13.5px">MacBook Air – eXtra</div><div style="font-size:11px;color:var(--gray)">Started Jan 2026</div></div></div>
+        <span class="tag red" style="display:inline-flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>Overdue!</span>
+      </div>
+      <div class="grid-4">
+        <div><div class="label">Monthly</div><div style="font-weight:700;font-size:13.5px;color:var(--red)">500 EGP</div></div>
+        <div><div class="label">Remaining</div><div style="font-weight:700;font-size:13.5px">21 / 24</div></div>
+        <div><div class="label">Total Left</div><div style="font-weight:700;font-size:13.5px">10,500 EGP</div></div>
+        <div><div class="label">Status</div><span class="tag red" style="margin-top:4px">Overdue</span></div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill" style="width:12%;background:var(--red)"></div></div>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <button class="btn primary sm">Pay Now</button>
+        <button class="btn secondary sm">Set Reminder</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SAVINGS ══ -->
+<div class="page" id="page-savings">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Savings Goals</div>
+    <button class="btn primary">+ New Goal</button>
+  </div>
+  <div class="page-sub">Turn your intentions into habits.</div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card green"><div class="label light">Total Saved</div><div class="val lg light">8,250</div><div class="sub" style="color:rgba(249,247,242,.5)">EGP across all goals</div></div>
+    <div class="card"><div class="label">Total Target</div><div class="val md">32,000</div><div class="sub">EGP combined</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="goal-card">
+      <div class="flex-between" style="margin-bottom:8px"><div class="flex-row"><div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 012.09 5.18 2 2 0 014.07 3h3a2 2 0 012 1.72"/></svg></div><div><div style="font-weight:600;font-size:14px">Europe Trip 2027</div><div style="font-size:11px;color:var(--gray)">Target: Dec 2026</div></div></div><span class="tag green">On Track</span></div>
+      <div class="flex-between" style="margin-bottom:5px"><span style="font-size:12.5px;color:var(--teal2)">Saved: <b>4,500 EGP</b></span><span style="font-size:12.5px;color:var(--teal2)">Target: <b>15,000 EGP</b></span></div>
+      <div class="progress-bg"><div class="progress-fill" style="width:30%"></div></div>
+      <div style="font-size:11px;color:var(--gray);margin-top:5px">30% complete · ~18 months at current rate</div>
+      <div style="margin-top:10px;display:flex;gap:8px"><button class="btn secondary sm">+ Add Contribution</button><button class="btn secondary sm">Edit</button></div>
+    </div>
+    <div class="goal-card">
+      <div class="flex-between" style="margin-bottom:8px"><div class="flex-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h1l3-4h8l3 4h1a2 2 0 012 2v6a2 2 0 01-2 2h-2"/></svg></div><div><div style="font-weight:600;font-size:14px">Car Down Payment</div><div style="font-size:11px;color:var(--gray)">Target: Jun 2027</div></div></div><span class="tag yellow">Needs Boost</span></div>
+      <div class="flex-between" style="margin-bottom:5px"><span style="font-size:12.5px;color:var(--teal2)">Saved: <b>2,200 EGP</b></span><span style="font-size:12.5px;color:var(--teal2)">Target: <b>12,000 EGP</b></span></div>
+      <div class="progress-bg"><div class="progress-fill" style="width:18%"></div></div>
+      <div style="margin-top:10px;display:flex;gap:8px"><button class="btn secondary sm">+ Add Contribution</button><button class="btn secondary sm">Edit</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GAM'EYA ══ -->
+<div class="page" id="page-gameya">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Digital Gam'eya</div>
+    <button class="btn primary">+ New Group</button>
+  </div>
+  <div class="page-sub">Digitize your rotating savings circles.</div>
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="card green"><div class="label light">Active Groups</div><div class="val md light">2</div></div>
+    <div class="card"><div class="label">Monthly Contribution</div><div class="val md">800 EGP</div></div>
+    <div class="card"><div class="label">Next Collection</div><div class="val" style="font-size:14px;font-weight:600;color:var(--teal2);margin-top:5px">May 2026</div><div class="sub">Group Alpha · 4,000 EGP</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="gam-card">
+      <div class="flex-between" style="margin-bottom:8px"><div style="font-weight:700;font-size:14px">Group Alpha</div><span class="tag green">Admin</span></div>
+      <div style="font-size:12px;color:var(--teal2);margin-bottom:2px">500 EGP/month · 8 members</div>
+      <div style="font-size:12px;color:var(--teal2)">Your turn: Round 8 (May 2026)</div>
+      <div class="member-dots" style="margin-top:10px">
+        <div class="mdot">أ</div><div class="mdot">م</div><div class="mdot">ف</div><div class="mdot">س</div>
+        <div class="mdot" style="background:var(--offwhite3);color:var(--teal2)">+4</div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill green" style="width:62%"></div></div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">Round 5 of 8 complete</div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn secondary sm">Mark Paid</button>
+        <button class="btn secondary sm">Schedule</button>
+      </div>
+    </div>
+    <div class="gam-card">
+      <div class="flex-between" style="margin-bottom:8px"><div style="font-weight:700;font-size:14px">Family Circle</div><span class="tag orange">Member</span></div>
+      <div style="font-size:12px;color:var(--teal2);margin-bottom:2px">300 EGP/month · 5 members</div>
+      <div style="font-size:12px;color:var(--teal2)">Your turn: Round 3 (Mar 2026)</div>
+      <div class="member-dots" style="margin-top:10px">
+        <div class="mdot">أ</div><div class="mdot">م</div><div class="mdot">ج</div>
+        <div class="mdot" style="background:var(--offwhite3);color:var(--teal2)">+2</div>
+      </div>
+      <div class="progress-bg"><div class="progress-fill" style="width:40%"></div></div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">Round 2 of 5 complete</div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn secondary sm">Mark Paid</button>
+        <button class="btn secondary sm">Schedule</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEALTH SCORE ══ -->
+<div class="page" id="page-health">
+  <div class="page-title">Financial Health Score</div>
+  <div class="page-sub">Your financial reliability at a glance.</div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card green" style="display:flex;gap:20px;align-items:center">
+      <div class="score-ring">
+        <svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" stroke="rgba(249,247,242,0.1)" stroke-width="7" fill="none"/><circle cx="48" cy="48" r="40" stroke="#E6FF2B" stroke-width="7" fill="none" stroke-dasharray="200.6" stroke-dashoffset="44" stroke-linecap="round"/></svg>
+        <div class="score-ring-val"><span class="num">78</span><span class="lbl">Score</span></div>
+      </div>
+      <div>
+        <div class="tag yellow" style="margin-bottom:8px">Healthy</div>
+        <div style="font-size:12px;color:rgba(249,247,242,.7)">Top 35% of users</div>
+        <div style="font-size:12px;color:var(--lime);font-weight:600;margin-top:4px">↑ +3 pts this month</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">SCORE BREAKDOWN</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div><div class="flex-between" style="margin-bottom:3px"><span style="font-size:12px;font-weight:600">Payment Punctuality</span><span style="font-size:12px;color:var(--teal2);font-weight:700">88/100</span></div><div class="progress-bg"><div class="progress-fill" style="width:88%"></div></div></div>
+        <div><div class="flex-between" style="margin-bottom:3px"><span style="font-size:12px;font-weight:600">Savings Consistency</span><span style="font-size:12px;color:var(--teal2);font-weight:700">62/100</span></div><div class="progress-bg"><div class="progress-fill" style="width:62%"></div></div></div>
+        <div><div class="flex-between" style="margin-bottom:3px"><span style="font-size:12px;font-weight:600">Spending Control</span><span style="font-size:12px;color:var(--teal2);font-weight:700">74/100</span></div><div class="progress-bg"><div class="progress-fill" style="width:74%"></div></div></div>
+        <div><div class="flex-between" style="margin-bottom:3px"><span style="font-size:12px;font-weight:600">Gam'eya Reliability</span><span style="font-size:12px;color:var(--teal2);font-weight:700">95/100</span></div><div class="progress-bg"><div class="progress-fill" style="width:95%"></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="background:rgba(11,70,80,.04);border-color:rgba(11,70,80,.15)">
+    <div class="label" style="color:var(--teal2);margin-bottom:10px">IMPROVEMENT TIPS</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="background:white;border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--teal2)">Pay overdue MacBook installment <b style="color:var(--teal)">(+8 pts)</b></div>
+      <div style="background:white;border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--teal2)">Add 1 savings contribution this month <b style="color:var(--teal)">(+6 pts)</b></div>
+      <div style="background:white;border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--teal2)">Reduce Food spending by 20% <b style="color:var(--teal)">(+4 pts)</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BNPL ADVISOR ══ -->
+<div class="page" id="page-bnpl">
+  <div class="page-title">BNPL Advisor</div>
+  <div class="page-sub">Know if you can afford it before you buy it.</div>
+  <div class="grid-2" style="align-items:start">
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">ENTER PURCHASE DETAILS</div>
+      <div class="input-group"><div class="input-label">Item Name</div><input id="bnplItem" placeholder="e.g. Samsung TV" value="Samsung 65&quot; TV"></div>
+      <div class="input-group"><div class="input-label">Monthly Income (EGP)</div><input id="bnplIncome" type="number" value="8500"></div>
+      <div class="input-group"><div class="input-label">Proposed Monthly Instalment</div><input id="bnplMonthly" type="number" value="1000"></div>
+      <div class="input-group"><div class="input-label">Number of Months</div><input id="bnplMonths" type="number" value="12"></div>
+      <button class="btn primary" style="width:100%" onclick="calcBNPL()">Calculate Risk</button>
+    </div>
+    <div id="bnplResult" class="card"></div>
+  </div>
+</div>
+
+<!-- ══ ANALYTICS ══ -->
+<div class="page" id="page-insights">
+  <div class="page-title">Analytics & Insights</div>
+  <div class="page-sub">Visual breakdown of your financial data.</div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:14px"><div class="label">6-MONTH TREND</div><span class="tag green">Income vs Spend</span></div>
+      <div style="display:flex;align-items:flex-end;gap:8px;height:100px;padding-bottom:4px">
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
+          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:72px"></div>
+          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:52px;margin-top:2px"></div>
+          <div style="font-size:8px;color:var(--gray);margin-top:3px">Nov</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
+          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
+          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:60px;margin-top:2px"></div>
+          <div style="font-size:8px;color:var(--gray);margin-top:3px">Dec</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
+          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
+          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:68px;margin-top:2px"></div>
+          <div style="font-size:8px;color:var(--gray);margin-top:3px">Jan</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
+          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:76px"></div>
+          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:65px;margin-top:2px"></div>
+          <div style="font-size:8px;color:var(--gray);margin-top:3px">Feb</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
+          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
+          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:58px;margin-top:2px"></div>
+          <div style="font-size:8px;color:var(--gray);margin-top:3px">Mar</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
+          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
+          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:51px;margin-top:2px"></div>
+          <div style="font-size:8px;color:var(--gray);margin-top:3px">Apr</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;margin-top:10px">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px"><div style="width:10px;height:10px;background:var(--teal3);border-radius:2px"></div><span>Income</span></div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px"><div style="width:10px;height:10px;background:var(--lime);border-radius:2px"></div><span>Expenses</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">SPENDING BREAKDOWN</div>
+      <div style="display:flex;justify-content:center;margin-bottom:12px">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="55" fill="none" stroke="#EDE9E0" stroke-width="20"/>
+          <circle cx="65" cy="65" r="55" fill="none" stroke="#E6FF2B" stroke-width="20" stroke-dasharray="68 277" stroke-dashoffset="0"/>
+          <circle cx="65" cy="65" r="55" fill="none" stroke="#0B4650" stroke-width="20" stroke-dasharray="51 277" stroke-dashoffset="-68"/>
+          <circle cx="65" cy="65" r="55" fill="none" stroke="#0F6070" stroke-width="20" stroke-dasharray="42 277" stroke-dashoffset="-119"/>
+          <circle cx="65" cy="65" r="55" fill="none" stroke="#C2DC08" stroke-width="20" stroke-dasharray="34 277" stroke-dashoffset="-161"/>
+          <circle cx="65" cy="65" r="55" fill="none" stroke="#898A8D" stroke-width="20" stroke-dasharray="82 277" stroke-dashoffset="-195"/>
+          <text x="65" y="60" text-anchor="middle" font-size="14" font-family="DM Serif Display" fill="#0B4650">4,320</text>
+          <text x="65" y="74" text-anchor="middle" font-size="9" fill="#898A8D">EGP Total</text>
+        </svg>
+      </div>
+      <div class="pie-legend">
+        <div class="pie-legend-item"><div class="pie-dot" style="background:#E6FF2B"></div><div style="flex:1">Installments</div><div style="font-weight:600">850 (20%)</div></div>
+        <div class="pie-legend-item"><div class="pie-dot" style="background:#0B4650"></div><div style="flex:1">Food & Dining</div><div style="font-weight:600">920 (21%)</div></div>
+        <div class="pie-legend-item"><div class="pie-dot" style="background:#0F6070"></div><div style="flex:1">Shopping</div><div style="font-weight:600">650 (15%)</div></div>
+        <div class="pie-legend-item"><div class="pie-dot" style="background:#C2DC08"></div><div style="flex:1">Transport</div><div style="font-weight:600">380 (9%)</div></div>
+        <div class="pie-legend-item"><div class="pie-dot" style="background:#898A8D"></div><div style="flex:1">Other</div><div style="font-weight:600">1,520 (35%)</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="label" style="margin-bottom:8px">SAVINGS RATE</div>
+      <div style="font-family:var(--font-display);font-size:32px;color:var(--teal)">0%</div>
+      <div style="font-size:11px;color:var(--red);margin-top:3px">No contribution this month</div>
+      <div class="progress-bg" style="margin-top:8px"><div class="progress-fill" style="width:0%"></div></div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">Target: 15%</div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:8px">OBLIGATION RATIO</div>
+      <div style="font-family:var(--font-display);font-size:32px;color:var(--teal2)">23%</div>
+      <div style="font-size:11px;color:var(--teal3);margin-top:3px">Safe zone (under 35%)</div>
+      <div class="progress-bg" style="margin-top:8px"><div class="progress-fill" style="width:23%;background:var(--teal3)"></div></div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">1,950 / 8,500 EGP</div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:8px">BURN RATE</div>
+      <div style="font-family:var(--font-display);font-size:32px;color:var(--red)">432</div>
+      <div style="font-size:11px;color:var(--red);margin-top:3px">EGP/day · Budget burnout in 9 days</div>
+      <div class="progress-bg" style="margin-top:8px"><div class="progress-fill" style="width:68%;background:var(--red)"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AI ADVISOR ══ -->
+<div class="page" id="page-ai">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div>
+      <div class="page-title">AI Financial Advisor</div>
+      <div class="page-sub">Ask me anything about your finances – in English or Egyptian Arabic.</div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="btn secondary sm" onclick="setAdvisorLang('en')">EN</button>
+      <button class="btn secondary sm" onclick="setAdvisorLang('ar')">عربي مصري</button>
+    </div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;height:calc(100vh - 56px - 180px)">
+    <div style="background:var(--teal2);padding:12px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">FC</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--offwhite)">FinCircle AI</div><div style="font-size:10px;color:rgba(249,247,242,.5)">Powered by your financial data</div></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:5px"><div style="width:7px;height:7px;background:#4CAF50;border-radius:50%"></div><span style="font-size:10px;color:rgba(249,247,242,.5)">Online</span></div>
+    </div>
+    <div style="padding:14px;display:flex;flex-direction:column;height:calc(100% - 50px)">
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg ai"><div class="msg-avatar">FC</div><div class="msg-bubble" id="aiGreeting">مرحباً يا جنا! أنا مستشارك المالي الذكي. إزيك؟ عندي كل بياناتك المالية وقادر أساعدك في أي حاجة. اسألني بالعربي أو الإنجليزي!</div></div>
+      </div>
+      <div class="quick-chips">
+        <div class="chip" onclick="sendChip(this)">Can I afford a new laptop?</div>
+        <div class="chip" onclick="sendChip(this)">Why is my score 78?</div>
+        <div class="chip" onclick="sendChip(this)">How do I save faster?</div>
+        <div class="chip" onclick="sendChip(this)">Am I overspending on food?</div>
+        <div class="chip" onclick="sendChip(this)">Summarize April</div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatInput" placeholder="Ask in English or بالعربي…" onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="send-btn" onclick="sendMsg()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INVEST ══ -->
+<div class="page" id="page-invest">
+  <div class="page-title">Invest</div>
+  <div class="page-sub">Start investing from just 1 EGP. Grow your wealth.</div>
+  <div class="card dark" style="margin-bottom:16px;padding:20px">
+    <div class="flex-between">
+      <div><div class="label light">PORTFOLIO VALUE</div><div style="font-family:var(--font-display);font-size:32px;color:var(--offwhite)">1,240 <span style="font-size:14px;font-family:'DM Sans'">EGP</span></div></div>
+      <div style="text-align:right"><div style="font-size:11px;color:rgba(249,247,242,.5);margin-bottom:4px">Total Return</div><div style="font-size:18px;font-weight:700;color:#4CAF50">+140 EGP (+12.7%)</div></div>
+    </div>
+    <div class="divider" style="border-color:rgba(249,247,242,.1)"></div>
+    <div style="display:flex;gap:12px">
+      <button class="btn primary sm">+ Add Funds</button>
+      <button class="btn ghost sm">Withdraw</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+    <div class="invest-option selected">
+      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9h3L14 15h-4.5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div>
+      <div class="name">Gold Fund</div>
+      <div class="ret">+11.2% YTD</div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 1 EGP</div>
+    </div>
+    <div class="invest-option">
+      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+      <div class="name">EGX30 Index</div>
+      <div class="ret">+8.7% YTD</div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 10 EGP</div>
+    </div>
+    <div class="invest-option">
+      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round"><path d="M3 22v-9M21 22v-9M2 13h20M12 2L2 8h20L12 2z"/></svg></div>
+      <div class="name">Treasury Bills</div>
+      <div class="ret">27.5% p.a.</div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 50 EGP</div>
+    </div>
+    <div class="invest-option">
+      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--lime3)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <div class="name">Real Estate</div>
+      <div class="ret">+15.3% YTD</div>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 100 EGP</div>
+    </div>
+  </div>
+  <div class="card" style="border-color:rgba(230,255,43,.25);background:rgba(230,255,43,.02)">
+    <div class="label" style="margin-bottom:12px;color:var(--teal2)">QUICK INVEST – GOLD FUND</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="btn secondary sm" onclick="setInvestAmt(1)">1 EGP</button>
+      <button class="btn secondary sm" onclick="setInvestAmt(10)">10 EGP</button>
+      <button class="btn secondary sm" onclick="setInvestAmt(50)">50 EGP</button>
+      <button class="btn secondary sm" onclick="setInvestAmt(100)">100 EGP</button>
+      <button class="btn secondary sm" onclick="setInvestAmt(500)">500 EGP</button>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <input id="investAmt" type="number" value="100" min="1" style="max-width:150px">
+      <span style="font-size:12px;color:var(--teal2)">EGP</span>
+      <button class="btn primary">Invest Now →</button>
+    </div>
+    <div style="font-size:11px;color:var(--gray);margin-top:8px">Investments involve risk. Past performance does not guarantee future results.</div>
+  </div>
+</div>
+
+<!-- ══ SALARY ADVANCE ══ -->
+<div class="page" id="page-salary">
+  <div class="page-title">Salary Advance</div>
+  <div class="page-sub">Get part of your salary before payday. Verified employees only.</div>
+  <div class="card green" style="margin-bottom:16px;padding:22px">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div><div class="label light">ELIGIBLE ADVANCE</div><div style="font-family:var(--font-display);font-size:36px;color:var(--offwhite)">2,125</div><div style="font-size:12px;color:rgba(249,247,242,.6)">EGP (25% of salary)</div></div>
+      <div style="text-align:right"><div class="tag light">✓ Verified</div><div style="font-size:11px;color:rgba(249,247,242,.5);margin-top:6px">Payday: May 1</div></div>
+    </div>
+    <div style="background:rgba(249,247,242,.1);border-radius:8px;height:8px;overflow:hidden">
+      <div class="salary-advance-bar" style="width:75%"></div>
+    </div>
+    <div style="font-size:10px;color:rgba(249,247,242,.4);margin-top:4px">75% of salary used · 25% advance available</div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="label" style="margin-bottom:12px">REQUEST ADVANCE</div>
+    <div class="input-group"><div class="input-label">Amount (max 2,125 EGP)</div><input type="number" value="1000" max="2125"></div>
+    <div style="background:rgba(11,70,80,.05);border:1px solid rgba(11,70,80,.15);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12.5px;color:var(--teal)">
+      <b>No interest</b> — Amount deducted from next salary automatically.
+    </div>
+    <button class="btn primary" style="width:100%">Request Advance →</button>
+  </div>
+</div>
+
+<!-- ══ P2P LENDING ══ -->
+<div class="page" id="page-p2p">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">P2P Lending</div>
+    <button class="btn primary">+ New Loan</button>
+  </div>
+  <div class="page-sub">Lend to or borrow from trusted contacts. All tracked automatically.</div>
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="card green"><div class="label light">Lent Out</div><div class="val md light">2,500 EGP</div><div class="sub" style="color:rgba(249,247,242,.5)">2 active loans</div></div>
+    <div class="card"><div class="label">Owed to Me</div><div class="val md" style="color:var(--teal3)">1,800 EGP</div><div class="sub">Expected May 15</div></div>
+    <div class="card" style="background:linear-gradient(160deg,var(--teal2),var(--teal));border-color:rgba(11,70,80,.3)"><div class="label" style="color:rgba(249,247,242,.6)">I Owe</div><div class="val md light">300 EGP</div><div class="sub" style="color:rgba(249,247,242,.6)">Due Apr 25</div></div>
+  </div>
+  <div class="card">
+    <div class="label" style="margin-bottom:10px">LOANS I GAVE</div>
+    <div class="loan-card">
+      <div class="flex-between" style="margin-bottom:8px">
+        <div class="flex-row"><div style="width:32px;height:32px;border-radius:50%;background:var(--teal3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white">ك</div><div><div style="font-weight:600;font-size:13.5px">Karim Hassan</div><div style="font-size:11px;color:var(--gray)">Lent Apr 1 · Due Jun 1</div></div></div>
+        <span class="loan-status" style="background:rgba(230,255,43,.12);color:var(--teal2)">Partial</span>
+      </div>
+      <div class="flex-between" style="font-size:12.5px;margin-bottom:8px"><span>Total: <b>1,500 EGP</b></span><span>Paid: <b style="color:var(--teal3)">500 EGP</b></span><span>Remaining: <b style="color:var(--teal2)">1,000 EGP</b></span></div>
+      <div class="progress-bg"><div class="progress-fill green" style="width:33%"></div></div>
+      <div style="margin-top:8px;display:flex;gap:8px"><button class="btn secondary sm">Mark Paid</button><button class="btn secondary sm">Send Reminder</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EGX ══ -->
+<div class="page" id="page-egx">
+  <div class="page-title">EGX Paper Trading</div>
+  <div class="page-sub">Simulated trading — no real money involved. Learn before you invest.</div>
+  <div style="background:rgba(193,18,31,.08);border:1px solid rgba(193,18,31,.2);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px">All trading is simulated for educational purposes only.</div>
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="card green"><div class="label light">Virtual Balance</div><div class="val md light">47,320 EGP</div></div>
+    <div class="card"><div class="label">Portfolio Value</div><div class="val md" style="color:var(--teal3)">12,680 EGP</div></div>
+    <div class="card"><div class="label">Total Return</div><div class="val md" style="color:var(--teal2)">+2,680 EGP</div><div class="sub">+26.8%</div></div>
+  </div>
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:12px"><div class="label">EGX30 STOCKS</div><span class="tag yellow" style="font-size:10px">Last updated 11:30 AM</span></div>
+    <div class="stock-row"><div class="stock-ticker">COMI</div><div class="stock-name">CIB – Commercial Intl Bank</div><div class="stock-price">78.50 EGP</div><div class="stock-chg" style="color:#4CAF50">+1.2%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
+    <div class="stock-row"><div class="stock-ticker">HRHO</div><div class="stock-name">EFG Hermes Holdings</div><div class="stock-price">22.30 EGP</div><div class="stock-chg" style="color:var(--red)">-0.8%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
+    <div class="stock-row"><div class="stock-ticker">EAST</div><div class="stock-name">Eastern Company</div><div class="stock-price">15.60 EGP</div><div class="stock-chg" style="color:#4CAF50">+2.1%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
+    <div class="stock-row"><div class="stock-ticker">SWDY</div><div class="stock-name">El Sewedy Electric</div><div class="stock-price">42.80 EGP</div><div class="stock-chg" style="color:var(--red)">-1.3%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
+    <div class="stock-row"><div class="stock-ticker">TMGH</div><div class="stock-name">Talaat Mustafa Group</div><div class="stock-price">31.10 EGP</div><div class="stock-chg" style="color:#4CAF50">+0.5%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
+  </div>
+</div>
+
+<!-- ══ ZAKAT ══ -->
+<div class="page" id="page-zakat">
+  <div class="page-title">Zakat & Sadaqa</div>
+  <div class="page-sub">Calculate and pay your religious financial obligations.</div>
+  <div class="zakat-card" style="margin-bottom:16px">
+    <div class="label light" style="margin-bottom:6px">ZAKAT CALCULATOR</div>
+    <div style="font-family:var(--font-display);font-size:28px;color:var(--offwhite)">212.50 EGP</div>
+    <div style="font-size:12px;color:rgba(249,247,242,.6);margin-top:4px">Due this year (2.5% of eligible savings above nisab)</div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button class="btn primary">Pay Zakat Now</button><button class="btn ghost">Recalculate</button></div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">ZAKAT CALCULATION</div>
+      <div class="row-item"><div style="flex:1;font-size:12.5px">Total Savings</div><div style="font-weight:700;font-size:12.5px">8,250 EGP</div></div>
+      <div class="row-item"><div style="flex:1;font-size:12.5px">Nisab Threshold (Gold)</div><div style="font-weight:700;font-size:12.5px">≈ 3,750 EGP</div></div>
+      <div class="row-item"><div style="flex:1;font-size:12.5px">Eligible Amount</div><div style="font-weight:700;font-size:12.5px">8,500 EGP</div></div>
+      <div class="row-item"><div style="flex:1;font-size:12.5px;color:var(--teal2);font-weight:600">Zakat Due (2.5%)</div><div style="font-weight:700;font-size:14px;color:var(--teal2)">212.50 EGP</div></div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">SADAQA & DONATIONS</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:var(--offwhite);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Local Mosque</div><div style="font-size:11px;color:var(--gray)">Community verified</div></div><button class="btn primary sm">Donate</button></div>
+        <div style="background:var(--offwhite);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Resala Charity</div><div style="font-size:11px;color:var(--gray)">رسالة للأعمال الخيرية</div></div><button class="btn primary sm">Donate</button></div>
+        <div style="background:var(--offwhite);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Orphans Support</div><div style="font-size:11px;color:var(--gray)">Verified NGO</div></div><button class="btn primary sm">Donate</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BUSINESS HUB ══ -->
+<div class="page" id="page-sme">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div class="page-title">Business Hub</div>
+    <span class="tag teal">SME Tools</span>
+  </div>
+  <div class="page-sub">Tools for small business owners — payroll, transfers, and AI insights.</div>
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="card dark"><div class="label light">Employees</div><div class="val md light">8</div><div class="sub" style="color:rgba(249,247,242,.6)">Active payroll</div></div>
+    <div class="card"><div class="label">Total Payroll</div><div class="val md">42,000 EGP</div><div class="sub">This month</div></div>
+    <div class="card teal" style="color:white"><div class="label" style="color:rgba(255,255,255,.6)">Next Payday</div><div style="font-family:var(--font-display);font-size:20px;color:white">May 1</div><div style="font-size:11px;color:rgba(255,255,255,.7)">21 days</div></div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="flex-between" style="margin-bottom:12px"><div class="label">BULK SALARY TRANSFER</div><button class="btn primary sm">Process All</button></div>
+    <div class="emp-row"><div class="emp-avatar" style="background:var(--teal3)">أ</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Ahmed Khaled</div><div style="font-size:11px;color:var(--gray)">Software Dev</div></div><div style="font-weight:700;font-size:13px">7,500 EGP</div><span class="tag green" style="font-size:10px">Pending</span></div>
+    <div class="emp-row"><div class="emp-avatar" style="background:var(--lime3);color:var(--teal)">م</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Mohamed Ragab</div><div style="font-size:11px;color:var(--gray)">Designer</div></div><div style="font-weight:700;font-size:13px">6,000 EGP</div><span class="tag green" style="font-size:10px">Pending</span></div>
+    <div class="emp-row"><div class="emp-avatar" style="background:var(--teal2)">ف</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Fatma Hassan</div><div style="font-size:11px;color:var(--gray)">Accountant</div></div><div style="font-weight:700;font-size:13px">5,500 EGP</div><span class="tag orange" style="font-size:10px">Review</span></div>
+    <div style="padding:8px 12px;background:var(--offwhite2);border-radius:8px;font-size:11.5px;color:var(--teal2);text-align:center">+5 more employees</div>
+  </div>
+  <div class="card" style="background:rgba(11,70,80,.04);border-color:rgba(11,70,80,.15)">
+    <div class="flex-between" style="margin-bottom:10px">
+      <div class="label" style="color:var(--teal2)">AI BUSINESS ADVISOR</div>
+      <div style="display:flex;align-items:center;gap:5px"><div style="width:7px;height:7px;background:#4CAF50;border-radius:50%"></div><span style="font-size:10px;color:var(--gray)">Live</span></div>
+    </div>
+    <div style="background:white;border-radius:10px;padding:12px;font-size:12.5px;color:var(--teal2);margin-bottom:10px;line-height:1.6">
+      <b>Cash Flow Alert:</b> Your operating expenses increased 18% last month. If this trend continues, you'll need additional working capital by June.
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="chip">Cash flow forecast</button>
+      <button class="chip">Payroll optimization</button>
+      <button class="chip">Tax planning</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NOTIFICATIONS ══ -->
+<div class="page" id="page-notifications">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div>
+      <div class="page-title">Notifications</div>
+      <div class="page-sub">All your financial alerts and investment opportunities in one place.</div>
+    </div>
+    <button class="btn sm secondary" onclick="document.querySelectorAll('.notif-unread').forEach(n=>n.style.background='')">Mark all read</button>
+  </div>
+
+  <!-- Investment Opportunities (NEW) -->
+  <div class="card" style="margin-bottom:14px;border:1px solid rgba(230,255,43,.3);background:linear-gradient(160deg,rgba(230,255,43,.04),white)">
+    <div class="flex-between" style="margin-bottom:12px">
+      <div class="label" style="color:var(--teal2)">📈 INVESTMENT OPPORTUNITIES — AI PICKS FOR YOU</div>
+      <button class="btn sm primary" onclick="showPage('invest',null)">View All</button>
+    </div>
+    <div class="notif-unread" style="background:rgba(230,255,43,.05);border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(230,255,43,.2);cursor:pointer" onclick="showPage('egx',null)">
+      <div class="flex-between" style="margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="icon-box" style="background:rgba(11,70,80,.08);width:32px;height:32px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><polyline points="3 18 7 13 11 15 16 8 21 5"/><circle cx="21" cy="5" r="2"/></svg></div>
+          <div><div class="tx-name">CIB (COMI) — Strong Buy Signal 🔥</div><div class="tx-cat">Egyptian Exchange · EGX30 Top Performer</div></div>
+        </div>
+        <span class="tag" style="background:rgba(11,70,80,.12);color:var(--teal3)">+1.2% today</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--teal2);line-height:1.6;background:white;border-radius:8px;padding:10px 12px">
+        <b>AI says:</b> Based on your 100 EGP/month investment pattern and current balance of 4,180 EGP, CIB stock at <b>78.50 EGP</b> has strong upside potential. Projected 3-month return: <b style="color:var(--teal3)">+8–12%</b>. You can afford <b>5 shares (392 EGP)</b> with low portfolio risk.
+      </div>
+      <button class="btn sm primary" style="margin-top:10px" onclick="showPage('egx',null)">Buy Now →</button>
+    </div>
+    <div style="background:rgba(230,255,43,.04);border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(230,255,43,.15);cursor:pointer">
+      <div class="flex-between" style="margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="icon-box" style="background:rgba(230,255,43,.1);width:32px;height:32px">🥇</div>
+          <div><div class="tx-name">Gold Fund — Low Risk, Inflation Hedge</div><div class="tx-cat">Investment · Recommended for your profile</div></div>
+        </div>
+        <span class="tag yellow">Stable</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--teal2);line-height:1.6;background:white;border-radius:8px;padding:10px 12px">
+        <b>AI says:</b> With Egypt's current inflation at ~25%, gold funds historically outperform savings accounts by <b>15–20%/year</b>. Your existing 100 EGP/month in Gold Fund is smart — consider increasing to <b>300 EGP/month</b> (+200 EGP) for stronger protection.
+      </div>
+      <button class="btn sm secondary" style="margin-top:10px" onclick="showPage('invest',null)">Increase Allocation →</button>
+    </div>
+    <div style="background:white;border-radius:12px;padding:12px 14px;border:1px solid var(--offwhite2);cursor:pointer">
+      <div class="flex-between" style="margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="icon-box" style="background:rgba(11,70,80,.06);width:32px;height:32px">📊</div>
+          <div><div class="tx-name">EGX30 Index Fund — Diversified Growth</div><div class="tx-cat">Low cost · Beginner friendly · High liquidity</div></div>
+        </div>
+        <span class="tag green">New</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--teal2);line-height:1.6;background:var(--offwhite);border-radius:8px;padding:10px 12px">
+        <b>AI says:</b> Instead of picking individual stocks, an EGX30 index fund gives you exposure to Egypt's top 30 companies with one click. With just <b>500 EGP/month</b>, you could build a <b>6,000 EGP portfolio in 12 months</b> with average projected growth of 10–14%.
+      </div>
+      <button class="btn sm secondary" style="margin-top:10px">Learn More →</button>
+    </div>
+  </div>
+
+  <!-- Financial Alerts -->
+  <div class="card">
+    <div class="label" style="margin-bottom:12px">⚡ FINANCIAL ALERTS</div>
+    <div class="row-item notif-unread" style="background:rgba(193,18,31,.03);border-radius:8px;padding:8px 10px;margin-bottom:4px">
+      <div class="icon-box" style="background:rgba(193,18,31,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1121F" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+      <div style="flex:1"><div class="tx-name">Unusual Payment Detected</div><div class="tx-cat">3,200 EGP to Unknown Merchant · 2 mins ago</div></div>
+      <span class="tag red">Risk</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/></svg></div>
+      <div style="flex:1"><div class="tx-name">iPhone Instalment Due</div><div class="tx-cat">850 EGP due Apr 15 · in 5 days</div></div>
+      <span class="tag orange">Due Soon</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg></div>
+      <div style="flex:1"><div class="tx-name">Savings Milestone!</div><div class="tx-cat">Europe Trip goal at 30% · Keep going!</div></div>
+      <span class="tag green">✓</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(11,70,80,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M9 11a3 3 0 0 1 6 0"/></svg></div>
+      <div style="flex:1"><div class="tx-name">Offline NFC Transaction Synced</div><div class="tx-cat">Domino's 180 EGP now recorded · 1 hr ago</div></div>
+      <span class="tag teal">Synced</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></div>
+      <div style="flex:1"><div class="tx-name">Zakat Reminder</div><div class="tx-cat">212.50 EGP due · Ramadan approaching</div></div>
+      <span class="tag yellow">Reminder</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(11,70,80,.06)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div style="flex:1"><div class="tx-name">P2P Payment Request</div><div class="tx-cat">Mohamed Ali requests 300 EGP · Due Apr 25</div></div>
+      <span class="tag orange">Action</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ POCKETS ══ -->
+<div class="page" id="page-pockets">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div>
+      <div class="page-title">Pockets</div>
+      <div class="page-sub">Organise your money into named pockets. Transfer freely, automate monthly.</div>
+    </div>
+    <button class="btn primary" onclick="openModal('newPocketModal')">+ New Pocket</button>
+  </div>
+  <div class="card green" style="padding:22px;margin-bottom:16px">
+    <div class="flex-between">
+      <div>
+        <div class="label light" style="margin-bottom:4px">MAIN POCKET <span style="background:rgba(230,255,43,.2);color:var(--lime);border-radius:10px;padding:2px 8px;font-size:10px;margin-left:6px">Primary</span></div>
+        <div style="font-family:var(--font-display);font-size:38px;color:var(--offwhite);line-height:1">4,180 <span style="font-size:16px;font-family:'DM Sans'">EGP</span></div>
+        <div style="font-size:11px;color:rgba(249,247,242,.4);margin-top:4px">All incoming salary & transfers land here</div>
+      </div>
+      <button class="btn ghost sm" onclick="openModal('transferPocketModal')">→ Transfer Out</button>
+    </div>
+  </div>
+  <div id="pocketsGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+    <div class="card" style="padding:18px;border-left:3px solid var(--lime);border-radius:0 var(--r2) var(--r2) 0">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div style="font-weight:700;font-size:13px">Rent</div>
+        <button onclick="editPocket(this)" style="background:none;border:none;cursor:pointer;color:var(--gray3);padding:2px">✎</button>
+      </div>
+      <div style="font-family:var(--font-display);font-size:22px;color:var(--teal);line-height:1">2,500 <span style="font-size:12px;font-family:'DM Sans'">EGP</span></div>
+      <div style="margin-top:10px;font-size:10px;color:var(--lime3);font-weight:600;background:rgba(230,255,43,.08);border-radius:6px;padding:4px 7px;width:fit-content">Auto: 2,500 EGP/mo</div>
+    </div>
+    <div class="card" style="padding:18px;border-left:3px solid var(--teal3);border-radius:0 var(--r2) var(--r2) 0">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div style="font-weight:700;font-size:13px">Europe Trip</div>
+        <button onclick="editPocket(this)" style="background:none;border:none;cursor:pointer;color:var(--gray3);padding:2px">✎</button>
+      </div>
+      <div style="font-family:var(--font-display);font-size:22px;color:var(--teal);line-height:1">680 <span style="font-size:12px;font-family:'DM Sans'">EGP</span></div>
+      <div class="progress-bg" style="margin-top:8px"><div class="progress-fill" style="width:14%;background:var(--teal3)"></div></div>
+      <div style="font-size:10px;color:var(--gray);margin-top:3px">680 / 5,000 EGP target</div>
+    </div>
+    <div class="card" style="padding:18px;border-left:3px solid var(--gray);border-radius:0 var(--r2) var(--r2) 0">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div style="font-weight:700;font-size:13px">Emergency</div>
+        <button onclick="editPocket(this)" style="background:none;border:none;cursor:pointer;color:var(--gray3);padding:2px">✎</button>
+      </div>
+      <div style="font-family:var(--font-display);font-size:22px;color:var(--teal);line-height:1">1,000 <span style="font-size:12px;font-family:'DM Sans'">EGP</span></div>
+      <div style="margin-top:10px;font-size:10px;color:var(--gray3);font-style:italic">No auto-transfer set</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:12px"><div class="label">POCKET ACTIVITY</div><span class="tag teal" style="font-size:10px">This Month</span></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--lime3)" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg></div><div class="tx-info"><div class="tx-name">Auto-transfer → Rent</div><div class="tx-cat">Apr 1 · Monthly schedule</div></div><div class="tx-amt" style="color:var(--teal2)">– 2,500 EGP</div></div>
+    <div class="tx-row"><div class="icon-box" style="background:rgba(230,255,43,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--lime3)" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg></div><div class="tx-info"><div class="tx-name">Auto-transfer → Europe Trip</div><div class="tx-cat">Apr 1 · Monthly schedule</div></div><div class="tx-amt" style="color:var(--teal2)">– 500 EGP</div></div>
+  </div>
+</div>
+
+<!-- ══ INTERNATIONAL ══ -->
+<div class="page" id="page-intl">
+  <div class="flex-between" style="margin-bottom:4px">
+    <div>
+      <div class="page-title">International Transfers</div>
+      <div class="page-sub">Send money abroad. Competitive rates, fast settlement.</div>
+    </div>
+    <button class="btn primary" onclick="openModal('intlSendModal')">→ Send Money</button>
+  </div>
+  <div class="card green" style="padding:18px;margin-bottom:16px">
+    <div class="flex-between">
+      <div>
+        <div class="label light" style="margin-bottom:6px">TODAY'S EXCHANGE RATES</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">USD</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">49.80 <span style="font-size:11px">EGP</span></div></div>
+          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">EUR</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">53.60 <span style="font-size:11px">EGP</span></div></div>
+          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">SAR</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">13.27 <span style="font-size:11px">EGP</span></div></div>
+          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">GBP</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">63.20 <span style="font-size:11px">EGP</span></div></div>
+          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">AED</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">13.55 <span style="font-size:11px">EGP</span></div></div>
+        </div>
+      </div>
+      <div style="text-align:right"><div style="font-size:10px;color:rgba(249,247,242,.4)">Live rates · 11:45 AM</div></div>
+    </div>
+  </div>
+  <div class="grid-2" style="align-items:start">
+    <div class="card">
+      <div class="label" style="margin-bottom:14px">QUICK TRANSFER CALCULATOR</div>
+      <div class="input-group"><div class="input-label">You Send (EGP)</div><input id="intlSendAmt" type="number" value="5000" oninput="calcIntl()"></div>
+      <div class="input-group"><div class="input-label">Destination Currency</div>
+        <select id="intlCurr" onchange="calcIntl()">
+          <option value="49.80">USD – US Dollar</option>
+          <option value="53.60">EUR – Euro</option>
+          <option value="13.27">SAR – Saudi Riyal</option>
+          <option value="63.20">GBP – British Pound</option>
+          <option value="13.55">AED – UAE Dirham</option>
+        </select>
+      </div>
+      <div style="background:var(--offwhite);border-radius:12px;padding:14px;margin-bottom:12px">
+        <div style="font-size:11px;color:var(--teal2);margin-bottom:3px">Recipient Gets</div>
+        <div id="intlResult" style="font-family:var(--font-display);font-size:26px;color:var(--teal)">100.40 USD</div>
+        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--gray)">
+          <span>Transfer fee: 25 EGP</span><span>Arrives in 1–2 days</span>
+        </div>
+      </div>
+      <button class="btn primary" style="width:100%" onclick="openModal('intlSendModal')">Send Now</button>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:10px">SUPPORTED CORRIDORS</div>
+      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">US</div><div style="flex:1"><div class="tx-name">United States (USD)</div><div class="tx-cat">Bank transfer · 1-2 days</div></div><span class="tag green">Active</span></div>
+      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">EU</div><div style="flex:1"><div class="tx-name">Eurozone (EUR)</div><div class="tx-cat">SEPA · 1-3 days</div></div><span class="tag green">Active</span></div>
+      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">SA</div><div style="flex:1"><div class="tx-name">Saudi Arabia (SAR)</div><div class="tx-cat">SWIFT · Same day</div></div><span class="tag green">Active</span></div>
+      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">AE</div><div style="flex:1"><div class="tx-name">UAE (AED)</div><div class="tx-cat">SWIFT · Same day</div></div><span class="tag green">Active</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+</div><!-- end .app -->
+
+<!-- ══ CS CHAT ══ -->
+<button class="cs-badge" onclick="toggleCS()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
+<div class="cs-panel" id="csPanel">
+  <div class="cs-header">
+    <div style="width:32px;height:32px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">FC</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">Customer Support</div><div style="font-size:10px;opacity:.6">AI-powered · Available 24/7</div></div>
+    <button onclick="toggleCS()" style="background:rgba(249,247,242,.1);border:none;color:var(--offwhite);width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px">×</button>
+  </div>
+  <div class="cs-messages" id="csMessages">
+    <div class="msg ai"><div class="msg-avatar" style="background:var(--lime);color:var(--teal)">CS</div><div class="msg-bubble" style="font-size:12px">Hi Jana! How can I help you today?</div></div>
+  </div>
+  <div style="padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--offwhite2)">
+    <button class="chip" onclick="sendCSChip(this)" style="font-size:10px">Report a problem</button>
+    <button class="chip" onclick="sendCSChip(this)" style="font-size:10px">How to use NFC?</button>
+    <button class="chip" onclick="sendCSChip(this)" style="font-size:10px">Reset my PIN</button>
+  </div>
+  <div class="cs-input-row">
+    <input class="cs-input" id="csInput" placeholder="Type your question…" onkeydown="if(event.key==='Enter')sendCS()">
+    <button class="cs-send" onclick="sendCS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+</div>
+
+<!-- ══ NFC OVERLAY ══ -->
+<div class="nfc-overlay" id="nfcOverlay">
+  <div class="nfc-ring"><div class="nfc-inner" style="display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="1.5" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="2" fill="var(--lime)"/></svg></div></div>
+  <div style="font-family:var(--font-display);font-size:28px;color:var(--offwhite)">Ready to Pay</div>
+  <div style="font-size:14px;color:rgba(249,247,242,.6)">Hold your phone near the payment terminal</div>
+  <div style="font-size:11px;color:rgba(230,255,43,.6);margin-top:4px">Works offline — transactions sync automatically</div>
+  <div style="display:flex;gap:12px;margin-top:16px">
+    <button class="btn primary" onclick="simulateNFC()">Simulate Tap</button>
+    <button class="btn ghost" onclick="toggleNFC()">Cancel</button>
+  </div>
+</div>
+
+
+<!-- ══ FUTURE ME AI ══ -->
+<div id="page-future" class="page">
+  <div class="page-title">Future Me AI</div>
+  <div class="page-sub">Predicting your financial behavior</div>
+
+  <div id="futureMeContent"></div>
+
+  <button class="btn primary" onclick="updateFutureMeUI()">
+    Analyze My Future
+  </button>
+</div>
+
+  <!-- AI Thinking Indicator -->
+  <div class="fm-thinking" id="fmThinking" style="display:none">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    AI is analyzing your financial patterns<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+  </div>
+
+  <!-- Main Prediction Hero -->
+  <div class="future-me-card" style="margin-bottom:16px" id="fmHeroCard">
+    <div class="fm-badge">🔮 NEXT 30 DAYS FORECAST</div>
+    <div class="fm-prediction" id="fmHeroPred">Click Refresh to get your personalized AI prediction</div>
+    <div class="fm-insight" id="fmHeroInsight">Your AI advisor will analyze your spending patterns, balance, installments, and income to generate a tailored forecast.</div>
+  </div>
+
+  <!-- Stat Cards Row -->
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="ai-pred-card" id="fmCashflowCard">
+      <div class="pred-label">CASHFLOW PREDICTION</div>
+      <div class="pred-value" id="fmCashflowVal">— EGP</div>
+      <div class="pred-desc" id="fmCashflowDesc">Run analysis to see projection</div>
+    </div>
+    <div class="ai-pred-card risk" id="fmRiskCard">
+      <div class="pred-label">RISK ALERT</div>
+      <div class="pred-value" id="fmRiskVal">—</div>
+      <div class="pred-desc" id="fmRiskDesc">Run analysis to see risks</div>
+    </div>
+    <div class="ai-pred-card save" id="fmSaveCard">
+      <div class="pred-label">SAVING OPPORTUNITY</div>
+      <div class="pred-value" id="fmSaveVal">— EGP</div>
+      <div class="pred-desc" id="fmSaveDesc">Run analysis to find savings</div>
+    </div>
+  </div>
+
+  <!-- AI Recommendations -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label">💡 AI RECOMMENDATIONS FOR YOU</div>
+      <span class="tag lime" id="fmRecTag">Awaiting Analysis</span>
+    </div>
+    <div id="fmRecommendations" style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:var(--offwhite);border-radius:12px;padding:14px;border-left:3px solid var(--offwhite3);opacity:0.5">
+        <div style="font-weight:700;font-size:13px;color:var(--teal)">Awaiting your data analysis...</div>
+        <div style="font-size:12px;color:var(--teal2);margin-top:4px;line-height:1.5">Hit the Refresh button above to get personalized AI investment and savings recommendations based on your actual financial data.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6-Month Timeline -->
+  <div class="card">
+    <div class="label" style="margin-bottom:14px">📅 YOUR FINANCIAL JOURNEY — NEXT 6 MONTHS</div>
+    <div id="fmTimeline" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:12px;align-items:center;opacity:0.4">
+        <div class="fm-timeline-dot" style="background:var(--offwhite2);color:var(--teal)">?</div>
+        <div style="font-size:12.5px;color:var(--teal2)">Timeline will be generated after AI analysis runs...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+<div class="modal-overlay" id="addExpenseModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addExpenseModal')">×</button>
+    <div class="modal-title">Add Transaction</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="btn primary sm" style="flex:1">Expense</button>
+      <button class="btn secondary sm" style="flex:1">Income</button>
+    </div>
+    <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
+    <div class="input-group"><div class="input-label">Category</div><select><option>Food & Dining</option><option>Transport</option><option>Bills</option><option>Shopping</option><option>Entertainment</option><option>Health</option><option>Investment</option></select></div>
+    <div class="input-group"><div class="input-label">Description</div><input placeholder="e.g. Carrefour groceries"></div>
+    <button class="btn primary" style="width:100%">Add Transaction</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="customizeModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('customizeModal')">×</button>
+    <div class="modal-title">Customize Your App</div>
+    <div style="font-size:12px;color:var(--teal2);margin-bottom:14px">Toggle sections on/off and drag to reorder your navigation.</div>
+    <div id="customizeList">
+      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Expenses</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Virtual Card</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Investments</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Gam'eya</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Pockets</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Business Hub</span><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+    </div>
+    <div class="divider"></div>
+    <button class="btn primary" style="width:100%" onclick="closeModal('customizeModal')">Save Changes</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="newPocketModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('newPocketModal')">×</button>
+    <div class="modal-title">Create New Pocket</div>
+    <div class="input-group"><div class="input-label">Pocket Name</div><input id="newPocketName" placeholder="e.g. Holiday Fund, Car, Books…"></div>
+    <div class="input-group"><div class="input-label">Initial Amount from Main Pocket (EGP)</div><input id="newPocketAmt" type="number" placeholder="0"></div>
+    <div class="input-group"><div class="input-label">Monthly Auto-Transfer</div><input id="newPocketAuto" type="number" placeholder="0 EGP/month"></div>
+    <button class="btn primary" style="width:100%" onclick="createPocket()">Create Pocket</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="transferPocketModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('transferPocketModal')">×</button>
+    <div class="modal-title">Transfer to Pocket</div>
+    <div class="input-group"><div class="input-label">From</div><select><option>Main Pocket – 4,180 EGP</option></select></div>
+    <div class="input-group"><div class="input-label">To</div><select id="toPocketSelect"><option>Rent – 2,500 EGP</option><option>Europe Trip – 680 EGP</option><option>Emergency – 1,000 EGP</option></select></div>
+    <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
+    <button class="btn primary" style="width:100%">Transfer Now</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="intlSendModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('intlSendModal')">×</button>
+    <div class="modal-title">Send International Transfer</div>
+    <div class="input-group"><div class="input-label">Recipient Full Name</div><input placeholder="As on bank account"></div>
+    <div class="input-group"><div class="input-label">Recipient IBAN / Account No.</div><input placeholder="e.g. GB29NWBK60161331926819"></div>
+    <div class="grid-2">
+      <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
+      <div class="input-group"><div class="input-label">Currency</div><select><option>USD</option><option>EUR</option><option>SAR</option><option>GBP</option><option>AED</option></select></div>
+    </div>
+    <button class="btn primary" style="width:100%" onclick="closeModal('intlSendModal')">Review & Send</button>
+  </div>
+</div>
+
+<script>
+let currentLang = 'en';
+let advisorLang = 'ar';
+
+function setLang(lang) {
+  currentLang = lang;
+  const html = document.documentElement;
+  html.setAttribute('lang', lang);
+  html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  document.querySelectorAll('[data-' + lang + ']').forEach(el => { el.textContent = el.getAttribute('data-' + lang); });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+}
+
+function setAdvisorLang(lang) {
+  advisorLang = lang;
+  const greeting = document.getElementById('aiGreeting');
+  if (lang === 'ar') { greeting.innerHTML = 'مرحباً يا جنا! أنا مستشارك المالي الذكي. إزيك؟ عندي كل بياناتك المالية وقادر أساعدك في أي حاجة!'; }
+  else { greeting.innerHTML = "Hi Jana! I'm your AI financial advisor with access to all your financial data. Ask me anything!"; }
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  const p = document.getElementById('page-' + id);
+  if (p) p.classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelectorAll('.nav-item').forEach(b => { if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) b.classList.add('active'); });
+}
+
+const rates = { EGP: 1, USD: 0.0201, EUR: 0.0186, SAR: 0.0754 };
+function setCurrency(curr, btn) {
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const factor = rates[curr];
+  const fmt = n => (n * factor).toLocaleString(undefined, {maximumFractionDigits:2});
+  document.getElementById('balVal').textContent = fmt(4180);
+  document.getElementById('balCurr').textContent = curr;
+  document.getElementById('incomeCurr').textContent = curr + ' this month';
+}
+
+function toggleNFC() { document.getElementById('nfcOverlay').classList.toggle('open'); }
+function simulateNFC() {
+  document.getElementById('nfcOverlay').classList.remove('open');
+  setTimeout(() => {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:70px;right:24px;z-index:500;padding:12px 16px;width:300px;border-radius:14px;display:flex;gap:10px;align-items:center;background:var(--teal);color:var(--offwhite);box-shadow:0 4px 20px rgba(0,0,0,.3)';
+    banner.innerHTML = '<div><b>NFC Payment Success</b><div style="font-size:11px;opacity:.8">180 EGP · Domino\'s · Offline (will sync)</div></div>';
+    document.body.appendChild(banner);
+    setTimeout(() => banner.remove(), 3000);
+  }, 300);
+}
+
+const aiResponses = {
+  'afford': {en: "Looking at your data: <b>4,180 EGP</b> balance and <b>1,950 EGP/month</b> in obligations. A laptop at 800 EGP/month over 24 months → ratio <b>32%</b> — <span style='color:var(--teal);font-weight:600'>Low Risk</span>. Clear your overdue MacBook payment first!", ar: "بص على أرقامك: عندك <b>4,180 ج.م</b> رصيد و<b>1,950 ج.م</b> التزامات. لو اشتريت لاب توب بـ800 ج.م × 24 شهر، النسبة <b>32%</b> — مخاطرة منخفضة. بس خلص قسط الماك بوك الأول!"},
+  'score': {en: "Your 78 score breaks down: Payment Punctuality 88, Savings 62, Spending 74, Gam'eya 95. Fix the MacBook payment → score jumps to ~86!", ar: "نقاطك 78: انتظام السداد 88، توفير 62، إنفاق 74، جمعية 95. ادفع قسط الماك بوك → النقاط تطلع ~86!"},
+  'save': {en: "3 steps: 1. Cut Food by 200 EGP/month. 2. Automate 500 EGP to Europe Trip on salary day. 3. Skip shopping in May → frees 650 EGP.", ar: "3 خطوات: 1. قلل الأكل 200 ج.م. 2. تحويل تلقائي 500 ج.م لأوروبا. 3. مفيش شوبينج في مايو = 650 ج.م توفير."},
+  'food': {en: "Yes — 3 months overspending! Food avg: <b>920 EGP</b>. Target: <b>700 EGP</b>. That's 2,640 EGP/year you could save!", ar: "آه — 3 شهور زيادة! متوسطك <b>920 ج.م</b>. الهدف <b>700 ج.م</b>. يعني 2,640 ج.م في السنة ممكن توفرها!"},
+  'april': {en: "April 2026: Income 8,500 · Spent 4,320 (50.8%) · Balance 4,180 · Savings 0 · Score 78 (+3). Overdue MacBook needs attention.", ar: "أبريل 2026: دخل 8,500 · مصروف 4,320 · رصيد 4,180 · توفير 0 · نقاط 78. قسط الماك بوك متأخر!"},
+};
+
+function getAIResponse(msg) {
+  const lower = msg.toLowerCase();
+  if (lower.includes('afford') || lower.includes('laptop') || lower.includes('أقدر') || lower.includes('اشتري')) return aiResponses['afford'][advisorLang];
+  if (lower.includes('score') || lower.includes('نقاط') || lower.includes('78')) return aiResponses['score'][advisorLang];
+  if (lower.includes('save') || lower.includes('توفر')) return aiResponses['save'][advisorLang];
+  if (lower.includes('food') || lower.includes('أكل')) return aiResponses['food'][advisorLang];
+  if (lower.includes('april') || lower.includes('أبريل') || lower.includes('summarize')) return aiResponses['april'][advisorLang];
+  return advisorLang === 'ar' ? "سؤال كويس! بناءً على بياناتك — رصيد <b>4,180 ج.م</b> ونقاط <b>78</b>. اسألني عن الأفوردابيلتي أو التوفير!" : "Based on your profile — <b>4,180 EGP</b> balance, score <b>78</b>. Try asking about affordability or savings tips!";
+}
+
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addChatMsg(msg, 'user', 'chatMessages', 'J');
+  input.value = '';
+  showTyping('chatMessages', 'FC');
+  setTimeout(() => { removeTyping('chatMessages'); addChatMsg(getAIResponse(msg), 'ai', 'chatMessages', 'FC'); }, 1300);
+}
+
+function sendChip(chip) {
+  const msg = chip.textContent;
+  addChatMsg(msg, 'user', 'chatMessages', 'J');
+  showTyping('chatMessages', 'FC');
+  setTimeout(() => { removeTyping('chatMessages'); addChatMsg(getAIResponse(msg), 'ai', 'chatMessages', 'FC'); }, 1300);
+}
+
+const csReplies = ["I understand! Let me look into that for you. Can you share more details?","For NFC: ensure it's enabled on your phone, then tap and hold near the terminal.","To reset your PIN: Virtual Card → Settings → Change PIN. Verify via OTP first.","I'll escalate this. You'll hear back within 2 hours. Ticket #FC-2847 created."];
+let csIdx = 0;
+
+function sendCS() {
+  const input = document.getElementById('csInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addChatMsg(msg, 'user', 'csMessages', 'J');
+  input.value = '';
+  showTyping('csMessages', 'CS');
+  const reply = csReplies[csIdx++ % csReplies.length];
+  setTimeout(() => { removeTyping('csMessages'); addChatMsg(reply, 'ai', 'csMessages', 'CS'); }, 1200);
+}
+
+function sendCSChip(chip) {
+  const msg = chip.textContent;
+  addChatMsg(msg, 'user', 'csMessages', 'J');
+  showTyping('csMessages', 'CS');
+  const reply = csReplies[csIdx++ % csReplies.length];
+  setTimeout(() => { removeTyping('csMessages'); addChatMsg(reply, 'ai', 'csMessages', 'CS'); }, 1200);
+}
+
+function toggleCS() { document.getElementById('csPanel').classList.toggle('open'); }
+
+function addChatMsg(text, type, containerId, initials) {
+  const wrap = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  const bg = type === 'ai' ? 'var(--lime)' : 'var(--teal)';
+  const col = type === 'ai' ? 'var(--teal)' : 'var(--offwhite)';
+  div.innerHTML = `<div class="msg-avatar" style="background:${bg};color:${col}">${initials}</div><div class="msg-bubble">${text}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping(containerId, initials) {
+  const wrap = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'msg ai'; div.id = containerId + '_typing';
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--lime);color:var(--teal)">${initials}</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div); wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeTyping(containerId) {
+  const el = document.getElementById(containerId + '_typing');
+  if (el) el.remove();
+}
+
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(ov => { ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); }); });
+
+function calcBNPL() {
+  const income = +document.getElementById('bnplIncome').value || 8500;
+  const monthly = +document.getElementById('bnplMonthly').value || 1000;
+  const months = +document.getElementById('bnplMonths').value || 12;
+  const item = document.getElementById('bnplItem').value || 'Item';
+  const existing = 1950;
+  const newTotal = existing + monthly;
+  const ratio = (newTotal / income * 100).toFixed(1);
+  let risk, riskColor, msg, bg, tip;
+  if (+ratio <= 35) { risk='Low'; riskColor='var(--teal)'; msg='Safe to proceed'; bg='rgba(11,70,80,.06)'; tip='Your income-to-obligation ratio stays healthy. You can comfortably take this plan.'; }
+  else if (+ratio <= 50) { risk='Medium'; riskColor='#A07800'; msg='Caution advised'; bg='rgba(230,255,43,.08)'; tip='Approaching the safe limit. Monitor spending and avoid additional obligations.'; }
+  else { risk='High'; riskColor='#C1121F'; msg='Not recommended'; bg='rgba(193,18,31,.06)'; tip='Over 50% of income goes to obligations. Consider a higher down payment or longer duration.'; }
+  const altMonthly = Math.max(0, Math.floor(income * 0.35 - existing));
+  const total = monthly * months;
+  document.getElementById('bnplResult').innerHTML = `
+    <div style="font-size:14.5px;font-weight:700;color:var(--teal);margin-bottom:14px;font-family:var(--font-display)">Risk Assessment — ${item}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">Existing obligations</span><span style="font-weight:700">${existing.toLocaleString()} EGP</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">New instalment/month</span><span style="font-weight:700;color:var(--teal2)">${monthly.toLocaleString()} EGP</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">Total cost over ${months} months</span><span style="font-weight:700">${total.toLocaleString()} EGP</span></div>
+      <div style="height:1px;background:var(--offwhite2)"></div>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">Income-to-Obligation Ratio</span><span style="font-weight:700;color:${riskColor}">${ratio}%</span></div>
+    </div>
+    <div style="background:${bg};border:1px solid ${riskColor}33;border-radius:12px;padding:13px;margin-bottom:10px">
+      <div style="font-weight:700;font-size:14px;color:${riskColor};margin-bottom:5px">${msg} — ${risk} Risk</div>
+      <div style="font-size:12px;color:var(--teal2);line-height:1.6">${tip}</div>
+    </div>
+    ${risk !== 'Low' ? `<div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.2);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--teal2)"><b style="color:var(--teal)">Suggested:</b> Max safe instalment = <b>${altMonthly.toLocaleString()} EGP/month</b></div>` : '<div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.2);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--teal3)"><b>Great choice!</b> This plan fits well within your budget.</div>'}
+    <button class="btn primary sm" style="margin-top:10px;width:100%" onclick="showPage('installments',null)">Add This Plan →</button>
+  `;
+}
+
+function calcIntl() {
+  const amt = +document.getElementById('intlSendAmt').value || 0;
+  const rate = +document.getElementById('intlCurr').selectedOptions[0].value;
+  const fee = 25;
+  const converted = ((Math.max(0, amt - fee)) / rate).toFixed(2);
+  const curr = document.getElementById('intlCurr').selectedOptions[0].text.split(' – ')[0];
+  document.getElementById('intlResult').textContent = `${converted} ${curr}`;
+}
+
+function setInvestAmt(n) { document.getElementById('investAmt').value = n; }
+
+let pocketCount = 3;
+const pocketColors = ['var(--lime)','var(--teal3)','var(--teal2)','var(--gray)','#4CAF50'];
+
+function createPocket() {
+  const name = document.getElementById('newPocketName').value.trim();
+  const amt = +document.getElementById('newPocketAmt').value || 0;
+  const auto = +document.getElementById('newPocketAuto').value || 0;
+  if (!name) return;
+  const color = pocketColors[pocketCount % pocketColors.length];
+  const grid = document.getElementById('pocketsGrid');
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = `padding:18px;border-left:3px solid ${color};border-radius:0 var(--r2) var(--r2) 0`;
+  card.innerHTML = `
+    <div class="flex-between" style="margin-bottom:10px">
+      <div style="font-weight:700;font-size:13px">${name}</div>
+      <button onclick="editPocket(this)" style="background:none;border:none;cursor:pointer;color:var(--gray3);padding:2px">✎</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:22px;color:var(--teal);line-height:1">${amt.toLocaleString()} <span style="font-size:12px;font-family:'DM Sans'">EGP</span></div>
+    ${auto > 0 ? `<div style="margin-top:10px;font-size:10px;color:${color};font-weight:600;background:rgba(11,70,80,.06);border-radius:6px;padding:4px 7px;width:fit-content">Auto: ${auto.toLocaleString()} EGP/mo</div>` : `<div style="margin-top:10px;font-size:10px;color:var(--gray3);font-style:italic">No auto-transfer set</div>`}
+  `;
+  grid.appendChild(card);
+  const sel = document.getElementById('toPocketSelect');
+  const opt = document.createElement('option');
+  opt.textContent = `${name} – ${amt.toLocaleString()} EGP`;
+  sel.appendChild(opt);
+  pocketCount++;
+  closeModal('newPocketModal');
+  document.getElementById('newPocketName').value = '';
+  document.getElementById('newPocketAmt').value = '';
+  document.getElementById('newPocketAuto').value = '';
+}
+
+function editPocket(btn) {
+  const card = btn.closest('.card');
+  const nameEl = card.querySelector('[style*="font-weight:700"]');
+  if (nameEl) {
+    const current = nameEl.textContent;
+    const newName = prompt('Rename pocket:', current);
+    if (newName && newName.trim()) nameEl.textContent = newName.trim();
+  }
+}
+
+
+// ══ FUTURE ME AI ══
+function getUserFinancialContext() {
+  let user = {};
+  try { user = JSON.parse(localStorage.getItem('fincircle_user') || '{}'); } catch(e) {}
+  const txs = user.transactions || [];
+  const installments = user.installments || [];
+
+  const catTotals = {};
+  let totalIncome = 0;
+  txs.forEach(t => {
+    if (t.amount < 0) {
+      const cat = t.category || 'Other';
+      catTotals[cat] = (catTotals[cat] || 0) + Math.abs(t.amount);
+    } else {
+      totalIncome += t.amount;
+    }
+  });
+
+  const income = user.income || 8500;
+  const balance = user.balance !== undefined ? user.balance : Math.round(income * 0.49);
+  const totalSpent = Object.values(catTotals).reduce((a,b) => a+b, 0);
+  const monthlyInstallments = installments.reduce((s,i) => s + (i.monthly || 0), 0);
+  const savingsRate = income > 0 ? Math.round(((income - totalSpent) / income) * 100) : 0;
+
+  return {
+    name: (user.name || 'Friend').split(' ')[0],
+    income,
+    balance: Math.round(balance),
+    totalSpent: Math.round(totalSpent),
+    monthlyInstallments: Math.round(monthlyInstallments),
+    spendingByCategory: catTotals,
+    transactionCount: txs.length,
+    installmentCount: installments.length,
+    savingsRate,
+    hasData: txs.length > 0 || installments.length > 0
+  };
+}
+
+async function runFutureAI() {
+  const ctx = getUserFinancialContext();
+
+  // Show loading state
+  document.getElementById('fmThinking').style.display = 'flex';
+  document.getElementById('fmHeroPred').innerHTML = '<span style="opacity:0.5;font-size:16px">Analyzing your financial data...</span>';
+  document.getElementById('fmHeroInsight').textContent = 'AI is reviewing your income, spending, and installments...';
+  document.getElementById('fmRecTag').textContent = 'AI Processing';
+  document.getElementById('fmCashflowVal').textContent = '...';
+  document.getElementById('fmRiskVal').textContent = '...';
+  document.getElementById('fmSaveVal').textContent = '...';
+
+  const catSummary = Object.keys(ctx.spendingByCategory).length > 0
+    ? Object.entries(ctx.spendingByCategory).map(([k,v]) => k + ': ' + Math.round(v) + ' EGP').join(', ')
+    : 'No categorized transactions yet (using estimated patterns)';
+
+  // Build a realistic spending context if no transactions
+  const estimatedFood = ctx.hasData ? '' : 'Note: No transactions recorded. Use typical Egyptian spending patterns for someone earning ' + ctx.income + ' EGP/month.';
+
+  const prompt = `You are Future Me AI inside FinCircle, an Egyptian personal finance app.
+
+User financial snapshot:
+- Name: ${ctx.name}
+- Monthly Income: ${ctx.income} EGP
+- Current Balance: ${ctx.balance} EGP
+- Spent This Month: ${ctx.totalSpent} EGP
+- Monthly Installments: ${ctx.monthlyInstallments} EGP
+- Savings Rate: ${ctx.savingsRate}%
+- Spending breakdown: ${catSummary}
+- Transactions logged: ${ctx.transactionCount}
+- Active installments: ${ctx.installmentCount}
+${estimatedFood}
+
+Generate a personalized financial forecast. Respond ONLY with valid JSON, no markdown fences, no extra text:
+{
+  "heroPrediction": "Single compelling sentence about their biggest financial insight this month (include specific EGP amounts derived from data)",
+  "heroInsight": "2-3 sentences explaining the prediction with data-backed reasoning. Be specific about numbers.",
+  "cashflowValue": "projected end-of-month balance as string e.g. 3,240 EGP",
+  "cashflowDesc": "one sentence explaining how you calculated this",
+  "riskValue": "short phrase for main risk e.g. 2 obligations",
+  "riskDesc": "one sentence describing the risk",
+  "savingValue": "potential monthly savings as string e.g. 1,100 EGP",
+  "savingDesc": "one sentence on how to achieve this saving",
+  "recommendations": [
+    {
+      "icon": "🥇",
+      "title": "recommendation title",
+      "tag": "tag label",
+      "tagColor": "green",
+      "body": "2-3 sentences of personalized advice with specific EGP amounts. Egyptian financial context.",
+      "cta": "button label"
+    },
+    {
+      "icon": "📈",
+      "title": "second recommendation",
+      "tag": "tag label",
+      "tagColor": "teal",
+      "body": "2-3 sentences personalized advice",
+      "cta": "button label"
+    },
+    {
+      "icon": "🏦",
+      "title": "third recommendation",
+      "tag": "tag label",
+      "tagColor": "orange",
+      "body": "2-3 sentences personalized advice",
+      "cta": "button label"
+    }
+  ],
+  "timeline": [
+    { "month": "JUN", "color": "#E6FF2B", "textColor": "#0B4650", "title": "action title", "desc": "brief personalized description with EGP numbers" },
+    { "month": "AUG", "color": "#0F6070", "textColor": "#ffffff", "title": "second milestone", "desc": "brief description" },
+    { "month": "NOV", "color": "#EDE9E0", "textColor": "#0B4650", "title": "third milestone", "desc": "brief description" }
+  ]
+}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) throw new Error('API error ' + res.status);
+    const data = await res.json();
+
+    const raw = (data.content || []).map(c => c.text || '').join('');
+    // Strip any accidental markdown
+    const clean = raw.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'').trim();
+    const r = JSON.parse(clean);
+
+    document.getElementById('fmThinking').style.display = 'none';
+
+    // Hero
+    document.getElementById('fmHeroPred').innerHTML = r.heroPrediction || 'Prediction unavailable';
+    document.getElementById('fmHeroInsight').textContent = r.heroInsight || '';
+
+    // Stats
+    document.getElementById('fmCashflowVal').textContent = r.cashflowValue || '—';
+    document.getElementById('fmCashflowDesc').textContent = r.cashflowDesc || '';
+    document.getElementById('fmRiskVal').textContent = r.riskValue || '—';
+    document.getElementById('fmRiskDesc').textContent = r.riskDesc || '';
+    document.getElementById('fmSaveVal').textContent = r.savingValue || '—';
+    document.getElementById('fmSaveDesc').textContent = r.savingDesc || '';
+
+    // Recommendations
+    document.getElementById('fmRecTag').textContent = 'AI Generated';
+    const tagMap = { green:'green', teal:'teal', orange:'orange' };
+    if (r.recommendations && r.recommendations.length) {
+      document.getElementById('fmRecommendations').innerHTML = r.recommendations.map(rec => `
+        <div style="background:var(--offwhite);border-radius:12px;padding:14px;border-left:3px solid var(--lime)">
+          <div class="flex-between" style="margin-bottom:6px">
+            <div style="font-weight:700;font-size:13px;color:var(--teal)">${rec.icon || ''} ${rec.title || ''}</div>
+            <span class="tag ${tagMap[rec.tagColor] || 'green'}">${rec.tag || ''}</span>
+          </div>
+          <div style="font-size:12px;color:var(--teal2);line-height:1.6">${rec.body || ''}</div>
+          <button class="btn primary sm" style="margin-top:10px">${rec.cta || 'Learn More'}</button>
+        </div>`).join('');
+    }
+
+    // Timeline
+    if (r.timeline && r.timeline.length) {
+      document.getElementById('fmTimeline').innerHTML = r.timeline.map(t => `
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div class="fm-timeline-dot" style="background:${t.color};color:${t.textColor}">${t.month}</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;color:var(--teal)">${t.title}</div>
+            <div style="font-size:11.5px;color:var(--gray);margin-top:2px">${t.desc}</div>
+          </div>
+        </div>`).join('');
+    }
+
+    if (typeof showToast === 'function') showToast('✨ Future Me AI updated!');
+
+  } catch(err) {
+    document.getElementById('fmThinking').style.display = 'none';
+    document.getElementById('fmHeroPred').innerHTML = '<span style="color:var(--red)">Analysis failed</span>';
+    document.getElementById('fmHeroInsight').textContent = 'Could not connect to AI. Check your connection and try again. (' + (err.message || err) + ')';
+    document.getElementById('fmRecTag').textContent = 'Error';
+  }
+}
+
+calcBNPL();
+calcIntl();
+</script>
+<script>
+// ===== FUTURE ME AI ENGINE =====
+
+// Fake database (replace later with real backend)
+let transactions = [
+  { amount: 320, category: "Food", date: "2026-05-01T14:30:00" },
+  { amount: 850, category: "Installment", date: "2026-04-30T10:00:00" },
+  { amount: 100, category: "Invest", date: "2026-04-28T18:00:00" },
+  { amount: 250, category: "Food", date: "2026-04-27T15:00:00" }
+];
+
+// ===== 1. PATTERN DETECTION =====
+function analyzePatterns() {
+  let categoryCount = {};
+  let timePatterns = [];
+
+  transactions.forEach(tx => {
+    // Category frequency
+    categoryCount[tx.category] = (categoryCount[tx.category] || 0) + 1;
+
+    // Time pattern
+    let hour = new Date(tx.date).getHours();
+    timePatterns.push(hour);
+  });
+
+  // Most frequent category
+  let topCategory = Object.keys(categoryCount).reduce((a, b) =>
+    categoryCount[a] > categoryCount[b] ? a : b
+  );
+
+  // Average spending time
+  let avgHour = Math.round(
+    timePatterns.reduce((a, b) => a + b, 0) / timePatterns.length
+  );
+
+  return { topCategory, avgHour };
+}
+
+// ===== 2. PREDICTION =====
+function predictNextMove() {
+  let { topCategory, avgHour } = analyzePatterns();
+
+  let now = new Date();
+  let currentHour = now.getHours();
+
+  let prediction = "";
+
+  if (Math.abs(currentHour - avgHour) <= 2) {
+    prediction = `You are likely to spend on ${topCategory} soon 💸`;
+  } else {
+    prediction = `No immediate spending predicted. Good time to save 💰`;
+  }
+
+  return prediction;
+}
+
+// ===== 3. SMART ALERTS =====
+function generateSmartAdvice() {
+  let totalSpent = transactions.reduce((sum, tx) => sum + tx.amount, 0);
+
+  if (totalSpent > 4000) {
+    return "⚠️ You're spending above your average. Consider slowing down.";
+  } else if (totalSpent < 2000) {
+    return "✅ Great job! You're saving well this month.";
+  } else {
+    return "💡 Balanced spending. You can invest small amounts.";
+  }
+}
+
+// ===== 4. SHOW IN UI =====
+function updateFutureMeUI() {
+  let prediction = predictNextMove();
+  let advice = generateSmartAdvice();
+
+  let container = document.getElementById("futureMeContent");
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="card">
+      <div class="label">Prediction</div>
+      <div class="val md">${prediction}</div>
+    </div>
+
+    <div class="card" style="margin-top:10px">
+      <div class="label">Advice</div>
+      <div class="val md">${advice}</div>
+    </div>
+  `;
+}
+
+// ===== 5. AUTO NOTIFICATIONS =====
+function triggerFutureAlert() {
+  let prediction = predictNextMove();
+
+  if (prediction.includes("spend")) {
+    showNotification("Future Me Alert", prediction);
+  }
+}
+
+// Simple notification
+function showNotification(title, message) {
+  let alertBox = document.getElementById("globalAlerts");
+
+  alertBox.style.display = "block";
+
+  alertBox.innerHTML = `
+    <div class="alert-banner info">
+      <div><b>${title}</b><br>${message}</div>
+    </div>
+  `;
+}
+
+// Run periodically
+setInterval(triggerFutureAlert, 15000);
+function addTransaction(amount, category) {
+  transactions.push({
+    amount,
+    category,
+    date: new Date().toISOString()
+  });
+
+  updateFutureMeUI(); // auto update AI
+}
+</script>
+</body>
+</html>

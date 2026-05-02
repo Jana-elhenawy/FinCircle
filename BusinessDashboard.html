@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinCircle – Business Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="StyleBusiness.css">
+
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="logo">
+    <svg width="28" height="28" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="26" cy="26" r="26" fill="#0B4650"/>
+      <path d="M26,7 A19,19 0 1,1 7.5,33" stroke="#E6FF2B" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M26,13 A13,13 0 1,0 13.2,33" stroke="#F9F7F2" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>
+      <circle cx="26" cy="26" r="4.5" fill="#E6FF2B"/>
+    </svg>
+    Fin<span>Circle</span>
+    <span class="biz-badge">BUSINESS</span>
+  </div>
+  <div class="topbar-center">
+    <div style="background:rgba(249,247,242,.08);border-radius:8px;padding:5px 14px;font-size:12px;color:rgba(249,247,242,.6)">
+      <span style="color:var(--lime);font-weight:600" id="bizNameDisplay">My Business</span>
+      &nbsp;·&nbsp; May 2026
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn" onclick="showPage('future',this)" title="Future Me AI">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 L12 12"/><path d="M16 2h6v6"/></svg>
+    </button>
+    <button class="icon-btn" style="position:relative">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="user-chip">
+      <div class="user-avatar" id="bizInitials">B</div>
+      <span class="user-name" id="bizUserName">Business</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SIDEBAR ── -->
+<div class="sidebar">
+  <div class="nav-section">MAIN</div>
+  <button class="nav-item active" onclick="showPage('overview',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span>Overview</span>
+  </button>
+  <button class="nav-item" onclick="showPage('cashflow',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <span>Cashflow</span>
+  </button>
+
+  <div class="nav-section">OPERATIONS</div>
+  <button class="nav-item" onclick="showPage('employees',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span>Employees & Payroll</span>
+  </button>
+  <button class="nav-item" onclick="showPage('invoicing',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span>Invoicing</span>
+  </button>
+  <button class="nav-item" onclick="showPage('expenses',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5V2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg>
+    <span>Expenses</span>
+  </button>
+
+  <div class="nav-section">SMART TOOLS</div>
+  <button class="nav-item" onclick="showPage('future',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 L12 12"/><path d="M16 2h6v6"/></svg>
+    <span>Future Me AI</span>
+    <span class="nav-badge"></span>
+  </button>
+  <button class="nav-item" onclick="showPage('insights',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="13" width="4" height="8"/><rect x="9" y="8" width="4" height="13"/><rect x="15" y="4" width="4" height="17"/><path d="M5 13 L11 8 L17 4" stroke-dasharray="2 2"/></svg>
+    <span>Business Insights</span>
+  </button>
+
+  <div class="sidebar-footer">
+    <div style="font-size:9px;color:rgba(249,247,242,.2);text-align:center;padding:6px">FinCircle Business · v2.0</div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main" id="mainContent">
+
+<!-- ══ OVERVIEW PAGE ══ -->
+<div class="page active" id="page-overview">
+  <div class="flex-between" style="margin-bottom:20px">
+    <div>
+      <div class="page-title">Business Overview</div>
+      <div class="page-sub">Your financial hub for May 2026</div>
+    </div>
+    <button class="btn primary" onclick="showPage('future',document.querySelector('[onclick*=future]'))">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 L12 12"/><path d="M16 2h6v6"/></svg>
+      AI Predictions
+    </button>
+  </div>
+
+  <div class="alert-banner">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 L12 12"/><path d="M16 2h6v6"/></svg>
+    <div><b style="color:var(--lime)">Future Me AI</b> predicts your payroll will exceed budget next month by <b style="color:var(--lime)">~8,200 EGP</b>. Review cashflow now.</div>
+    <button class="btn sm ghost" style="margin-left:auto;flex-shrink:0" onclick="showPage('future',null)">View →</button>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card lime-top">
+      <div class="kpi-label">Cash Balance</div>
+      <div class="kpi-value">128,000 <span style="font-size:13px;font-family:var(--font-body)">EGP</span></div>
+      <div class="kpi-change up">↑ +12% vs last month</div>
+    </div>
+    <div class="kpi-card lime-top">
+      <div class="kpi-label">Revenue (MTD)</div>
+      <div class="kpi-value">127,000</div>
+      <div class="kpi-change up">↑ +14% vs April</div>
+    </div>
+    <div class="kpi-card red-top">
+      <div class="kpi-label">Expenses (MTD)</div>
+      <div class="kpi-value">42,000</div>
+      <div class="kpi-change down">↑ +5% vs April</div>
+    </div>
+    <div class="kpi-card teal-top">
+      <div class="kpi-label">Profit Margin</div>
+      <div class="kpi-value">66.9<span style="font-size:16px">%</span></div>
+      <div class="kpi-change up">↑ +2.1pp this month</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card green">
+      <div class="label light" style="margin-bottom:12px">MONTHLY REVENUE</div>
+      <div class="bar-chart" id="revChart"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+        <span class="tag light">Jan: 98K</span>
+        <span class="tag light">Feb: 104K</span>
+        <span class="tag light">Mar: 111K</span>
+        <span class="tag light">Apr: 119K</span>
+        <span class="tag" style="background:rgba(230,255,43,.25);color:var(--lime)">May: 127K ✓</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card">
+        <div class="label">PAYROLL STATUS</div>
+        <div style="font-family:var(--font-display);font-size:26px;color:var(--teal);margin:4px 0">48,000 EGP</div>
+        <div class="progress-bg"><div class="progress-fill" style="width:62%"></div></div>
+        <div class="sub" style="margin-top:6px">62% of revenue · 8 employees</div>
+        <div style="margin-top:10px"><span class="tag green">Next payroll: May 30</span></div>
+      </div>
+      <div class="card lime">
+        <div class="label" style="color:var(--teal2)">NET PROFIT</div>
+        <div style="font-family:var(--font-display);font-size:28px;color:var(--teal);margin:4px 0">85,000 EGP</div>
+        <div style="font-size:11px;color:var(--teal2);font-weight:500">Best month so far 🎯</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label">RECENT TRANSACTIONS</div>
+      <button class="btn sm secondary" onclick="showPage('expenses',null)">View All</button>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(11,70,80,.08)">📦</div>
+      <div style="flex:1"><div class="tx-name">Supplier Payment – Al Ahram Trading</div><div class="tx-cat">Inventory · May 28</div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--red)">−12,400 EGP</div>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1)">📄</div>
+      <div style="flex:1"><div class="tx-name">Invoice Paid – Tech Corp</div><div class="tx-cat">Invoicing · May 27</div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--teal3)">+25,000 EGP</div>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(11,70,80,.08)">🏢</div>
+      <div style="flex:1"><div class="tx-name">Office Rent – May 2026</div><div class="tx-cat">Operations · May 1</div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--red)">−8,500 EGP</div>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1)">📄</div>
+      <div style="flex:1"><div class="tx-name">Invoice Paid – Retail Store</div><div class="tx-cat">Invoicing · May 22</div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--teal3)">+18,200 EGP</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CASHFLOW PAGE ══ -->
+<div class="page" id="page-cashflow">
+  <div class="page-title">Cashflow AI</div>
+  <div class="page-sub">90-day intelligent cashflow forecast powered by AI</div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card green">
+      <div class="label light">AI FORECAST — NEXT 90 DAYS</div>
+      <div class="val lg light" style="font-size:32px;margin:8px 0">+85,000 EGP</div>
+      <div style="font-size:11.5px;color:rgba(249,247,242,.7);margin-bottom:12px">Positive trajectory based on current revenue trend ✅</div>
+      <div class="progress-bg" style="background:rgba(249,247,242,.15)"><div class="progress-fill" style="width:78%"></div></div>
+      <div style="font-size:10px;color:rgba(249,247,242,.5);margin-top:6px">78% confidence score</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="flex:1">
+        <div class="label">JUNE FORECAST</div>
+        <div style="font-family:var(--font-display);font-size:24px;color:var(--teal3)">137,000 EGP</div>
+        <div class="sub">+8% projected growth</div>
+      </div>
+      <div class="card" style="flex:1">
+        <div class="label">JULY FORECAST</div>
+        <div style="font-family:var(--font-display);font-size:24px;color:var(--teal3)">148,000 EGP</div>
+        <div class="sub">+8% continued trend</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label">REVENUE vs EXPENSE TREND</div>
+      <div class="flex-row" style="gap:10px">
+        <div class="flex-row" style="gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--teal3)"></div><span style="font-size:11px;color:var(--gray)">Revenue</span></div>
+        <div class="flex-row" style="gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--red)"></div><span style="font-size:11px;color:var(--gray)">Expenses</span></div>
+      </div>
+    </div>
+    <div id="cashflowChart" style="display:flex;align-items:flex-end;gap:10px;height:100px"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;padding:0 2px">
+      <span style="font-size:9px;color:var(--gray)">Jan</span><span style="font-size:9px;color:var(--gray)">Feb</span><span style="font-size:9px;color:var(--gray)">Mar</span><span style="font-size:9px;color:var(--gray)">Apr</span><span style="font-size:9px;color:var(--gray)">May</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="label" style="margin-bottom:12px;color:var(--teal2)">💡 AI RECOMMENDATIONS</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.15);border-radius:12px;padding:13px;display:flex;align-items:flex-start;gap:10px">
+        <div style="font-size:18px;flex-shrink:0">📉</div>
+        <div><div style="font-weight:600;font-size:12.5px;color:var(--teal);margin-bottom:3px">Reduce Operational Costs by 12%</div><div style="font-size:11.5px;color:var(--teal2);line-height:1.5">Through vendor negotiation → projected saving of <b>+15,000 EGP/year</b>.</div></div>
+      </div>
+      <div style="background:rgba(230,255,43,.06);border:1px solid rgba(230,255,43,.2);border-radius:12px;padding:13px;display:flex;align-items:flex-start;gap:10px">
+        <div style="font-size:18px;flex-shrink:0">📈</div>
+        <div><div style="font-weight:600;font-size:12.5px;color:var(--teal);margin-bottom:3px">Expand Digital Sales Channel</div><div style="font-size:11.5px;color:var(--teal2);line-height:1.5">Add e-commerce — AI estimates <b>+22% revenue</b> growth in 6 months based on market trends.</div></div>
+      </div>
+      <div style="background:rgba(193,18,31,.05);border:1px solid rgba(193,18,31,.15);border-radius:12px;padding:13px;display:flex;align-items:flex-start;gap:10px">
+        <div style="font-size:18px;flex-shrink:0">⚠️</div>
+        <div><div style="font-weight:600;font-size:12.5px;color:var(--red);margin-bottom:3px">Payroll Risk Alert</div><div style="font-size:11.5px;color:var(--teal2);line-height:1.5">June payroll projected to hit <b>56,000 EGP</b> — 8,200 EGP over current budget. Consider deferring hire.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EMPLOYEES PAGE ══ -->
+<div class="page" id="page-employees">
+  <div class="flex-between" style="margin-bottom:20px">
+    <div>
+      <div class="page-title">Employees & Payroll</div>
+      <div class="page-sub">Manage your team and process payments</div>
+    </div>
+    <button class="btn primary" onclick="openModal('addEmployeeModal')">+ Add Employee</button>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="kpi-card lime-top">
+      <div class="kpi-label">Total Employees</div>
+      <div class="kpi-value" id="empCount">8</div>
+      <div class="kpi-change up">↑ +1 this month</div>
+    </div>
+    <div class="kpi-card lime-top">
+      <div class="kpi-label">Monthly Payroll</div>
+      <div class="kpi-value" id="payrollTotal">48,000</div>
+      <div class="kpi-change" style="color:var(--gray)">EGP total</div>
+    </div>
+    <div class="kpi-card teal-top">
+      <div class="kpi-label">Payroll / Revenue</div>
+      <div class="kpi-value">37.8%</div>
+      <div class="kpi-change up">✓ Healthy ratio</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label">TEAM ROSTER</div>
+      <button class="btn sm primary" onclick="processPayroll()">Process Payroll →</button>
+    </div>
+    <div id="employeeList"></div>
+  </div>
+</div>
+
+<!-- ══ INVOICING PAGE ══ -->
+<div class="page" id="page-invoicing">
+  <div class="flex-between" style="margin-bottom:20px">
+    <div>
+      <div class="page-title">Invoicing</div>
+      <div class="page-sub">Create and track client invoices</div>
+    </div>
+    <button class="btn primary" onclick="openModal('createInvoiceModal')">+ Create Invoice</button>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="kpi-card lime-top">
+      <div class="kpi-label">Total Invoiced</div>
+      <div class="kpi-value">127,000</div>
+      <div class="kpi-change up">↑ This month</div>
+    </div>
+    <div class="kpi-card teal-top">
+      <div class="kpi-label">Paid</div>
+      <div class="kpi-value">108,500</div>
+      <div class="kpi-change up">3 invoices paid</div>
+    </div>
+    <div class="kpi-card red-top">
+      <div class="kpi-label">Pending</div>
+      <div class="kpi-value">18,500</div>
+      <div class="kpi-change down">2 outstanding</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:14px">RECENT INVOICES</div>
+    <div id="invoiceList"></div>
+  </div>
+</div>
+
+<!-- ══ EXPENSES PAGE ══ -->
+<div class="page" id="page-expenses">
+  <div class="flex-between" style="margin-bottom:20px">
+    <div>
+      <div class="page-title">Business Expenses</div>
+      <div class="page-sub">Track and categorize all outgoing payments</div>
+    </div>
+    <button class="btn primary" onclick="openModal('addExpenseModal')">+ Add Expense</button>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card green">
+      <div class="label light">TOTAL EXPENSES (MTD)</div>
+      <div class="val lg light" style="margin:6px 0">42,000 EGP</div>
+      <div class="progress-bg" style="background:rgba(249,247,242,.15)"><div class="progress-fill" style="width:33%"></div></div>
+      <div style="font-size:10px;color:rgba(249,247,242,.5);margin-top:5px">33% of revenue</div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:10px">BY CATEGORY</div>
+      <div id="expensePie"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:14px">EXPENSE LOG</div>
+    <div id="expenseList"></div>
+  </div>
+</div>
+
+<!-- ══ FUTURE ME AI PAGE ══ -->
+<div class="page" id="page-future">
+  <div class="page-title">Future Me AI</div>
+  <div class="page-sub">AI-powered spending & cashflow predictions for your business</div>
+
+  <!-- Spending Prediction Panel -->
+  <div class="card green" style="margin-bottom:16px">
+    <div class="flex-between">
+      <div>
+        <div class="label light">NEXT MONTH SPENDING PREDICTION</div>
+        <div class="val lg light" style="font-size:30px;margin:6px 0" id="predictTotal">Loading...</div>
+        <div style="font-size:11.5px;color:rgba(249,247,242,.6)" id="predictSub">Analyzing your business patterns...</div>
+      </div>
+      <div style="background:rgba(230,255,43,.12);border-radius:50%;width:72px;height:72px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:32px">🔮</div>
+    </div>
+    <div class="progress-bg" style="background:rgba(249,247,242,.15);margin-top:14px"><div class="progress-fill" id="predictConf" style="width:0%"></div></div>
+    <div style="font-size:10px;color:rgba(249,247,242,.4);margin-top:4px" id="predictConfLabel">AI Confidence</div>
+  </div>
+
+  <!-- Breakdown Predictions -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="flex-between" style="margin-bottom:12px">
+      <div class="label">PREDICTED SPENDING BREAKDOWN</div>
+      <button class="btn sm secondary" onclick="refreshPredictions()">↻ Refresh</button>
+    </div>
+    <div id="predictBreakdown"></div>
+  </div>
+
+  <!-- AI Chat -->
+  <div class="card">
+    <div class="flex-between" style="margin-bottom:10px">
+      <div>
+        <div class="label">FUTURE ME AI — ASK ANYTHING</div>
+        <div style="font-size:11px;color:var(--gray)">AI financial advisor with full access to your business data</div>
+      </div>
+      <div style="background:var(--lime);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--teal);font-weight:700;flex-shrink:0">FC</div>
+    </div>
+    <div class="chat-wrap">
+      <div class="chat-messages" id="bizChatMessages">
+        <div class="msg ai">
+          <div class="msg-avatar" style="background:var(--lime);color:var(--teal)">FC</div>
+          <div class="msg-bubble" id="bizGreeting">Hello! I'm your Future Me AI. I have full access to your business data — revenue, expenses, payroll, and cashflow. I can predict your next month's spending and answer any business finance question. What would you like to know?</div>
+        </div>
+      </div>
+      <div class="quick-chips" id="bizChips">
+        <div class="chip" onclick="sendBizChip(this)">Predict next month spending</div>
+        <div class="chip" onclick="sendBizChip(this)">Payroll risk analysis</div>
+        <div class="chip" onclick="sendBizChip(this)">Cash runway</div>
+        <div class="chip" onclick="sendBizChip(this)">Can I hire someone?</div>
+        <div class="chip" onclick="sendBizChip(this)">Top expense to cut</div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="bizChatInput" placeholder="Ask your AI advisor..." onkeydown="if(event.key==='Enter')sendBizMsg()">
+        <button class="send-btn" onclick="sendBizMsg()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INSIGHTS PAGE ══ -->
+<div class="page" id="page-insights">
+  <div class="page-title">Business Insights</div>
+  <div class="page-sub">AI-powered analytics and performance metrics</div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card green" style="display:flex;gap:20px;align-items:center">
+      <div class="score-ring">
+        <svg width="96" height="96" viewBox="0 0 96 96">
+          <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(249,247,242,.12)" stroke-width="7"/>
+          <circle cx="48" cy="48" r="40" fill="none" stroke="#E6FF2B" stroke-width="7" stroke-dasharray="213" stroke-dashoffset="38" stroke-linecap="round"/>
+        </svg>
+        <div class="score-ring-val"><div class="num">84</div><div class="lbl">Score</div></div>
+      </div>
+      <div>
+        <div class="label light">BUSINESS HEALTH SCORE</div>
+        <div style="font-size:13px;color:rgba(249,247,242,.8);margin-top:4px;line-height:1.6">Strong liquidity, healthy margins, moderate payroll ratio.</div>
+        <div style="margin-top:8px"><span class="tag light">Top 22% of SMEs</span></div>
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px">
+      <div class="label">PERFORMANCE METRICS</div>
+      <div>
+        <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--teal2)">Revenue Growth</span><span style="font-size:12px;font-weight:700;color:var(--teal3)">+14%</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width:72%"></div></div>
+      </div>
+      <div>
+        <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--teal2)">Cost Efficiency</span><span style="font-size:12px;font-weight:700;color:var(--teal3)">67%</span></div>
+        <div class="progress-bg"><div class="progress-fill teal" style="width:67%"></div></div>
+      </div>
+      <div>
+        <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--teal2)">Payroll Ratio</span><span style="font-size:12px;font-weight:700;color:var(--teal3)">37.8%</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width:38%"></div></div>
+      </div>
+      <div>
+        <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--teal2)">Invoice Collection Rate</span><span style="font-size:12px;font-weight:700;color:var(--teal3)">85%</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width:85%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:12px">TOP GROWTH OPPORTUNITIES</div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1);font-size:18px">🛒</div>
+      <div style="flex:1"><div class="tx-name">Expand Digital Payments Channel</div><div class="tx-cat">Projected ROI: +22% revenue in 6 months</div></div>
+      <span class="tag orange">High Impact</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1);font-size:18px">🤝</div>
+      <div style="flex:1"><div class="tx-name">Vendor Renegotiation</div><div class="tx-cat">+15,000 EGP/year in operational savings</div></div>
+      <span class="tag green">Quick Win</span>
+    </div>
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(230,255,43,.1);font-size:18px">📊</div>
+      <div style="flex:1"><div class="tx-name">Automate Invoice Collection</div><div class="tx-cat">Reduce overdue rate from 15% to under 5%</div></div>
+      <span class="tag yellow">Medium Term</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+
+<!-- ══ MODALS ══ -->
+
+<div class="modal-overlay" id="addEmployeeModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addEmployeeModal')">×</button>
+    <div class="modal-title">Add Employee</div>
+    <div class="input-group"><div class="input-label">Full Name</div><input type="text" id="newEmpName" placeholder="Ahmed Hassan"></div>
+    <div class="input-group"><div class="input-label">Role / Position</div><input type="text" id="newEmpRole" placeholder="Sales Manager"></div>
+    <div class="input-group"><div class="input-label">Monthly Salary (EGP)</div><input type="number" id="newEmpSalary" placeholder="8000"></div>
+    <div class="input-group"><div class="input-label">Department</div>
+      <select id="newEmpDept">
+        <option>Operations</option><option>Sales</option><option>Finance</option><option>Technology</option><option>HR</option>
+      </select>
+    </div>
+    <button class="btn primary" style="width:100%;margin-top:4px" onclick="addEmployee()">Add to Roster</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="createInvoiceModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('createInvoiceModal')">×</button>
+    <div class="modal-title">Create Invoice</div>
+    <div class="input-group"><div class="input-label">Client Name</div><input type="text" id="invClient" placeholder="Tech Corp"></div>
+    <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" id="invAmount" placeholder="15000"></div>
+    <div class="input-group"><div class="input-label">Description</div><input type="text" id="invDesc" placeholder="Web development services – May 2026"></div>
+    <div class="input-group"><div class="input-label">Due Date</div><input type="date" id="invDue"></div>
+    <button class="btn primary" style="width:100%;margin-top:4px" onclick="createInvoice()">Generate Invoice</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addExpenseModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addExpenseModal')">×</button>
+    <div class="modal-title">Add Expense</div>
+    <div class="input-group"><div class="input-label">Expense Name</div><input type="text" id="expName" placeholder="Office supplies"></div>
+    <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" id="expAmount" placeholder="1200"></div>
+    <div class="input-group"><div class="input-label">Category</div>
+      <select id="expCat">
+        <option>Operations</option><option>Payroll</option><option>Marketing</option><option>Technology</option><option>Rent</option><option>Inventory</option><option>Other</option>
+      </select>
+    </div>
+    <button class="btn primary" style="width:100%;margin-top:4px" onclick="addExpense()">Save Expense</button>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+let bizData = JSON.parse(localStorage.getItem('fincircle_business') || 'null') || {
+  company: 'My Business',
+  balance: 128000,
+  revenue: 127000,
+  expenses: 42000,
+  employees: [
+    { name:'Ahmed Hassan', role:'Operations Manager', salary:10000, dept:'Operations' },
+    { name:'Sara Mahmoud', role:'Head of Accounting', salary:9000, dept:'Finance' },
+    { name:'Mostafa Ali', role:'Senior Sales', salary:7500, dept:'Sales' },
+    { name:'Nour Ibrahim', role:'Frontend Developer', salary:8500, dept:'Technology' },
+    { name:'Khaled Saad', role:'HR Specialist', salary:6000, dept:'HR' },
+    { name:'Aya Mohamed', role:'Sales Executive', salary:5500, dept:'Sales' },
+    { name:'Omar Farouk', role:'Operations', salary:5000, dept:'Operations' },
+    { name:'Layla Hassan', role:'Junior Developer', salary:4500, dept:'Technology' }
+  ],
+  invoices: [
+    { client:'Tech Corp', amount:25000, desc:'Software development', status:'Paid', date:'May 27' },
+    { client:'Retail Store', amount:18200, desc:'Supply chain services', status:'Paid', date:'May 22' },
+    { client:'Al Nour Trading', amount:12500, desc:'Consulting – Q2', status:'Pending', date:'May 15' },
+    { client:'Metro Group', amount:8500, desc:'IT infrastructure', status:'Pending', date:'May 10' },
+    { client:'Delta Corp', amount:15000, desc:'Marketing campaign', status:'Paid', date:'May 5' }
+  ],
+  expenseLog: [
+    { name:'Supplier Payment – Al Ahram', cat:'Inventory', amount:12400, date:'May 28' },
+    { name:'Office Rent – May 2026', cat:'Rent', amount:8500, date:'May 1' },
+    { name:'Google Ads – May', cat:'Marketing', amount:3200, date:'May 3' },
+    { name:'Software Subscriptions', cat:'Technology', amount:1800, date:'May 1' },
+    { name:'Office Supplies', cat:'Operations', amount:950, date:'May 12' },
+    { name:'Team Lunch – Quarterly', cat:'Operations', amount:2200, date:'May 15' }
+  ]
+};
+
+function saveBiz() { localStorage.setItem('fincircle_business', JSON.stringify(bizData)); }
+
+// ── LOAD USER INFO ──
+(function() {
+  const user = JSON.parse(localStorage.getItem('fincircle_user') || '{}');
+  if (user.name) {
+    document.getElementById('bizUserName').textContent = user.name.split(' ')[0];
+    document.getElementById('bizInitials').textContent = user.name[0].toUpperCase();
+  }
+  if (bizData.company) document.getElementById('bizNameDisplay').textContent = bizData.company;
+})();
+
+// ── NAVIGATION ──
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  const p = document.getElementById('page-' + id);
+  if (p) p.classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelectorAll('.nav-item').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+  if (id === 'future') renderPredictions();
+  if (id === 'employees') renderEmployees();
+  if (id === 'invoicing') renderInvoices();
+  if (id === 'expenses') renderExpenses();
+  if (id === 'cashflow') renderCashflowChart();
+}
+
+// ── MODALS ──
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); });
+});
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:20px;right:20px;background:var(--teal);color:white;padding:12px 20px;border-radius:12px;z-index:500;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.2);animation:fadeIn .2s ease';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ── CHARTS ──
+function renderRevChart() {
+  const data = [98, 104, 111, 119, 127];
+  const max = Math.max(...data);
+  const months = ['J','F','M','A','M'];
+  const chart = document.getElementById('revChart');
+  if (!chart) return;
+  chart.innerHTML = data.map((v,i) => `
+    <div class="bar-col">
+      <div class="bar" style="height:${(v/max*68)}px;background:${i===4?'var(--lime)':'rgba(249,247,242,.18)'}"></div>
+      <span class="bl" style="color:rgba(249,247,242,.4)">${months[i]}</span>
+    </div>`).join('');
+}
+
+function renderCashflowChart() {
+  const rev = [98, 104, 111, 119, 127];
+  const exp = [34, 36, 38, 40, 42];
+  const maxV = Math.max(...rev);
+  const chart = document.getElementById('cashflowChart');
+  if (!chart) return;
+  chart.innerHTML = rev.map((r,i) => `
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100px">
+      <div style="width:100%;border-radius:3px 3px 0 0;height:${(r/maxV*88)}px;background:var(--teal3);opacity:.8"></div>
+      <div style="width:60%;border-radius:3px 3px 0 0;height:${(exp[i]/maxV*88)}px;background:var(--red);opacity:.7;margin-top:-${(r/maxV*88)}px;position:relative"></div>
+    </div>`).join('');
+}
+
+// ── EMPLOYEES ──
+function renderEmployees() {
+  const list = document.getElementById('employeeList');
+  const total = bizData.employees.reduce((a,e) => a+e.salary, 0);
+  if (document.getElementById('empCount')) document.getElementById('empCount').textContent = bizData.employees.length;
+  if (document.getElementById('payrollTotal')) document.getElementById('payrollTotal').textContent = total.toLocaleString();
+  list.innerHTML = bizData.employees.map((e,i) => `
+    <div class="emp-row">
+      <div class="emp-avatar">${e.name[0]}</div>
+      <div class="emp-info">
+        <div class="emp-name">${e.name}</div>
+        <div class="emp-role">${e.role} · ${e.dept}</div>
+      </div>
+      <div style="font-family:var(--font-display);font-size:14px;color:var(--teal);margin-right:10px">${e.salary.toLocaleString()} EGP</div>
+      <span class="tag green">Active</span>
+    </div>`).join('');
+}
+
+function addEmployee() {
+  const name = document.getElementById('newEmpName').value.trim();
+  const role = document.getElementById('newEmpRole').value.trim();
+  const salary = +document.getElementById('newEmpSalary').value;
+  const dept = document.getElementById('newEmpDept').value;
+  if (!name || !salary) return;
+  bizData.employees.push({ name, role, salary, dept });
+  bizData.expenses += salary;
+  saveBiz();
+  closeModal('addEmployeeModal');
+  renderEmployees();
+  showToast(`✓ ${name} added to roster`);
+  document.getElementById('newEmpName').value = '';
+  document.getElementById('newEmpRole').value = '';
+  document.getElementById('newEmpSalary').value = '';
+}
+
+function processPayroll() {
+  const total = bizData.employees.reduce((a,e) => a+e.salary, 0);
+  bizData.balance -= total;
+  saveBiz();
+  showToast(`✓ Payroll of ${total.toLocaleString()} EGP processed for ${bizData.employees.length} employees`);
+}
+
+// ── INVOICES ──
+function renderInvoices() {
+  const list = document.getElementById('invoiceList');
+  list.innerHTML = bizData.invoices.map(inv => `
+    <div class="invoice-row">
+      <div class="icon-box" style="background:rgba(230,255,43,.1)">📄</div>
+      <div style="flex:1">
+        <div class="tx-name">${inv.client}</div>
+        <div class="tx-cat">${inv.desc} · ${inv.date}</div>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--teal);margin-right:10px">${inv.amount.toLocaleString()} EGP</div>
+      <span class="tag ${inv.status==='Paid'?'green':'orange'}">${inv.status}</span>
+    </div>`).join('');
+}
+
+function createInvoice() {
+  const client = document.getElementById('invClient').value.trim();
+  const amount = +document.getElementById('invAmount').value;
+  const desc = document.getElementById('invDesc').value.trim();
+  if (!client || !amount) return;
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+  bizData.invoices.unshift({ client, amount, desc, status:'Pending', date:today });
+  saveBiz();
+  closeModal('createInvoiceModal');
+  renderInvoices();
+  showToast(`✓ Invoice for ${client} created — ${amount.toLocaleString()} EGP`);
+}
+
+// ── EXPENSES ──
+function renderExpenses() {
+  const list = document.getElementById('expenseList');
+  list.innerHTML = bizData.expenseLog.map(exp => `
+    <div class="row-item">
+      <div class="icon-box" style="background:rgba(193,18,31,.06);font-size:14px">📤</div>
+      <div style="flex:1"><div class="tx-name">${exp.name}</div><div class="tx-cat">${exp.cat} · ${exp.date}</div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--red)">−${exp.amount.toLocaleString()} EGP</div>
+    </div>`).join('');
+  // Pie by category
+  const cats = {};
+  bizData.expenseLog.forEach(e => { cats[e.cat] = (cats[e.cat]||0) + e.amount; });
+  const total = Object.values(cats).reduce((a,b)=>a+b,0);
+  const colors = ['var(--teal)','var(--teal3)','var(--lime3)','var(--teal2)','#C1121F','var(--gray)'];
+  const pie = document.getElementById('expensePie');
+  if (pie) {
+    pie.innerHTML = Object.entries(cats).map(([k,v],i) => `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+        <div style="width:8px;height:8px;border-radius:2px;background:${colors[i%colors.length]};flex-shrink:0"></div>
+        <div style="flex:1;font-size:11.5px;color:var(--teal2)">${k}</div>
+        <div style="font-size:11.5px;font-weight:700;color:var(--teal)">${v.toLocaleString()} EGP</div>
+        <div style="font-size:10px;color:var(--gray)">${(v/total*100).toFixed(0)}%</div>
+      </div>`).join('');
+  }
+}
+
+function addExpense() {
+  const name = document.getElementById('expName').value.trim();
+  const amount = +document.getElementById('expAmount').value;
+  const cat = document.getElementById('expCat').value;
+  if (!name || !amount) return;
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+  bizData.expenseLog.unshift({ name, amount, cat, date:today });
+  bizData.expenses += amount;
+  bizData.balance -= amount;
+  saveBiz();
+  closeModal('addExpenseModal');
+  renderExpenses();
+  showToast(`✓ Expense of ${amount.toLocaleString()} EGP recorded`);
+}
+
+// ── FUTURE ME AI — SPENDING PREDICTIONS ──
+function computePredictions() {
+  const payroll = bizData.employees.reduce((a,e) => a+e.salary, 0);
+  // Predict slight growth in all categories
+  return {
+    total: Math.round((bizData.expenses + payroll) * 1.05),
+    confidence: 87,
+    items: [
+      { label:'Payroll', predicted: Math.round(payroll * 1.08), current: payroll, icon:'👥', conf:95 },
+      { label:'Inventory & Suppliers', predicted: Math.round(13500 * 1.06), current: 12400, icon:'📦', conf:80 },
+      { label:'Office Rent', predicted: 8500, current: 8500, icon:'🏢', conf:100 },
+      { label:'Marketing & Ads', predicted: Math.round(3200 * 1.15), current: 3200, icon:'📣', conf:72 },
+      { label:'Technology', predicted: Math.round(1800 * 1.02), current: 1800, icon:'💻', conf:90 },
+      { label:'Operations (misc)', predicted: Math.round(3150 * 1.08), current: 3150, icon:'⚙️', conf:65 }
+    ]
+  };
+}
+
+function renderPredictions() {
+  const pred = computePredictions();
+  document.getElementById('predictTotal').textContent = pred.total.toLocaleString() + ' EGP';
+  document.getElementById('predictSub').textContent = `Based on ${bizData.employees.length} employees and ${bizData.expenseLog.length} expense patterns`;
+  setTimeout(() => {
+    if (document.getElementById('predictConf')) {
+      document.getElementById('predictConf').style.width = pred.confidence + '%';
+      document.getElementById('predictConfLabel').textContent = `AI Confidence: ${pred.confidence}%`;
+    }
+  }, 300);
+
+  const maxPred = Math.max(...pred.items.map(x => x.predicted));
+  const breakdown = document.getElementById('predictBreakdown');
+  breakdown.innerHTML = pred.items.map(item => {
+    const change = item.predicted - item.current;
+    const pct = ((change / item.current) * 100).toFixed(1);
+    const changeColor = change > 0 ? '#C1121F' : 'var(--teal3)';
+    const barWidth = Math.round((item.predicted / maxPred) * 100);
+    return `
+    <div class="predict-item">
+      <div style="font-size:20px;flex-shrink:0">${item.icon}</div>
+      <div class="predict-bar-wrap">
+        <div class="flex-between">
+          <span class="predict-label">${item.label}</span>
+          <span style="font-size:10px;color:${changeColor};font-weight:600">${change>0?'+':''}${change.toLocaleString()} EGP (${pct}%)</span>
+        </div>
+        <div class="flex-between" style="margin-top:1px">
+          <span class="predict-amount">${item.predicted.toLocaleString()} EGP</span>
+          <span class="predict-conf">Conf: ${item.conf}%</span>
+        </div>
+        <div class="progress-bg" style="margin-top:6px"><div class="progress-fill ${change>100?'red':''}" style="width:${barWidth}%"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function refreshPredictions() {
+  document.getElementById('predictTotal').textContent = 'Recalculating...';
+  document.getElementById('predictBreakdown').innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray);font-size:12px">AI is analyzing your patterns...</div>';
+  setTimeout(renderPredictions, 1200);
+}
+
+// ── FUTURE ME AI CHAT ──
+const bizAIResponses = {
+  'predict': () => {
+    const p = computePredictions();
+    return `Based on your data, I predict <b>${p.total.toLocaleString()} EGP</b> in total spending next month. The biggest driver is payroll growing to <b>${bizData.employees.reduce((a,e)=>a+e.salary,0)*1.08|0} EGP</b> (+8%). Confidence: ${p.confidence}%.`;
+  },
+  'payroll': () => {
+    const total = bizData.employees.reduce((a,e) => a+e.salary, 0);
+    const pred = total * 1.08;
+    return `Current payroll: <b>${total.toLocaleString()} EGP/month</b> for ${bizData.employees.length} employees. My prediction for June: <b>${(pred|0).toLocaleString()} EGP</b> — that's <b>${((pred-total)|0).toLocaleString()} EGP above budget</b>. I recommend deferring any new hire until August.`;
+  },
+  'hire': () => {
+    const runway = bizData.balance / (bizData.expenses / 1);
+    return `Your current balance is <b>${bizData.balance.toLocaleString()} EGP</b> with monthly expenses of <b>${bizData.expenses.toLocaleString()} EGP</b>. Cash runway: ~3 months. I'd recommend waiting until revenue stabilizes above <b>140,000 EGP/month</b> before adding headcount. You can afford a new hire at <b>max 5,500 EGP/month</b> safely.`;
+  },
+  'runway': () => `Your balance is <b>${bizData.balance.toLocaleString()} EGP</b>. At current burn rate, cash runway is approximately <b>3 months</b>. With current revenue trajectory, you should maintain positive cashflow indefinitely — but keep 2 months reserve as buffer.`,
+  'cut': () => `Biggest cost-cutting opportunity: <b>Marketing</b> — you spent 3,200 EGP but could optimize to 2,000 EGP with better targeting (saving 14,400 EGP/year). Also consider renegotiating your Inventory supplier — potential <b>12% reduction</b> = 15,000 EGP saved annually.`,
+  'revenue': () => `Revenue trend: Jan 98K → May 127K (+30% in 5 months). At this rate, I predict <b>158,000 EGP by August</b>. Your Q3 target should be 145,000 EGP/month. Top clients: Tech Corp (25K), Retail Store (18K), Delta Corp (15K).`,
+  'default': () => `Based on your business data — balance <b>${bizData.balance.toLocaleString()} EGP</b>, revenue <b>${bizData.revenue.toLocaleString()} EGP</b>, ${bizData.employees.length} employees. Ask me about spending predictions, payroll risk, hiring capacity, or revenue forecasts!`
+};
+
+function getBizAIResponse(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('predict') || m.includes('next month') || m.includes('spending')) return bizAIResponses['predict']();
+  if (m.includes('payroll') || m.includes('salary') || m.includes('risk')) return bizAIResponses['payroll']();
+  if (m.includes('hire') || m.includes('employee') || m.includes('afford')) return bizAIResponses['hire']();
+  if (m.includes('runway') || m.includes('cash') || m.includes('balance')) return bizAIResponses['runway']();
+  if (m.includes('cut') || m.includes('reduce') || m.includes('save') || m.includes('top expense')) return bizAIResponses['cut']();
+  if (m.includes('revenue') || m.includes('growth') || m.includes('sales')) return bizAIResponses['revenue']();
+  return bizAIResponses['default']();
+}
+
+function sendBizMsg() {
+  const input = document.getElementById('bizChatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addBizMsg(msg, 'user');
+  input.value = '';
+  showBizTyping();
+  setTimeout(() => { removeBizTyping(); addBizMsg(getBizAIResponse(msg), 'ai'); }, 1400);
+}
+
+function sendBizChip(el) {
+  const msg = el.textContent;
+  addBizMsg(msg, 'user');
+  showBizTyping();
+  setTimeout(() => { removeBizTyping(); addBizMsg(getBizAIResponse(msg), 'ai'); }, 1400);
+}
+
+function addBizMsg(text, type) {
+  const wrap = document.getElementById('bizChatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  const bg = type === 'ai' ? 'var(--lime)' : 'var(--teal)';
+  const col = type === 'ai' ? 'var(--teal)' : 'var(--offwhite)';
+  const initials = type === 'ai' ? 'FC' : (document.getElementById('bizInitials').textContent || 'B');
+  div.innerHTML = `<div class="msg-avatar" style="background:${bg};color:${col}">${initials}</div><div class="msg-bubble">${text}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showBizTyping() {
+  const wrap = document.getElementById('bizChatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ai'; div.id = 'bizTyping';
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--lime);color:var(--teal)">FC</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div); wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeBizTyping() {
+  const el = document.getElementById('bizTyping');
+  if (el) el.remove();
+}
+
+// ── INIT ──
+renderRevChart();
+renderEmployees();
+renderInvoices();
+
+// Chat input enter key
+document.getElementById('bizChatInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendBizMsg();
+});
+</script>
+</body>
+</html>
