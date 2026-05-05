@@ -5,7 +5,456 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinCircle – دائرتك المالية</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="StyleVirtual.css" rel="stylesheet">
+<style>
+:root {
+  /* ── NEW PALETTE ── */
+  --lime:    #E6FF2B;
+  --lime2:   #D4EE1A;
+  --lime3:   #C2DC08;
+  --teal:    #0B4650;
+  --teal2:   #0D5260;
+  --teal3:   #0F6070;
+  --teal4:   #1A7A88;
+  --offwhite:#F9F7F2;
+  --offwhite2:#EDE9E0;
+  --offwhite3:#DDD8CC;
+  --gray:    #898A8D;
+  --gray2:   #6E6F72;
+  --gray3:   #B0B1B4;
+
+  /* ── SEMANTIC ALIASES ── */
+  --sand:    var(--offwhite);
+  --sand2:   var(--offwhite2);
+  --sand3:   var(--offwhite3);
+  --crimson: var(--teal);
+  --crimson2:var(--teal2);
+  --crimson3:var(--teal3);
+  --crimson4:var(--teal4);
+  --steel:   var(--lime3);
+  --steel2:  var(--lime2);
+  --steel3:  var(--lime);
+  --danger:  #C1121F;
+  --gold:    var(--lime);
+  --navy:    var(--teal);
+  --text:    var(--teal);
+  --text2:   var(--teal2);
+
+  /* Legacy compat */
+  --beige:   var(--offwhite);
+  --beige2:  var(--offwhite2);
+  --beige3:  var(--offwhite3);
+  --green:   var(--teal);
+  --green2:  var(--teal2);
+  --green3:  var(--teal3);
+  --green4:  var(--teal4);
+  --orange:  var(--lime);
+  --orange2: var(--lime2);
+  --orange3: var(--lime3);
+  --red:     #C1121F;
+  --yellow:  var(--lime);
+
+  --r: 14px; --r2: 20px;
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+[lang="ar"] { --font-body: 'Cairo', sans-serif; }
+
+/* ── METALLIC TEAL SYSTEM ── */
+:root {
+  --mg-topbar: linear-gradient(180deg,
+    #0D5260 0%, #0B4650 18%, #083438 42%, #0A4050 60%, #0D5260 78%, #0B4650 100%);
+  --mg-sidebar: linear-gradient(180deg,
+    #0A4A56 0%, #083840 20%, #062830 50%, #083440 70%, #0A4250 100%);
+  --mg-nav-active: linear-gradient(135deg,
+    #E6FF2B 0%, #C2DC08 30%, #A8C000 55%, #C2DC08 75%, #E6FF2B 100%);
+  --mg-card-teal: linear-gradient(160deg,
+    #0D5260 0%, #0A4050 40%, #083440 65%, #0B4A58 100%);
+  --metal-sheen: linear-gradient(105deg,
+    transparent 0%, rgba(230,255,43,.04) 28%, rgba(255,255,255,.06) 46%,
+    rgba(230,255,43,.03) 54%, transparent 100%);
+  --metal-border: rgba(230,255,43,.18);
+  --metal-border-bright: rgba(230,255,43,.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:var(--font-body);background:#062830;color:var(--teal);overflow:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--offwhite3);border-radius:4px}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-columns:224px 1fr;grid-template-rows:56px 1fr;height:100vh}
+.topbar{grid-column:1/-1;background:var(--mg-topbar);border-bottom:1px solid var(--metal-border);box-shadow:0 1px 0 var(--metal-border-bright),inset 0 1px 0 rgba(230,255,43,.06);display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px;z-index:10;position:relative}.topbar::after{content:'';position:absolute;inset:0;background:var(--metal-sheen);pointer-events:none}
+.logo{font-family:var(--font-display);font-size:20px;color:var(--offwhite);letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.logo svg{flex-shrink:0}
+.logo span{color:var(--lime)}
+.topbar-center{flex:1;display:flex;justify-content:center}
+.lang-toggle{display:flex;background:rgba(249,247,242,.1);border-radius:50px;padding:3px;gap:2px}
+.lang-btn{border:none;background:none;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;color:rgba(249,247,242,.5);transition:all .2s;font-family:var(--font-body)}
+.lang-btn.active{background:var(--lime);color:var(--teal)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.icon-btn{position:relative;background:rgba(249,247,242,.08);border:none;width:34px;height:34px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:background .15s;color:var(--offwhite2)}
+.icon-btn:hover{background:rgba(249,247,242,.15)}
+.notif-dot{position:absolute;top:6px;right:7px;width:7px;height:7px;background:var(--lime);border-radius:50%;border:2px solid var(--teal)}
+.user-chip{display:flex;align-items:center;gap:8px;background:rgba(249,247,242,.08);border-radius:50px;padding:4px 12px 4px 4px;cursor:pointer;transition:background .15s}
+.user-chip:hover{background:rgba(249,247,242,.15)}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)}
+.user-name{font-size:12px;color:var(--offwhite);font-weight:500}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--mg-sidebar);border-right:1px solid var(--metal-border);box-shadow:inset -1px 0 0 var(--metal-border-bright);padding:14px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative}.sidebar::before{content:'';position:absolute;inset:0;background:var(--metal-sheen);pointer-events:none;z-index:0}.sidebar>*{position:relative;z-index:1}
+.nav-section{font-size:9px;color:rgba(249,247,242,.3);text-transform:uppercase;letter-spacing:.1em;padding:10px 10px 4px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;cursor:pointer;font-size:12.5px;font-weight:500;color:rgba(249,247,242,.6);transition:all .15s;border:none;background:none;width:100%;text-align:left;position:relative}
+.nav-item:hover{background:rgba(249,247,242,.07);color:var(--offwhite)}
+.nav-item.active{background:var(--lime);color:var(--teal);box-shadow:0 2px 8px rgba(230,255,43,.25)}
+.nav-item svg{flex-shrink:0;opacity:.8}
+.nav-item.active svg{opacity:1}
+.nav-badge{margin-left:auto;background:rgba(230,255,43,.15);color:var(--lime2);border-radius:10px;padding:2px 7px;font-size:10px;font-weight:600}
+.nav-item.active .nav-badge{background:rgba(11,70,80,.2);color:var(--teal)}
+.sidebar-footer{margin-top:auto;padding-top:10px;border-top:1px solid rgba(249,247,242,.08)}
+.customize-hint{font-size:9px;color:rgba(249,247,242,.2);text-align:center;padding:6px;cursor:pointer;transition:color .2s}
+.customize-hint:hover{color:rgba(249,247,242,.4)}
+
+/* ── MAIN ── */
+.main{background:var(--offwhite);overflow-y:auto;position:relative}
+.page{display:none;padding:26px;animation:fadeIn .22s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── ALERT BANNER ── */
+.alert-banner{background:linear-gradient(135deg,#0D5260 0%,#0B4650 40%,#083840 65%,#0A4A58 100%);box-shadow:inset 0 1px 0 rgba(230,255,43,.12),inset 0 -1px 0 rgba(0,0,0,.18);color:var(--offwhite);border-radius:14px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;animation:slideIn .3s ease;cursor:pointer;border:1px solid var(--metal-border)}
+.alert-banner.warning{background:linear-gradient(135deg,#0B4650,#1A7A88)}
+.alert-banner.info{background:linear-gradient(135deg,var(--teal3),var(--teal2))}
+@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── COMMON ── */
+.page-title{font-family:var(--font-display);font-size:25px;color:var(--teal);margin-bottom:3px}
+.page-sub{font-size:12.5px;color:var(--teal2);margin-bottom:20px;font-weight:300}
+.card{background:white;border-radius:var(--r2);border:1px solid var(--offwhite2);padding:18px}
+.card.green{background:var(--mg-card-teal);border-color:var(--metal-border);box-shadow:inset 0 1px 0 rgba(230,255,43,.1),inset 0 -1px 0 rgba(0,0,0,.2)}
+.card.orange{background:linear-gradient(160deg,#D4EE1A 0%,#C2DC08 45%,#E6FF2B 100%);border-color:rgba(194,220,8,.3)}
+.card.dark{background:linear-gradient(160deg,#0D5260 0%,#083840 45%,#0B4A58 100%);border-color:var(--metal-border)}
+.card.teal{background:var(--teal);border-color:var(--teal)}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--text2);margin-bottom:5px}
+.label.light{color:rgba(249,247,242,.5)}
+.val{font-family:var(--font-display)}
+.val.lg{font-size:34px;color:var(--teal);line-height:1}
+.val.md{font-size:20px;color:var(--teal);line-height:1}
+.val.light{color:var(--offwhite)}
+.val.orange{color:var(--teal3)}
+.sub{font-size:11px;color:var(--gray);margin-top:3px}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600}
+.tag.green{background:rgba(11,70,80,.1);color:var(--teal)}
+.tag.orange{background:rgba(194,220,8,.15);color:var(--teal2)}
+.tag.red{background:rgba(193,18,31,.12);color:#C1121F}
+.tag.yellow{background:rgba(230,255,43,.2);color:var(--teal2)}
+.tag.teal{background:rgba(11,70,80,.1);color:var(--teal)}
+.tag.light{background:rgba(249,247,242,.15);color:var(--lime2)}
+.progress-bg{background:var(--offwhite2);border-radius:4px;height:7px;overflow:hidden;margin-top:7px}
+.progress-fill{background:var(--lime);height:7px;border-radius:4px;transition:width .5s}
+.progress-fill.green{background:var(--teal3)}
+.progress-fill.teal{background:var(--teal)}
+.btn{border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-body);font-size:12.5px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn.primary{background:var(--lime);color:var(--teal)}
+.btn.primary:hover{background:var(--lime2);transform:translateY(-1px)}
+.btn.secondary{background:var(--offwhite2);color:var(--teal)}
+.btn.secondary:hover{background:var(--offwhite3)}
+.btn.ghost{background:rgba(249,247,242,.1);color:var(--offwhite);border:1px solid rgba(249,247,242,.15)}
+.btn.ghost:hover{background:rgba(249,247,242,.18)}
+.btn.danger{background:rgba(193,18,31,.1);color:#C1121F}
+.btn.teal{background:var(--teal);color:white}
+.btn.sm{padding:6px 13px;font-size:11.5px}
+.divider{height:1px;background:var(--offwhite2);margin:14px 0}
+input,select,textarea{font-family:var(--font-body);font-size:13px;border:1.5px solid var(--offwhite3);border-radius:10px;padding:9px 12px;width:100%;background:white;color:var(--teal);outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
+.input-group{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.input-label{font-size:11.5px;font-weight:600;color:var(--text2)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.flex-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.row-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--offwhite2)}
+.row-item:last-child{border-bottom:none}
+.icon-box{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* ── SCORE RING ── */
+.score-ring{position:relative;width:96px;height:96px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-ring-val .num{font-family:var(--font-display);font-size:26px;color:var(--offwhite);line-height:1}
+.score-ring-val .lbl{font-size:8px;color:rgba(249,247,242,.5);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── TX ROWS ── */
+.tx-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;transition:background .15s;cursor:default}
+.tx-row:hover{background:var(--offwhite)}
+.tx-info{flex:1;min-width:0}
+.tx-name{font-size:12.5px;font-weight:600;color:var(--teal)}
+.tx-cat{font-size:11px;color:var(--gray);margin-top:1px}
+.tx-amt{font-size:13px;font-weight:700;white-space:nowrap}
+
+/* ── CHAT ── */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 56px - 100px)}
+.chat-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:8px;scroll-behavior:smooth}
+.msg{display:flex;gap:9px;max-width:88%}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-bubble{padding:10px 14px;border-radius:16px;font-size:12.5px;line-height:1.6}
+.msg.ai .msg-bubble{background:white;border:1px solid var(--offwhite2);color:var(--teal);border-radius:4px 16px 16px 16px}
+.msg.user .msg-bubble{background:var(--teal);color:var(--offwhite);border-radius:16px 4px 16px 16px}
+.msg-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.msg.ai .msg-avatar{background:var(--lime);color:var(--teal)}
+.msg.user .msg-avatar{background:var(--teal);color:var(--offwhite)}
+.chat-input-row{display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--offwhite2);margin-top:auto}
+.chat-input{flex:1;border-radius:50px;padding:9px 16px;font-size:12.5px;resize:none;border:1.5px solid var(--offwhite3);height:40px}
+.send-btn{width:38px;height:38px;border-radius:50%;background:var(--lime);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.send-btn:hover{background:var(--lime2);transform:scale(1.05)}
+.quick-chips{display:flex;gap:6px;flex-wrap:wrap;padding:6px 0 8px}
+.chip{background:white;border:1.5px solid var(--offwhite2);border-radius:50px;padding:4px 11px;font-size:11px;font-weight:500;color:var(--teal2);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--lime3);color:var(--teal);background:rgba(230,255,43,.07)}
+.typing-dots{display:flex;gap:4px;align-items:center;padding:2px 0}
+.typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--offwhite3);animation:bounce .9s infinite}
+.typing-dots span:nth-child(2){animation-delay:.15s}
+.typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:24px;padding:26px;width:440px;max-width:92vw;max-height:82vh;overflow-y:auto;animation:fadeIn .2s ease;position:relative}
+.modal-title{font-family:var(--font-display);font-size:20px;color:var(--teal);margin-bottom:14px}
+.modal-close{position:absolute;top:14px;right:14px;background:var(--offwhite2);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal-close:hover{background:var(--offwhite3)}
+
+/* ── VIRTUAL CARD ── */
+.virtual-card{background:linear-gradient(135deg,#0D5260 0%,#0B4650 25%,#083840 50%,#0A4A58 70%,#0D5260 100%);box-shadow:inset 0 1px 0 rgba(230,255,43,.14),inset 0 -2px 0 rgba(0,0,0,.25),0 8px 32px rgba(0,0,0,.35);border:1px solid var(--metal-border);border-radius:20px;padding:22px;color:var(--offwhite);position:relative;overflow:hidden;cursor:pointer;transition:transform .2s;min-height:160px}
+.virtual-card::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:rgba(230,255,43,.08)}
+.virtual-card::after{content:'';position:absolute;inset:0;background:var(--metal-sheen);pointer-events:none}
+.virtual-card:hover{transform:translateY(-3px)}
+.vc-chip{width:38px;height:28px;background:linear-gradient(135deg,var(--lime),var(--lime2));border-radius:5px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--teal)}
+.vc-number{font-size:14px;letter-spacing:.15em;margin-bottom:14px;font-weight:500;font-family:monospace}
+.vc-footer{display:flex;justify-content:space-between;align-items:flex-end}
+.vc-label{font-size:8px;opacity:.5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.vc-val{font-size:13px;font-weight:600}
+.vc-nfc{background:rgba(230,255,43,.15);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--lime);display:inline-flex;align-items:center;gap:4px}
+
+/* ── NFC PULSE ── */
+.nfc-active{animation:nfcPulse 1.5s ease-in-out infinite}
+@keyframes nfcPulse{0%,100%{box-shadow:0 0 0 0 rgba(230,255,43,.3)}50%{box-shadow:0 0 0 12px rgba(230,255,43,0)}}
+
+/* ── CHARTS ── */
+.bar-chart{display:flex;align-items:flex-end;gap:7px;height:80px;padding-bottom:4px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar-col .bar{width:100%;border-radius:4px 4px 0 0;transition:opacity .2s;cursor:default}
+.bar-col .bar:hover{opacity:.75}
+.bar-col .bl{font-size:8px;color:var(--gray)}
+.donut-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.donut-center{position:absolute;text-align:center}
+
+/* ── STOCK ROWS ── */
+.stock-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;cursor:pointer;transition:background .15s}
+.stock-row:hover{background:var(--offwhite)}
+.stock-ticker{font-weight:700;font-size:12.5px;color:var(--teal);width:56px}
+.stock-name{font-size:11.5px;color:var(--teal2);flex:1}
+.stock-price{font-weight:600;font-size:12.5px;width:70px;text-align:right}
+.stock-chg{font-size:11.5px;font-weight:600;width:60px;text-align:right}
+
+/* ── GOAL CARDS ── */
+.goal-card{background:white;border:1px solid var(--offwhite2);border-radius:var(--r2);padding:16px;transition:all .2s}
+.goal-card:hover{box-shadow:0 6px 20px rgba(11,70,80,.07)}
+
+/* ── SME / BUSINESS ── */
+.emp-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--offwhite);border-radius:11px;margin-bottom:8px}
+.emp-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+
+/* ── P2P LENDING ── */
+.loan-card{background:white;border:1px solid var(--offwhite2);border-radius:var(--r2);padding:16px;margin-bottom:10px}
+.loan-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+
+/* ── RISK METER ── */
+.risk-meter{display:flex;gap:4px;margin:10px 0}
+.risk-seg{flex:1;height:8px;border-radius:4px}
+
+/* ── CURRENCY SELECTOR ── */
+.currency-pill{display:flex;gap:0;background:rgba(249,247,242,.1);border-radius:50px;padding:3px;overflow:hidden}
+.curr-btn{border:none;background:none;padding:4px 14px;border-radius:50px;font-size:11.5px;font-weight:600;cursor:pointer;color:rgba(249,247,242,.6);transition:all .2s;font-family:var(--font-body)}
+.curr-btn.active{background:var(--lime);color:var(--teal)}
+
+/* ── ZAKAT ── */
+.zakat-card{background:linear-gradient(135deg,var(--teal2),var(--teal));border-radius:var(--r2);padding:20px;color:var(--offwhite);position:relative;overflow:hidden}
+
+/* ── CUSTOMIZE MODAL ── */
+.nav-customize-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--offwhite);border-radius:10px;margin-bottom:6px;cursor:grab;transition:background .15s}
+.nav-customize-item:hover{background:var(--offwhite2)}
+.drag-handle{color:var(--gray3);font-size:14px;cursor:grab}
+.toggle-switch{position:relative;width:36px;height:20px;margin-left:auto}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--offwhite3);border-radius:10px;transition:.3s;cursor:pointer}
+.toggle-slider:before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:white;border-radius:50%;transition:.3s}
+.toggle-switch input:checked+.toggle-slider{background:var(--lime)}
+.toggle-switch input:checked+.toggle-slider:before{transform:translateX(16px)}
+
+/* ── INVEST ── */
+.invest-option{background:white;border:1.5px solid var(--offwhite2);border-radius:16px;padding:16px;cursor:pointer;transition:all .2s;text-align:center}
+.invest-option:hover{border-color:var(--lime);transform:translateY(-2px);box-shadow:0 8px 20px rgba(230,255,43,.15)}
+.invest-option.selected{border-color:var(--lime);background:rgba(230,255,43,.05)}
+.invest-option .icon{font-size:28px;margin-bottom:8px}
+.invest-option .name{font-weight:600;font-size:13px;color:var(--teal)}
+.invest-option .ret{font-size:12px;color:var(--teal3);margin-top:2px}
+
+/* ── SALARY ADVANCE ── */
+.salary-advance-bar{background:linear-gradient(90deg,var(--teal),var(--teal3));height:8px;border-radius:4px;transition:width .5s}
+
+/* ── RTL SUPPORT ── */
+[dir="rtl"] .nav-item{text-align:right}
+[dir="rtl"] .nav-badge{margin-left:0;margin-right:auto}
+[dir="rtl"] .topbar{flex-direction:row-reverse}
+
+/* ── ANALYSIS CHARTS ── */
+.sparkline{display:flex;align-items:flex-end;gap:3px;height:40px}
+.sparkline-bar{flex:1;border-radius:2px 2px 0 0;min-width:6px;transition:opacity .2s}
+.sparkline-bar:hover{opacity:.75}
+.pie-legend{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.pie-legend-item{display:flex;align-items:center;gap:8px;font-size:11.5px}
+.pie-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* ── GAMEYA ── */
+.gam-card{background:white;border:1px solid var(--offwhite2);border-radius:var(--r2);padding:16px;cursor:pointer;transition:all .2s}
+.gam-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,70,80,.08)}
+.member-dots{display:flex;margin-top:10px}
+.mdot{width:24px;height:24px;border-radius:50%;background:var(--teal3);border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--offwhite);font-weight:600;margin-left:-6px}
+.mdot:first-child{margin-left:0}
+
+/* ── CUSTOMER SERVICE BADGE ── */
+.cs-badge{position:fixed;bottom:24px;right:24px;background:var(--lime);color:var(--teal);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(230,255,43,.35);z-index:250;transition:all .2s;border:none}
+.cs-badge:hover{background:var(--lime2);transform:scale(1.08)}
+.cs-panel{position:fixed;bottom:84px;right:24px;width:340px;background:white;border-radius:20px;box-shadow:0 16px 48px rgba(11,70,80,.2);z-index:250;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--offwhite2);max-height:500px}
+.cs-panel.open{display:flex}
+.cs-header{background:var(--teal);padding:16px;color:var(--offwhite);display:flex;align-items:center;gap:10px}
+.cs-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:300px}
+.cs-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--offwhite2)}
+.cs-input{flex:1;border-radius:50px;padding:8px 14px;font-size:12px;border:1.5px solid var(--offwhite3);outline:none;font-family:var(--font-body)}
+.cs-send{width:34px;height:34px;border-radius:50%;background:var(--lime);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--teal);font-size:14px}
+
+/* ── NFC OVERLAY ── */
+.nfc-overlay{position:fixed;inset:0;background:rgba(8,40,48,.96);z-index:400;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.nfc-overlay.open{display:flex}
+.nfc-ring{width:160px;height:160px;border-radius:50%;border:3px solid var(--lime);display:flex;align-items:center;justify-content:center;animation:nfcPulse2 1.5s ease-in-out infinite}
+@keyframes nfcPulse2{0%,100%{box-shadow:0 0 0 0 rgba(230,255,43,.4),0 0 0 0 rgba(230,255,43,.2)}50%{box-shadow:0 0 0 20px rgba(230,255,43,.1),0 0 0 40px rgba(230,255,43,.05)}}
+.nfc-inner{font-size:60px}
+
+/* ── FUTURE ME AI ── */
+.future-me-card{background:linear-gradient(135deg,#062830 0%,#0A3D48 40%,#0D5260 100%);border:1px solid rgba(230,255,43,.25);border-radius:20px;padding:20px;position:relative;overflow:hidden}
+.future-me-card::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(230,255,43,.12),transparent 70%);pointer-events:none}
+.fm-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(230,255,43,.15);border:1px solid rgba(230,255,43,.3);border-radius:50px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--lime);margin-bottom:10px;letter-spacing:.04em}
+.fm-prediction{font-family:var(--font-display);font-size:20px;color:var(--offwhite);line-height:1.35;margin-bottom:8px}
+.fm-insight{font-size:12.5px;color:rgba(249,247,242,.7);line-height:1.6}
+.fm-thinking{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(230,255,43,.05);border:1px solid rgba(230,255,43,.15);border-radius:12px;font-size:12px;color:var(--lime);margin-bottom:12px}
+.fm-thinking .dots span{animation:dot-blink 1.4s infinite both}
+.fm-thinking .dots span:nth-child(2){animation-delay:.2s}
+.fm-thinking .dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot-blink{0%,80%,100%{opacity:0}40%{opacity:1}}
+.ai-pred-card{background:var(--offwhite);border-radius:16px;padding:16px;margin-bottom:12px;border-left:3px solid var(--lime)}
+.ai-pred-card.risk{border-left-color:#C1121F}
+.ai-pred-card.save{border-left-color:var(--teal3)}
+.ai-pred-card .pred-label{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--gray2);margin-bottom:6px}
+.ai-pred-card .pred-value{font-family:var(--font-display);font-size:22px;color:var(--teal);margin-bottom:4px}
+.ai-pred-card .pred-desc{font-size:12px;color:var(--teal2);line-height:1.5}
+.fm-timeline-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+
+/* ══ FUTURE ME AI — ADDED STYLES ══ */
+.fmai-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;gap:16px;flex-wrap:wrap}
+.fmai-live-badge{display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:var(--lime);font-size:10.5px;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:.05em;text-transform:uppercase}
+.fmai-live-badge::before{content:'';width:6px;height:6px;background:var(--lime);border-radius:50%;animation:dot-blink 1.8s ease-in-out infinite}
+.fmai-behavior-chip{font-size:11px;font-weight:600;color:var(--gray2);padding:4px 10px;background:var(--offwhite);border-radius:50px;border:1px solid var(--offwhite3)}
+.fmai-toggle-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fmai-behavior-toggle{display:flex;gap:0;background:var(--offwhite2);border-radius:50px;padding:4px}
+.fmai-btog{border:none;background:none;padding:8px 18px;border-radius:50px;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;color:var(--teal2);transition:all .25s}
+.fmai-btog.active{background:var(--teal);color:var(--lime);box-shadow:0 2px 8px rgba(11,70,80,.25)}
+.fmai-main-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:20px}
+.fmai-chip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:50px}
+.fmai-chip.up{background:rgba(22,163,74,.15);color:#16a34a}
+.fmai-chip.down{background:rgba(193,18,31,.12);color:var(--red)}
+.fmai-ttab{border:1.5px solid var(--offwhite3);background:white;border-radius:50px;padding:5px 13px;font-family:var(--font-body);font-size:11.5px;font-weight:600;cursor:pointer;color:var(--teal3);transition:all .2s}
+.fmai-ttab.active{border-color:var(--teal);background:var(--teal);color:var(--lime)}
+.fmai-proj-stat{flex:1;min-width:80px}
+.fmai-ps-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);font-weight:600;margin-bottom:4px}
+.fmai-ps-val{font-family:var(--font-display);font-size:17px;color:var(--teal)}
+.fmai-ps-val.up{color:#16a34a}
+.fmai-ps-val.down{color:var(--red)}
+.fmai-slider-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.fmai-slider-label{font-size:13px;font-weight:500;color:var(--teal);display:flex;align-items:center;gap:8px}
+.fmai-slider-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.fmai-sv-badge{font-family:var(--font-display);font-size:13.5px;color:var(--teal);background:var(--offwhite);border-radius:8px;padding:3px 10px;min-width:70px;text-align:center;transition:background .2s,color .2s;border:1px solid var(--offwhite3)}
+.fmai-sv-badge.on{background:var(--teal);color:var(--lime);border-color:var(--teal)}
+.fmai-range{-webkit-appearance:none;width:100%;height:5px;background:var(--offwhite2);border-radius:50px;outline:none;cursor:pointer;margin-bottom:16px;display:block}
+.fmai-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--teal);border:3px solid var(--lime);cursor:pointer;box-shadow:0 2px 6px rgba(11,70,80,.25);transition:transform .15s}
+.fmai-range::-webkit-slider-thumb:hover{transform:scale(1.25)}
+.fmai-avatar{width:46px;height:46px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;box-shadow:0 4px 14px rgba(230,255,43,.3)}
+.fmai-fstat{background:rgba(249,247,242,.08);border:1px solid rgba(249,247,242,.12);border-radius:10px;padding:9px 13px;flex:1;min-width:78px}
+.fmai-fstat-label{font-size:9.5px;color:rgba(249,247,242,.45);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.fmai-fstat-val{font-family:var(--font-display);font-size:16px;color:var(--lime)}
+.fmai-advice-card{display:flex;align-items:flex-start;gap:11px;padding:13px 14px;border-radius:12px;border:1px solid var(--offwhite2);background:var(--offwhite);transition:box-shadow .2s,transform .2s}
+.fmai-advice-card:hover{box-shadow:0 4px 18px rgba(11,70,80,.1);transform:translateX(3px)}
+.fmai-advice-card.warn{border-left:3px solid #F59E0B}
+.fmai-advice-card.succ{border-left:3px solid #16a34a}
+.fmai-advice-card.info{border-left:3px solid var(--teal3)}
+.fmai-adv-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.fmai-advice-card.warn .fmai-adv-icon{background:#FEF3C7}
+.fmai-advice-card.succ .fmai-adv-icon{background:#DCFCE7}
+.fmai-advice-card.info .fmai-adv-icon{background:rgba(15,96,112,.1)}
+.fmai-adv-title{font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:2px}
+.fmai-adv-text{font-size:11.5px;color:var(--teal2);line-height:1.5}
+.fmai-adv-save{font-size:11px;font-weight:700;margin-top:5px;display:inline-block;padding:2px 8px;border-radius:20px}
+.fmai-advice-card.succ .fmai-adv-save{background:#DCFCE7;color:#16a34a}
+.fmai-advice-card.warn .fmai-adv-save{background:#FEF3C7;color:#92400E}
+.fmai-advice-card.info .fmai-adv-save{background:rgba(15,96,112,.1);color:var(--teal3)}
+.fmai-ms-track{position:relative}
+.fmai-ms-track::before{content:'';position:absolute;left:-18px;top:12px;bottom:12px;width:1.5px;background:var(--offwhite3)}
+.fmai-ms-item{position:relative;padding:0 0 16px 0;animation:fadeUp .35s ease both}
+.fmai-ms-dot{position:absolute;left:-27px;top:2px;width:20px;height:20px;border-radius:50%;background:white;border:2px solid var(--offwhite3);display:flex;align-items:center;justify-content:center;font-size:9.5px;z-index:1;transition:all .3s}
+.fmai-ms-dot.reached{background:var(--teal);border-color:var(--teal);color:var(--lime)}
+.fmai-ms-dot.soon{background:var(--lime);border-color:var(--lime3);color:var(--teal)}
+.fmai-ms-month{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);margin-bottom:1px}
+.fmai-ms-amount{font-family:var(--font-display);font-size:15px;color:var(--teal)}
+.fmai-thinking-toast{display:none;position:fixed;top:20px;right:24px;background:var(--teal);color:var(--lime);border-radius:50px;padding:9px 16px;font-size:12px;font-weight:600;z-index:999;align-items:center;gap:7px;box-shadow:0 4px 18px rgba(11,70,80,.35)}
+.fmai-thinking-toast.show{display:flex}
+.fmai-tdot{width:5px;height:5px;border-radius:50%;background:var(--lime)}
+.fmai-tdot:nth-child(2){animation:dot-blink 1.2s 0s infinite}
+.fmai-tdot:nth-child(3){animation:dot-blink 1.2s .2s infinite}
+.fmai-tdot:nth-child(4){animation:dot-blink 1.2s .4s infinite}
+@media(max-width:900px){.fmai-main-grid{grid-template-columns:1fr}.fmai-header{flex-direction:column}}
+
+/* ── NOTIFICATION FILTER TABS ── */
+.notif-tab{border:1.5px solid var(--offwhite3);background:white;color:var(--gray2);border-radius:50px;padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all .18s;display:inline-flex;align-items:center;gap:5px}
+.notif-tab:hover{border-color:var(--teal3);color:var(--teal)}
+.notif-tab.active{background:var(--teal);color:white;border-color:var(--teal)}
+.notif-tab-badge{border-radius:10px;padding:1px 6px;font-size:10px;background:rgba(11,70,80,.08);color:var(--teal2)}
+.notif-tab.active .notif-tab-badge{background:rgba(255,255,255,.2);color:white}
+
+/* ── FUTURE ME INSIGHT CARDS ── */
+.fm-notif-card{border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1px solid;cursor:default;transition:transform .18s;animation:fmSlide .35s cubic-bezier(.22,.8,.44,1)}
+.fm-notif-card:last-child{margin-bottom:0}
+.fm-notif-card:hover{transform:translateX(2px)}
+@keyframes fmSlide{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
+.fm-positive{background:linear-gradient(135deg,rgba(11,70,80,.05),rgba(194,220,8,.05));border-color:rgba(194,220,8,.3)}
+.fm-warning{background:linear-gradient(135deg,rgba(193,18,31,.03),rgba(193,18,31,.06));border-color:rgba(193,18,31,.2)}
+.fm-neutral{background:rgba(120,80,200,.04);border-color:rgba(120,80,200,.18)}
+.fm-icon-box{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.fm-positive-icon{background:rgba(194,220,8,.18)}
+.fm-warning-icon{background:rgba(193,18,31,.1)}
+.fm-neutral-icon{background:rgba(120,80,200,.1)}
+.fm-ai-bubble{font-size:11.5px;color:var(--teal2);line-height:1.6;background:white;border-radius:8px;padding:9px 11px;border:1px solid var(--offwhite2)}
+.fm-dismiss-btn{background:none;border:none;font-size:10px;color:var(--gray3);cursor:pointer;font-family:var(--font-body);padding:2px 0;transition:color .15s}
+.fm-dismiss-btn:hover{color:var(--gray2)}
+
+/* ── NOTIFICATION TOAST (popup when tx added) ── */
+.fm-toast{position:fixed;top:70px;right:24px;z-index:600;padding:12px 16px;min-width:280px;max-width:340px;border-radius:14px;display:flex;gap:10px;align-items:flex-start;background:linear-gradient(135deg,#7850C8,#5B3AA0);color:white;box-shadow:0 6px 24px rgba(120,80,200,.35);opacity:0;transform:translateX(20px);pointer-events:none;transition:all .3s cubic-bezier(.22,.8,.44,1)}
+.fm-toast.show{opacity:1;transform:translateX(0);pointer-events:auto}
+.fm-toast-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.fm-toast-title{font-size:12.5px;font-weight:700;margin-bottom:2px}
+.fm-toast-sub{font-size:11px;opacity:.8;line-height:1.4}
+
+</style>
 </head>
 <body>
 <div class="app" id="app">
@@ -524,36 +973,48 @@
   <div class="grid-2" style="margin-bottom:16px">
     <div class="card">
       <div class="flex-between" style="margin-bottom:14px"><div class="label">6-MONTH TREND</div><span class="tag green">Income vs Spend</span></div>
-      <div style="display:flex;align-items:flex-end;gap:8px;height:100px;padding-bottom:4px">
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
-          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:72px"></div>
-          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:52px;margin-top:2px"></div>
-          <div style="font-size:8px;color:var(--gray);margin-top:3px">Nov</div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-evenly;gap:4px;height:160px;padding-bottom:4px">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="display:flex;align-items:flex-end;gap:4px">
+            <div style="width:14px;height:140px;background:var(--teal3);border-radius:3px 3px 0 0"></div>
+            <div style="width:14px;height:85px;background:var(--lime);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:5px">Nov</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
-          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
-          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:60px;margin-top:2px"></div>
-          <div style="font-size:8px;color:var(--gray);margin-top:3px">Dec</div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="display:flex;align-items:flex-end;gap:4px">
+            <div style="width:14px;height:140px;background:var(--teal3);border-radius:3px 3px 0 0"></div>
+            <div style="width:14px;height:100px;background:var(--lime);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:5px">Dec</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
-          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
-          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:68px;margin-top:2px"></div>
-          <div style="font-size:8px;color:var(--gray);margin-top:3px">Jan</div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="display:flex;align-items:flex-end;gap:4px">
+            <div style="width:14px;height:140px;background:var(--teal3);border-radius:3px 3px 0 0"></div>
+            <div style="width:14px;height:97px;background:var(--lime);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:5px">Jan</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
-          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:76px"></div>
-          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:65px;margin-top:2px"></div>
-          <div style="font-size:8px;color:var(--gray);margin-top:3px">Feb</div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="display:flex;align-items:flex-end;gap:4px">
+            <div style="width:14px;height:140px;background:var(--teal3);border-radius:3px 3px 0 0"></div>
+            <div style="width:14px;height:91px;background:var(--lime);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:5px">Feb</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
-          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
-          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:58px;margin-top:2px"></div>
-          <div style="font-size:8px;color:var(--gray);margin-top:3px">Mar</div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="display:flex;align-items:flex-end;gap:4px">
+            <div style="width:14px;height:140px;background:var(--teal3);border-radius:3px 3px 0 0"></div>
+            <div style="width:14px;height:83px;background:var(--lime);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:5px">Mar</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center">
-          <div style="width:100%;background:var(--teal3);border-radius:3px 3px 0 0;height:80px"></div>
-          <div style="width:100%;background:var(--lime);border-radius:3px 3px 0 0;height:51px;margin-top:2px"></div>
-          <div style="font-size:8px;color:var(--gray);margin-top:3px">Apr</div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div style="display:flex;align-items:flex-end;gap:4px">
+            <div style="width:14px;height:140px;background:var(--teal3);border-radius:3px 3px 0 0"></div>
+            <div style="width:14px;height:72px;background:var(--lime);border-radius:3px 3px 0 0"></div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:5px">Apr</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;margin-top:10px">
@@ -845,13 +1306,29 @@
   <div class="flex-between" style="margin-bottom:4px">
     <div>
       <div class="page-title">Notifications</div>
-      <div class="page-sub">All your financial alerts and investment opportunities in one place.</div>
+      <div class="page-sub">All your financial alerts, investment opportunities, and AI behaviour insights.</div>
     </div>
-    <button class="btn sm secondary" onclick="document.querySelectorAll('.notif-unread').forEach(n=>n.style.background='')">Mark all read</button>
+    <button class="btn sm secondary" onclick="notifMarkAllRead()">Mark all read</button>
   </div>
 
-  <!-- Investment Opportunities (NEW) -->
-  <div class="card" style="margin-bottom:14px;border:1px solid rgba(230,255,43,.3);background:linear-gradient(160deg,rgba(230,255,43,.04),white)">
+  <!-- ── FILTER TABS ── -->
+  <div style="display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap">
+    <button class="notif-tab active" data-filter="all" onclick="notifSetFilter('all',this)">
+      All <span class="notif-tab-badge" id="ntab-all">9</span>
+    </button>
+    <button class="notif-tab" data-filter="investments" onclick="notifSetFilter('investments',this)">
+      📈 Investments <span class="notif-tab-badge" id="ntab-investments">3</span>
+    </button>
+    <button class="notif-tab" data-filter="alerts" onclick="notifSetFilter('alerts',this)">
+      ⚡ Alerts <span class="notif-tab-badge" id="ntab-alerts">6</span>
+    </button>
+    <button class="notif-tab" data-filter="futureme" onclick="notifSetFilter('futureme',this)">
+      ✦ Future Me <span class="notif-tab-badge" id="ntab-futureme">0</span>
+    </button>
+  </div>
+
+  <!-- Investment Opportunities -->
+  <div class="card" id="notif-section-investments" style="margin-bottom:14px;border:1px solid rgba(230,255,43,.3);background:linear-gradient(160deg,rgba(230,255,43,.04),white)">
     <div class="flex-between" style="margin-bottom:12px">
       <div class="label" style="color:var(--teal2)">📈 INVESTMENT OPPORTUNITIES — AI PICKS FOR YOU</div>
       <button class="btn sm primary" onclick="showPage('invest',null)">View All</button>
@@ -897,8 +1374,87 @@
     </div>
   </div>
 
+  <!-- ── FUTURE ME INSIGHTS ── -->
+  <div id="notif-section-futureme" style="margin-bottom:14px;border:1px solid rgba(120,80,200,.22);background:linear-gradient(160deg,rgba(120,80,200,.04),white);border-radius:20px;padding:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="background:linear-gradient(135deg,#7850C8,#5B3AA0);color:white;border-radius:8px;padding:3px 8px;font-size:9px;font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;gap:4px">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.68 5.16L19 9l-5.32 1.84L12 16l-1.68-5.16L5 9l5.32-1.84z"/></svg>AI
+        </span>
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:#7850C8">✦ FUTURE ME INSIGHTS — BEHAVIOUR FEEDBACK</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:10px;color:var(--gray3)">Last 5 only</span>
+        <button class="btn sm secondary" onclick="fmClearAll()" style="font-size:11px">Clear All</button>
+      </div>
+    </div>
+
+    <!-- FM card list — seeded with 3 starter insights -->
+    <div id="fm-notif-list">
+      <div class="fm-notif-card fm-positive" data-fmid="seed1">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div class="fm-icon-box fm-positive-icon">✅</div>
+            <div>
+              <div class="tx-name">Smart move! Investing now will benefit your future.</div>
+              <div class="tx-cat">✦ Future Me · 14 min ago</div>
+            </div>
+          </div>
+          <span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>
+        </div>
+        <div class="fm-ai-bubble">Your 100 EGP/month investment habit is building compounding momentum. At this rate, your portfolio could reach <b>14,200 EGP in 5 years</b> — keep it up, your future self approves.</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <span style="font-size:10px;color:var(--gray3)">Gold Fund · +100 EGP</span>
+          <button class="fm-dismiss-btn" onclick="fmDismiss(this)">Dismiss ×</button>
+        </div>
+      </div>
+
+      <div class="fm-notif-card fm-warning" data-fmid="seed2">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div class="fm-icon-box fm-warning-icon">⚠️</div>
+            <div>
+              <div class="tx-name">This expense is higher than usual. Your future self is concerned.</div>
+              <div class="tx-cat">✦ Future Me · 1 hr ago</div>
+            </div>
+          </div>
+          <span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>
+        </div>
+        <div class="fm-ai-bubble">You spent <b>3,200 EGP</b> on an unknown merchant — that's <b>3.2× your average daily spend</b>. If this continues, your monthly surplus drops to near zero. Review this transaction.</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <span style="font-size:10px;color:var(--gray3)">Unknown Merchant · 3,200 EGP</span>
+          <button class="fm-dismiss-btn" onclick="fmDismiss(this)">Dismiss ×</button>
+        </div>
+      </div>
+
+      <div class="fm-notif-card fm-neutral" data-fmid="seed3">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div class="fm-icon-box fm-neutral-icon">🔍</div>
+            <div>
+              <div class="tx-name">This looks like a non-essential purchase.</div>
+              <div class="tx-cat">✦ Future Me · 2 hr ago</div>
+            </div>
+          </div>
+          <span class="tag" style="background:rgba(120,80,200,.1);color:#7850C8;font-size:10px;white-space:nowrap">Heads Up</span>
+        </div>
+        <div class="fm-ai-bubble">Domino's 180 EGP on a Tuesday afternoon is outside your usual spending pattern. <b>3 similar orders this week</b> adds up to 540 EGP — consider if this aligns with your savings goal.</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <span style="font-size:10px;color:var(--gray3)">Domino's · 180 EGP</span>
+          <button class="fm-dismiss-btn" onclick="fmDismiss(this)">Dismiss ×</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="fm-notif-empty" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px 16px;color:var(--gray3);text-align:center">
+      <div style="font-size:32px;margin-bottom:10px;opacity:.5">🤖</div>
+      <div style="font-size:12px;line-height:1.6">Future Me is watching...<br>Add a transaction to see AI insights react.</div>
+    </div>
+  </div>
+
   <!-- Financial Alerts -->
-  <div class="card">
+  <div class="card" id="notif-section-alerts">
     <div class="label" style="margin-bottom:12px">⚡ FINANCIAL ALERTS</div>
     <div class="row-item notif-unread" style="background:rgba(193,18,31,.03);border-radius:8px;padding:8px 10px;margin-bottom:4px">
       <div class="icon-box" style="background:rgba(193,18,31,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1121F" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
@@ -1042,6 +1598,162 @@
   </div>
 </div>
 
+
+<!-- ══ FUTURE ME AI ══ -->
+<div id="page-future" class="page">
+
+  <!-- Header -->
+  <div class="fmai-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div class="fmai-live-badge">✨ Future Me AI</div>
+        <span class="fmai-behavior-chip" id="fmaiBehaviorChip">Current Behavior</span>
+      </div>
+      <div class="page-title" style="margin-bottom:4px">Your <span style="color:var(--teal3);font-style:italic">Financial Future</span></div>
+      <div class="page-sub">See how your financial future could look based on your current habits — then simulate what happens when you change them.</div>
+    </div>
+    <div class="fmai-toggle-wrap">
+      <div class="fmai-behavior-toggle">
+        <button class="fmai-btog active" id="fmaiBtnCurrent" onclick="fmaiSetBehavior('current')">Current Behavior</button>
+        <button class="fmai-btog" id="fmaiBtnImproved" onclick="fmaiSetBehavior('improved')">Improved Behavior</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snapshot Row -->
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card green" style="padding:20px">
+      <div class="label light">Current Balance</div>
+      <div class="val lg light" id="fmaiBalance">14,800</div>
+      <div style="font-size:11px;color:rgba(249,247,242,.5);margin-top:2px">EGP</div>
+      <div class="fmai-chip up" style="margin-top:10px">↑ +320 EGP today</div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="label">Monthly Income</div>
+      <div class="val md" style="color:var(--teal3)" id="fmaiIncome">8,500</div>
+      <div class="sub">EGP per month</div>
+      <div class="progress-bg" style="margin-top:10px"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="label">Monthly Expenses</div>
+      <div class="val md" style="color:var(--teal2)" id="fmaiExpenses">6,200</div>
+      <div class="sub">EGP per month</div>
+      <div class="progress-bg" style="margin-top:10px"><div class="progress-fill" id="fmaiExpBar" style="width:73%"></div></div>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="fmai-main-grid">
+
+    <!-- LEFT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Chart Card -->
+      <div class="card" style="padding:22px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">Balance Projection</div>
+            <div style="font-size:12.5px;color:var(--teal3)" id="fmaiProjSubtext">At this rate, your savings will reach <strong>18,200 EGP</strong> in 6 months</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="fmai-ttab active" onclick="fmaiSetTimeline(6,this)">6 Months</button>
+            <button class="fmai-ttab" onclick="fmaiSetTimeline(12,this)">12 Months</button>
+            <button class="fmai-ttab" onclick="fmaiSetTimeline(24,this)">2 Years</button>
+          </div>
+        </div>
+        <div style="position:relative;height:220px;margin-bottom:14px">
+          <canvas id="fmaiChart"></canvas>
+        </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--offwhite2)">
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Starting Balance</div><div class="fmai-ps-val">14,800 EGP</div></div>
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Projected End</div><div class="fmai-ps-val up" id="fmaiProjEnd">18,200 EGP</div></div>
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Monthly Net</div><div class="fmai-ps-val" id="fmaiProjNet">+600 EGP</div></div>
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Growth</div><div class="fmai-ps-val up" id="fmaiProjGrowth">+23%</div></div>
+        </div>
+      </div>
+
+      <!-- AI Advice -->
+      <div class="card" style="padding:22px">
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">AI-Powered Advice</div>
+        <div style="font-size:12.5px;color:var(--teal3);margin-bottom:16px">Rule-based insights from your spending pattern</div>
+        <div id="fmaiAdviceList" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Scenario Simulator -->
+      <div class="card" style="padding:22px">
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">Scenario Simulator</div>
+        <div style="font-size:12.5px;color:var(--teal3);margin-bottom:18px">Adjust sliders to see your future change instantly</div>
+
+        <div class="fmai-slider-row">
+          <div class="fmai-slider-label"><span class="fmai-slider-icon" style="background:#DCFCE7">💰</span>Monthly Savings Boost</div>
+          <div class="fmai-sv-badge" id="fmaiSavLbl">+0 EGP</div>
+        </div>
+        <input type="range" class="fmai-range" id="fmaiSliderSav" min="0" max="2000" step="100" value="0" oninput="fmaiHandleSlider()">
+
+        <div class="fmai-slider-row">
+          <div class="fmai-slider-label"><span class="fmai-slider-icon" style="background:#FEE2E2">🛍️</span>Extra Monthly Spending</div>
+          <div class="fmai-sv-badge" id="fmaiSpendLbl">+0 EGP</div>
+        </div>
+        <input type="range" class="fmai-range" id="fmaiSliderSpend" min="0" max="3000" step="100" value="0" oninput="fmaiHandleSlider()">
+
+        <div class="fmai-slider-row">
+          <div class="fmai-slider-label"><span class="fmai-slider-icon" style="background:rgba(15,96,112,.1)">📈</span>Investment % of Income</div>
+          <div class="fmai-sv-badge" id="fmaiInvLbl">0%</div>
+        </div>
+        <input type="range" class="fmai-range" id="fmaiSliderInv" min="0" max="30" step="1" value="0" oninput="fmaiHandleSlider()">
+
+        <div style="border-top:1px solid var(--offwhite2);padding-top:14px;margin-top:4px">
+          <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);margin-bottom:8px">Quick Presets</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <button class="btn secondary sm" onclick="fmaiPreset('conservative')">🛡 Conservative</button>
+            <button class="btn secondary sm" onclick="fmaiPreset('balanced')">⚖️ Balanced</button>
+            <button class="btn secondary sm" onclick="fmaiPreset('aggressive')">🚀 Aggressive</button>
+            <button class="btn secondary sm" onclick="fmaiPreset('reset')">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Future Me Card -->
+      <div class="future-me-card" id="fmaiHeroCard">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(249,247,242,.4);margin-bottom:10px">Message from your future self</div>
+        <div class="fmai-avatar" id="fmaiAvatar">🙂</div>
+        <div class="fm-badge" style="margin-bottom:10px">🔮 FUTURE YOU SAYS</div>
+        <div class="fm-prediction" id="fmaiHeroMsg">Keep going — you're on track. In 6 months, you'll have 18,200 EGP saved. Don't stop now!</div>
+        <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+          <div class="fmai-fstat"><div class="fmai-fstat-label">Projected</div><div class="fmai-fstat-val" id="fmaiGoal">18,200</div></div>
+          <div class="fmai-fstat"><div class="fmai-fstat-label">Health</div><div class="fmai-fstat-val" id="fmaiHealth">78/100</div></div>
+          <div class="fmai-fstat"><div class="fmai-fstat-label">Outlook</div><div class="fmai-fstat-val" id="fmaiOutlook" style="font-size:12px">🟢 Good</div></div>
+        </div>
+      </div>
+
+      <!-- Milestone Timeline -->
+      <div class="card" style="padding:22px">
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">Milestone Timeline</div>
+        <div style="font-size:12.5px;color:var(--teal3);margin-bottom:16px">Your projected savings checkpoints</div>
+        <div id="fmaiMilestones" style="display:flex;flex-direction:column;gap:0;padding-left:28px;position:relative">
+          <!-- JS rendered -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AI Thinking Toast -->
+  <div class="fmai-thinking-toast" id="fmaiToast">
+    <span>AI Recalculating</span>
+    <span class="fmai-tdot"></span><span class="fmai-tdot"></span><span class="fmai-tdot"></span>
+  </div>
+
+</div>
+
+
+
+
 </div><!-- end .main -->
 </div><!-- end .app -->
 
@@ -1080,89 +1792,29 @@
 </div>
 
 
-<!-- ══ FUTURE ME AI ══ -->
-<div id="page-future" class="page">
-  <div class="page-title">Future Me AI</div>
-  <div class="page-sub">Predicting your financial behavior</div>
-
-  <div id="futureMeContent"></div>
-
-  <button class="btn primary" onclick="updateFutureMeUI()">
-    Analyze My Future
-  </button>
-</div>
-
-  <!-- AI Thinking Indicator -->
-  <div class="fm-thinking" id="fmThinking" style="display:none">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-    AI is analyzing your financial patterns<span class="dots"><span>.</span><span>.</span><span>.</span></span>
-  </div>
-
-  <!-- Main Prediction Hero -->
-  <div class="future-me-card" style="margin-bottom:16px" id="fmHeroCard">
-    <div class="fm-badge">🔮 NEXT 30 DAYS FORECAST</div>
-    <div class="fm-prediction" id="fmHeroPred">Click Refresh to get your personalized AI prediction</div>
-    <div class="fm-insight" id="fmHeroInsight">Your AI advisor will analyze your spending patterns, balance, installments, and income to generate a tailored forecast.</div>
-  </div>
-
-  <!-- Stat Cards Row -->
-  <div class="grid-3" style="margin-bottom:16px">
-    <div class="ai-pred-card" id="fmCashflowCard">
-      <div class="pred-label">CASHFLOW PREDICTION</div>
-      <div class="pred-value" id="fmCashflowVal">— EGP</div>
-      <div class="pred-desc" id="fmCashflowDesc">Run analysis to see projection</div>
-    </div>
-    <div class="ai-pred-card risk" id="fmRiskCard">
-      <div class="pred-label">RISK ALERT</div>
-      <div class="pred-value" id="fmRiskVal">—</div>
-      <div class="pred-desc" id="fmRiskDesc">Run analysis to see risks</div>
-    </div>
-    <div class="ai-pred-card save" id="fmSaveCard">
-      <div class="pred-label">SAVING OPPORTUNITY</div>
-      <div class="pred-value" id="fmSaveVal">— EGP</div>
-      <div class="pred-desc" id="fmSaveDesc">Run analysis to find savings</div>
-    </div>
-  </div>
-
-  <!-- AI Recommendations -->
-  <div class="card" style="margin-bottom:16px">
-    <div class="flex-between" style="margin-bottom:14px">
-      <div class="label">💡 AI RECOMMENDATIONS FOR YOU</div>
-      <span class="tag lime" id="fmRecTag">Awaiting Analysis</span>
-    </div>
-    <div id="fmRecommendations" style="display:flex;flex-direction:column;gap:10px">
-      <div style="background:var(--offwhite);border-radius:12px;padding:14px;border-left:3px solid var(--offwhite3);opacity:0.5">
-        <div style="font-weight:700;font-size:13px;color:var(--teal)">Awaiting your data analysis...</div>
-        <div style="font-size:12px;color:var(--teal2);margin-top:4px;line-height:1.5">Hit the Refresh button above to get personalized AI investment and savings recommendations based on your actual financial data.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6-Month Timeline -->
-  <div class="card">
-    <div class="label" style="margin-bottom:14px">📅 YOUR FINANCIAL JOURNEY — NEXT 6 MONTHS</div>
-    <div id="fmTimeline" style="display:flex;flex-direction:column;gap:12px">
-      <div style="display:flex;gap:12px;align-items:center;opacity:0.4">
-        <div class="fm-timeline-dot" style="background:var(--offwhite2);color:var(--teal)">?</div>
-        <div style="font-size:12.5px;color:var(--teal2)">Timeline will be generated after AI analysis runs...</div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="addExpenseModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('addExpenseModal')">×</button>
     <div class="modal-title">Add Transaction</div>
     <div style="display:flex;gap:8px;margin-bottom:14px">
-      <button class="btn primary sm" style="flex:1">Expense</button>
-      <button class="btn secondary sm" style="flex:1">Income</button>
+      <button class="btn primary sm" id="txTypeExpenseBtn" style="flex:1" onclick="setTxType('expense')">Expense</button>
+      <button class="btn secondary sm" id="txTypeIncomeBtn" style="flex:1" onclick="setTxType('income')">Income</button>
     </div>
-    <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
-    <div class="input-group"><div class="input-label">Category</div><select><option>Food & Dining</option><option>Transport</option><option>Bills</option><option>Shopping</option><option>Entertainment</option><option>Health</option><option>Investment</option></select></div>
-    <div class="input-group"><div class="input-label">Description</div><input placeholder="e.g. Carrefour groceries"></div>
-    <button class="btn primary" style="width:100%">Add Transaction</button>
+    <div class="input-group"><div class="input-label">Amount (EGP)</div><input id="txAmount" type="number" placeholder="0.00" min="1"></div>
+    <div class="input-group"><div class="input-label">Category</div>
+      <select id="txCategory">
+        <option value="food">Food & Dining</option>
+        <option value="transport">Transport</option>
+        <option value="bills">Bills</option>
+        <option value="shopping">Shopping</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="health">Health</option>
+        <option value="investment">Investment</option>
+      </select>
+    </div>
+    <div class="input-group"><div class="input-label">Description / Merchant</div><input id="txDescription" placeholder="e.g. Carrefour groceries"></div>
+    <button class="btn primary" style="width:100%" onclick="submitTransaction()">Add Transaction</button>
   </div>
 </div>
 
@@ -1485,279 +2137,691 @@ function getUserFinancialContext() {
   };
 }
 
-async function runFutureAI() {
-  const ctx = getUserFinancialContext();
-
-  // Show loading state
-  document.getElementById('fmThinking').style.display = 'flex';
-  document.getElementById('fmHeroPred').innerHTML = '<span style="opacity:0.5;font-size:16px">Analyzing your financial data...</span>';
-  document.getElementById('fmHeroInsight').textContent = 'AI is reviewing your income, spending, and installments...';
-  document.getElementById('fmRecTag').textContent = 'AI Processing';
-  document.getElementById('fmCashflowVal').textContent = '...';
-  document.getElementById('fmRiskVal').textContent = '...';
-  document.getElementById('fmSaveVal').textContent = '...';
-
-  const catSummary = Object.keys(ctx.spendingByCategory).length > 0
-    ? Object.entries(ctx.spendingByCategory).map(([k,v]) => k + ': ' + Math.round(v) + ' EGP').join(', ')
-    : 'No categorized transactions yet (using estimated patterns)';
-
-  // Build a realistic spending context if no transactions
-  const estimatedFood = ctx.hasData ? '' : 'Note: No transactions recorded. Use typical Egyptian spending patterns for someone earning ' + ctx.income + ' EGP/month.';
-
-  const prompt = `You are Future Me AI inside FinCircle, an Egyptian personal finance app.
-
-User financial snapshot:
-- Name: ${ctx.name}
-- Monthly Income: ${ctx.income} EGP
-- Current Balance: ${ctx.balance} EGP
-- Spent This Month: ${ctx.totalSpent} EGP
-- Monthly Installments: ${ctx.monthlyInstallments} EGP
-- Savings Rate: ${ctx.savingsRate}%
-- Spending breakdown: ${catSummary}
-- Transactions logged: ${ctx.transactionCount}
-- Active installments: ${ctx.installmentCount}
-${estimatedFood}
-
-Generate a personalized financial forecast. Respond ONLY with valid JSON, no markdown fences, no extra text:
-{
-  "heroPrediction": "Single compelling sentence about their biggest financial insight this month (include specific EGP amounts derived from data)",
-  "heroInsight": "2-3 sentences explaining the prediction with data-backed reasoning. Be specific about numbers.",
-  "cashflowValue": "projected end-of-month balance as string e.g. 3,240 EGP",
-  "cashflowDesc": "one sentence explaining how you calculated this",
-  "riskValue": "short phrase for main risk e.g. 2 obligations",
-  "riskDesc": "one sentence describing the risk",
-  "savingValue": "potential monthly savings as string e.g. 1,100 EGP",
-  "savingDesc": "one sentence on how to achieve this saving",
-  "recommendations": [
-    {
-      "icon": "🥇",
-      "title": "recommendation title",
-      "tag": "tag label",
-      "tagColor": "green",
-      "body": "2-3 sentences of personalized advice with specific EGP amounts. Egyptian financial context.",
-      "cta": "button label"
-    },
-    {
-      "icon": "📈",
-      "title": "second recommendation",
-      "tag": "tag label",
-      "tagColor": "teal",
-      "body": "2-3 sentences personalized advice",
-      "cta": "button label"
-    },
-    {
-      "icon": "🏦",
-      "title": "third recommendation",
-      "tag": "tag label",
-      "tagColor": "orange",
-      "body": "2-3 sentences personalized advice",
-      "cta": "button label"
-    }
-  ],
-  "timeline": [
-    { "month": "JUN", "color": "#E6FF2B", "textColor": "#0B4650", "title": "action title", "desc": "brief personalized description with EGP numbers" },
-    { "month": "AUG", "color": "#0F6070", "textColor": "#ffffff", "title": "second milestone", "desc": "brief description" },
-    { "month": "NOV", "color": "#EDE9E0", "textColor": "#0B4650", "title": "third milestone", "desc": "brief description" }
-  ]
-}`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1200,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    if (!res.ok) throw new Error('API error ' + res.status);
-    const data = await res.json();
-
-    const raw = (data.content || []).map(c => c.text || '').join('');
-    // Strip any accidental markdown
-    const clean = raw.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'').trim();
-    const r = JSON.parse(clean);
-
-    document.getElementById('fmThinking').style.display = 'none';
-
-    // Hero
-    document.getElementById('fmHeroPred').innerHTML = r.heroPrediction || 'Prediction unavailable';
-    document.getElementById('fmHeroInsight').textContent = r.heroInsight || '';
-
-    // Stats
-    document.getElementById('fmCashflowVal').textContent = r.cashflowValue || '—';
-    document.getElementById('fmCashflowDesc').textContent = r.cashflowDesc || '';
-    document.getElementById('fmRiskVal').textContent = r.riskValue || '—';
-    document.getElementById('fmRiskDesc').textContent = r.riskDesc || '';
-    document.getElementById('fmSaveVal').textContent = r.savingValue || '—';
-    document.getElementById('fmSaveDesc').textContent = r.savingDesc || '';
-
-    // Recommendations
-    document.getElementById('fmRecTag').textContent = 'AI Generated';
-    const tagMap = { green:'green', teal:'teal', orange:'orange' };
-    if (r.recommendations && r.recommendations.length) {
-      document.getElementById('fmRecommendations').innerHTML = r.recommendations.map(rec => `
-        <div style="background:var(--offwhite);border-radius:12px;padding:14px;border-left:3px solid var(--lime)">
-          <div class="flex-between" style="margin-bottom:6px">
-            <div style="font-weight:700;font-size:13px;color:var(--teal)">${rec.icon || ''} ${rec.title || ''}</div>
-            <span class="tag ${tagMap[rec.tagColor] || 'green'}">${rec.tag || ''}</span>
-          </div>
-          <div style="font-size:12px;color:var(--teal2);line-height:1.6">${rec.body || ''}</div>
-          <button class="btn primary sm" style="margin-top:10px">${rec.cta || 'Learn More'}</button>
-        </div>`).join('');
-    }
-
-    // Timeline
-    if (r.timeline && r.timeline.length) {
-      document.getElementById('fmTimeline').innerHTML = r.timeline.map(t => `
-        <div style="display:flex;gap:12px;align-items:flex-start">
-          <div class="fm-timeline-dot" style="background:${t.color};color:${t.textColor}">${t.month}</div>
-          <div>
-            <div style="font-weight:600;font-size:13px;color:var(--teal)">${t.title}</div>
-            <div style="font-size:11.5px;color:var(--gray);margin-top:2px">${t.desc}</div>
-          </div>
-        </div>`).join('');
-    }
-
-    if (typeof showToast === 'function') showToast('✨ Future Me AI updated!');
-
-  } catch(err) {
-    document.getElementById('fmThinking').style.display = 'none';
-    document.getElementById('fmHeroPred').innerHTML = '<span style="color:var(--red)">Analysis failed</span>';
-    document.getElementById('fmHeroInsight').textContent = 'Could not connect to AI. Check your connection and try again. (' + (err.message || err) + ')';
-    document.getElementById('fmRecTag').textContent = 'Error';
-  }
-}
-
 calcBNPL();
 calcIntl();
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-// ===== FUTURE ME AI ENGINE =====
+// ══ FUTURE ME AI ENGINE (Prototype — no real AI) ══
+(function() {
+  const FMAI = {
+    BASE_BAL:  14800,
+    INCOME:    8500,
+    EXPENSES:  6200,
+    timeline:  6,
+    chart:     null,
+    debounce:  null,
+  };
 
-// Fake database (replace later with real backend)
-let transactions = [
-  { amount: 320, category: "Food", date: "2026-05-01T14:30:00" },
-  { amount: 850, category: "Installment", date: "2026-04-30T10:00:00" },
-  { amount: 100, category: "Invest", date: "2026-04-28T18:00:00" },
-  { amount: 250, category: "Food", date: "2026-04-27T15:00:00" }
-];
+  // ── Get slider values ──
+  function sliders() {
+    return {
+      sav:   parseInt(document.getElementById('fmaiSliderSav').value)   || 0,
+      spend: parseInt(document.getElementById('fmaiSliderSpend').value) || 0,
+      inv:   parseInt(document.getElementById('fmaiSliderInv').value)   || 0,
+    };
+  }
 
-// ===== 1. PATTERN DETECTION =====
-function analyzePatterns() {
-  let categoryCount = {};
-  let timePatterns = [];
+  // ── Core projection math ──
+  function project(months) {
+    const { sav, spend, inv } = sliders();
+    const baseNet = FMAI.INCOME - FMAI.EXPENSES;          // 2300
+    const scenNet = baseNet + sav - spend;
+    const invMonthly = FMAI.INCOME * inv / 100;
+    const labels = [], base = [], scen = [];
 
-  transactions.forEach(tx => {
-    // Category frequency
-    categoryCount[tx.category] = (categoryCount[tx.category] || 0) + 1;
+    for (let i = 0; i <= months; i++) {
+      labels.push(i === 0 ? 'Now' : 'M' + i);
+      base.push(Math.round(FMAI.BASE_BAL + baseNet * i));
+      const compound = invMonthly * 0.009 * i * (i + 1) / 2;
+      scen.push(Math.round(FMAI.BASE_BAL + scenNet * i + compound));
+    }
+    return { labels, base, scen, scenNet };
+  }
 
-    // Time pattern
-    let hour = new Date(tx.date).getHours();
-    timePatterns.push(hour);
-  });
+  function stats(months) {
+    const { base, scen, scenNet } = project(months);
+    const projEnd = scen[scen.length - 1];
+    const growth  = (((projEnd - FMAI.BASE_BAL) / FMAI.BASE_BAL) * 100).toFixed(1);
+    return { projEnd, scenNet, growth };
+  }
 
-  // Most frequent category
-  let topCategory = Object.keys(categoryCount).reduce((a, b) =>
-    categoryCount[a] > categoryCount[b] ? a : b
-  );
+  // ── Chart ──
+  function renderChart(months) {
+    const { labels, base, scen } = project(months);
+    const ctx = document.getElementById('fmaiChart');
+    if (!ctx) return;
+    const c2d = ctx.getContext('2d');
+    const hasChange = scen[scen.length-1] !== base[base.length-1];
 
-  // Average spending time
-  let avgHour = Math.round(
-    timePatterns.reduce((a, b) => a + b, 0) / timePatterns.length
-  );
+    const g1 = c2d.createLinearGradient(0, 0, 0, 220);
+    g1.addColorStop(0, 'rgba(11,70,80,0.15)'); g1.addColorStop(1, 'rgba(11,70,80,0)');
+    const g2 = c2d.createLinearGradient(0, 0, 0, 220);
+    g2.addColorStop(0, 'rgba(230,255,43,0.22)'); g2.addColorStop(1, 'rgba(230,255,43,0)');
 
-  return { topCategory, avgHour };
-}
+    const datasets = [{
+      label: 'Current Trend',
+      data: base,
+      borderColor: 'rgba(11,70,80,0.38)',
+      backgroundColor: hasChange ? 'transparent' : g1,
+      borderWidth: hasChange ? 1.5 : 2,
+      borderDash: hasChange ? [5, 4] : [],
+      fill: !hasChange,
+      tension: 0.4,
+      pointRadius: 3,
+      pointBackgroundColor: '#0B4650',
+    }];
+    if (hasChange) {
+      datasets.push({
+        label: 'Your Scenario',
+        data: scen,
+        borderColor: '#0B4650',
+        backgroundColor: g2,
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: '#E6FF2B',
+        pointBorderColor: '#0B4650',
+        pointBorderWidth: 1.5,
+      });
+    }
 
-// ===== 2. PREDICTION =====
-function predictNextMove() {
-  let { topCategory, avgHour } = analyzePatterns();
+    if (FMAI.chart) {
+      FMAI.chart.data.labels = labels;
+      FMAI.chart.data.datasets = datasets;
+      FMAI.chart.update('active');
+    } else {
+      FMAI.chart = new Chart(c2d, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              display: hasChange,
+              labels: { font: { family: 'DM Sans', size: 11 }, color: '#0B4650', boxWidth: 18, boxHeight: 2 }
+            },
+            tooltip: {
+              backgroundColor: '#0B4650', titleColor: '#E6FF2B', bodyColor: '#F9F7F2',
+              borderColor: 'rgba(230,255,43,.2)', borderWidth: 1, padding: 10,
+              callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString() + ' EGP' }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'DM Sans', size: 10 }, color: '#0F6070' } },
+            y: {
+              grid: { color: 'rgba(11,70,80,.06)' },
+              ticks: { font: { family: 'DM Sans', size: 10 }, color: '#0F6070', callback: v => (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v) + ' EGP' }
+            }
+          }
+        }
+      });
+    }
+  }
 
-  let now = new Date();
-  let currentHour = now.getHours();
+  // ── Advice rules ──
+  function renderAdvice() {
+    const s = sliders();
+    const rules = [
+      { type:'warn', icon:'🍽️', title:'Reduce Dining Expenses',
+        text:'Your food spending is 22% above average for your income bracket.',
+        save:'Save up to 400 EGP/month', show: true },
+      { type:'succ', icon:'📈', title:'Start Investing Now',
+        text:'Investing 10% monthly could grow your savings by 25% in a year via compound returns.',
+        save:'+2,100 EGP in 12 months', show: s.inv < 5 },
+      { type:'succ', icon:'💪', title:'Great Investment Strategy!',
+        text:'You\'re investing ' + s.inv + '% of income. Keep it consistent for maximum compound growth.',
+        save:'+' + Math.round(FMAI.INCOME * s.inv / 100 * 12 * 1.08).toLocaleString() + ' EGP projected', show: s.inv >= 10 },
+      { type:'info', icon:'🏦', title:'Build Emergency Fund',
+        text:'Aim for 3–6 months of expenses (18,600–37,200 EGP) as a safety net.',
+        save:'Target: 18,600 EGP', show: s.sav < 500 },
+      { type:'warn', icon:'⚠️', title:'Extra Spending Alert',
+        text:'Your extra spending scenario significantly reduces monthly savings.',
+        save:'Cut by 50% → save ' + Math.round(s.spend * 0.5).toLocaleString() + ' EGP/mo', show: s.spend > 500 },
+      { type:'succ', icon:'🎯', title:'Savings Boost Working!',
+        text:'Great move! Automate this transfer on payday to lock in discipline.',
+        save:'+' + s.sav.toLocaleString() + ' EGP/month', show: s.sav >= 500 },
+      { type:'info', icon:'💡', title:"Gam'eya Opportunity",
+        text:"Joining a 2,000 EGP monthly Gam'eya circle could accelerate your goal by 4 months.",
+        save:'Goal 4 months earlier', show: true },
+    ];
+    const active = rules.filter(r => r.show).slice(0, 4);
+    const el = document.getElementById('fmaiAdviceList');
+    if (!el) return;
+    el.innerHTML = active.map((a, i) => `
+      <div class="fmai-advice-card ${a.type}" style="animation-delay:${i * 0.07}s;animation:slideIn .4s ease both">
+        <div class="fmai-adv-icon">${a.icon}</div>
+        <div style="flex:1">
+          <div class="fmai-adv-title">${a.title}</div>
+          <div class="fmai-adv-text">${a.text}</div>
+          <span class="fmai-adv-save">${a.save}</span>
+        </div>
+      </div>`).join('');
+  }
 
-  let prediction = "";
+  // ── Milestones ──
+  function renderMilestones(months) {
+    const { scen } = project(months);
+    const pts = months <= 6 ? [1,2,3,6] : months <= 12 ? [2,4,6,9,12] : [3,6,9,12,18,24];
+    const el = document.getElementById('fmaiMilestones');
+    if (!el) return;
+    el.className = 'fmai-ms-track';
+    el.innerHTML = pts.map((m, i) => {
+      const val = scen[Math.min(m, scen.length - 1)];
+      const reached = m <= 2, soon = m === 3;
+      return `<div class="fmai-ms-item" style="animation-delay:${i * 0.06}s">
+        <div class="fmai-ms-dot ${reached ? 'reached' : soon ? 'soon' : ''}">${reached ? '✓' : soon ? '→' : ''}</div>
+        <div class="fmai-ms-month">Month ${m}${reached ? ' · <span style="color:#16a34a;font-size:9px">REACHED</span>' : soon ? ' · <span style="color:var(--teal3);font-size:9px">Soon</span>' : ''}</div>
+        <div class="fmai-ms-amount">${val.toLocaleString()} EGP</div>
+      </div>`;
+    }).join('');
+  }
 
-  if (Math.abs(currentHour - avgHour) <= 2) {
-    prediction = `You are likely to spend on ${topCategory} soon 💸`;
+  // ── Future Me card ──
+  const MSGS = {
+    great:   ["Keep going — future you will have {n} EGP saved. Discipline today builds tomorrow's freedom.", "Investing and saving simultaneously? Future you is genuinely impressed. {n} EGP and growing!"],
+    good:    ["You're on track. Keep saving consistently and you'll reach {n} EGP. Small steps, big results.", "Steady progress! {n} EGP is your projected balance. Don't break the streak."],
+    warning: ["The extra spending is eating into your future. A few tweaks could reclaim {n} EGP.", "At this rate you'll reach only {n} EGP. Small cuts now = big gains later."],
+    danger:  ["This path is risky. Future you won't have enough cushion. Reduce spending — every EGP counts.", "Red flag! Your scenario threatens your financial health. Adjust those sliders now."],
+  };
+
+  function updateFutureMe(months) {
+    const { projEnd, scenNet } = stats(months);
+    let mood, healthScore, outlookStr, avatar;
+    if (scenNet >= 1500)      { mood = 'great';   healthScore = 92; outlookStr = '🟢 Excellent'; avatar = '🤩'; }
+    else if (scenNet >= 500)  { mood = 'good';    healthScore = 78; outlookStr = '🟢 Good';      avatar = '🙂'; }
+    else if (scenNet >= 0)    { mood = 'warning'; healthScore = 54; outlookStr = '🟡 Watch Out'; avatar = '😕'; }
+    else                      { mood = 'danger';  healthScore = 30; outlookStr = '🔴 Danger';    avatar = '😰'; }
+
+    const pool = MSGS[mood];
+    const msg  = pool[Math.floor(Math.random() * pool.length)].replace('{n}', projEnd.toLocaleString());
+
+    const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+    set('fmaiHeroMsg', msg);
+    set('fmaiAvatar',  avatar);
+    set('fmaiOutlook', outlookStr);
+    set('fmaiHealth',  healthScore + '/100');
+    set('fmaiGoal',    projEnd.toLocaleString());
+  }
+
+  // ── Stats bar ──
+  function updateStats(months) {
+    const { projEnd, scenNet, growth } = stats(months);
+    const s = sliders();
+
+    const setEl = (id, txt, cls) => {
+      const e = document.getElementById(id);
+      if (!e) return;
+      e.textContent = txt;
+      if (cls !== undefined) e.className = 'fmai-ps-val ' + (cls ? 'up' : 'down');
+    };
+
+    setEl('fmaiProjEnd',    projEnd.toLocaleString() + ' EGP', parseFloat(growth) >= 0);
+    setEl('fmaiProjNet',    (scenNet >= 0 ? '+' : '') + scenNet.toLocaleString() + ' EGP');
+    setEl('fmaiProjGrowth', (parseFloat(growth) >= 0 ? '+' : '') + growth + '%', parseFloat(growth) >= 0);
+
+    const pnEl = document.getElementById('fmaiProjNet');
+    if (pnEl) pnEl.style.color = scenNet >= 500 ? '#16a34a' : scenNet >= 0 ? 'var(--teal3)' : 'var(--red)';
+
+    const dir = projEnd > FMAI.BASE_BAL ? 'reach' : 'drop to';
+    const sub = document.getElementById('fmaiProjSubtext');
+    if (sub) sub.innerHTML = `At this rate, your savings will ${dir} <strong>${projEnd.toLocaleString()} EGP</strong> in ${months} months`;
+
+    const expTotal = FMAI.EXPENSES + s.spend;
+    const expRatio = Math.min(100, (expTotal / FMAI.INCOME) * 100);
+    const bar = document.getElementById('fmaiExpBar');
+    if (bar) { bar.style.width = expRatio + '%'; bar.style.background = expRatio > 85 ? 'var(--red)' : ''; }
+    const expEl = document.getElementById('fmaiExpenses');
+    if (expEl) expEl.textContent = expTotal.toLocaleString();
+  }
+
+  // ── Slider labels ──
+  function updateLabels() {
+    const { sav, spend, inv } = sliders();
+    const up = (id, txt, active) => {
+      const e = document.getElementById(id);
+      if (e) { e.textContent = txt; e.className = 'fmai-sv-badge' + (active ? ' on' : ''); }
+    };
+    up('fmaiSavLbl',   (sav > 0 ? '+' : '') + sav.toLocaleString()   + ' EGP', sav   > 0);
+    up('fmaiSpendLbl', (spend > 0 ? '+' : '') + spend.toLocaleString() + ' EGP', spend > 0);
+    up('fmaiInvLbl',   inv + '%', inv > 0);
+  }
+
+  // ── Full refresh ──
+  function refresh() {
+    updateLabels();
+    renderChart(FMAI.timeline);
+    updateStats(FMAI.timeline);
+    renderAdvice();
+    renderMilestones(FMAI.timeline);
+    updateFutureMe(FMAI.timeline);
+  }
+
+  // ── Public handlers ──
+  window.fmaiHandleSlider = function() {
+    updateLabels();
+    clearTimeout(FMAI.debounce);
+    const toast = document.getElementById('fmaiToast');
+    if (toast) toast.classList.add('show');
+    FMAI.debounce = setTimeout(() => {
+      refresh();
+      if (toast) toast.classList.remove('show');
+    }, 580);
+  };
+
+  window.fmaiSetTimeline = function(m, btn) {
+    FMAI.timeline = m;
+    document.querySelectorAll('.fmai-ttab').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    refresh();
+  };
+
+  window.fmaiSetBehavior = function(mode) {
+    document.getElementById('fmaiBtnCurrent').classList.toggle('active', mode === 'current');
+    document.getElementById('fmaiBtnImproved').classList.toggle('active', mode === 'improved');
+    const chip = document.getElementById('fmaiBehaviorChip');
+    if (chip) chip.textContent = mode === 'current' ? 'Current Behavior' : 'Improved Behavior';
+    fmaiPreset(mode === 'improved' ? 'balanced' : 'reset');
+  };
+
+  window.fmaiPreset = function(name) {
+    const p = { conservative:{sav:500,spend:0,inv:5}, balanced:{sav:1000,spend:0,inv:10}, aggressive:{sav:2000,spend:0,inv:20}, reset:{sav:0,spend:0,inv:0} };
+    const v = p[name]; if (!v) return;
+    document.getElementById('fmaiSliderSav').value   = v.sav;
+    document.getElementById('fmaiSliderSpend').value = v.spend;
+    document.getElementById('fmaiSliderInv').value   = v.inv;
+    const toast = document.getElementById('fmaiToast');
+    if (toast) toast.classList.add('show');
+    setTimeout(() => { refresh(); if (toast) toast.classList.remove('show'); }, 750);
+  };
+
+  // ── Init: run when Chart.js is ready ──
+  function tryInit() {
+    if (typeof Chart === 'undefined') { setTimeout(tryInit, 200); return; }
+    refresh();
+  }
+
+  // Init on page show (FinCircle's showPage fires before this)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit);
   } else {
-    prediction = `No immediate spending predicted. Good time to save 💰`;
+    tryInit();
   }
 
-  return prediction;
-}
+  // Also re-render if someone clicks the Future Me nav item
+  const origShowPage = window.showPage;
+  window.showPage = function(id, btn) {
+    origShowPage && origShowPage(id, btn);
+    if (id === 'future') setTimeout(tryInit, 50);
+  };
 
-// ===== 3. SMART ALERTS =====
-function generateSmartAdvice() {
-  let totalSpent = transactions.reduce((sum, tx) => sum + tx.amount, 0);
-
-  if (totalSpent > 4000) {
-    return "⚠️ You're spending above your average. Consider slowing down.";
-  } else if (totalSpent < 2000) {
-    return "✅ Great job! You're saving well this month.";
-  } else {
-    return "💡 Balanced spending. You can invest small amounts.";
-  }
-}
-
-// ===== 4. SHOW IN UI =====
-function updateFutureMeUI() {
-  let prediction = predictNextMove();
-  let advice = generateSmartAdvice();
-
-  let container = document.getElementById("futureMeContent");
-
-  if (!container) return;
-
-  container.innerHTML = `
-    <div class="card">
-      <div class="label">Prediction</div>
-      <div class="val md">${prediction}</div>
-    </div>
-
-    <div class="card" style="margin-top:10px">
-      <div class="label">Advice</div>
-      <div class="val md">${advice}</div>
-    </div>
-  `;
-}
-
-// ===== 5. AUTO NOTIFICATIONS =====
-function triggerFutureAlert() {
-  let prediction = predictNextMove();
-
-  if (prediction.includes("spend")) {
-    showNotification("Future Me Alert", prediction);
-  }
-}
-
-// Simple notification
-function showNotification(title, message) {
-  let alertBox = document.getElementById("globalAlerts");
-
-  alertBox.style.display = "block";
-
-  alertBox.innerHTML = `
-    <div class="alert-banner info">
-      <div><b>${title}</b><br>${message}</div>
-    </div>
-  `;
-}
-
-// Run periodically
-setInterval(triggerFutureAlert, 15000);
-function addTransaction(amount, category) {
-  transactions.push({
-    amount,
-    category,
-    date: new Date().toISOString()
-  });
-
-  updateFutureMeUI(); // auto update AI
-}
+})();
 </script>
-</body>
-</html>
+
+<!-- ── FUTURE ME TOAST ── -->
+<div class="fm-toast" id="fmToast">
+  <div class="fm-toast-icon" id="fmToastIcon">✦</div>
+  <div>
+    <div class="fm-toast-title" id="fmToastTitle">Future Me Insight</div>
+    <div class="fm-toast-sub" id="fmToastSub">New insight generated.</div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// FUTURE ME INSIGHTS — Full Integration Engine
+// ══════════════════════════════════════════════════════
+(function() {
+
+  // ── State ──
+  let fmInsights = ['seed1','seed2','seed3']; // track IDs
+  let txTimestamps = [];
+  let fmIdCounter = 200;
+  let currentTxType = 'expense';
+
+  // ── Transaction type toggle ──
+  window.setTxType = function(type) {
+    currentTxType = type;
+    document.getElementById('txTypeExpenseBtn').className = type === 'expense' ? 'btn primary sm' : 'btn secondary sm';
+    document.getElementById('txTypeIncomeBtn').className = type === 'income' ? 'btn primary sm' : 'btn secondary sm';
+    const catSel = document.getElementById('txCategory');
+    if (type === 'income') {
+      catSel.innerHTML = '<option value="income">💰 Salary / Income</option><option value="investment">📈 Investment Return</option><option value="other_income">🎁 Other Income</option>';
+    } else {
+      catSel.innerHTML = '<option value="food">Food & Dining</option><option value="transport">Transport</option><option value="bills">Bills</option><option value="shopping">Shopping</option><option value="entertainment">Entertainment</option><option value="health">Health</option><option value="investment">Investment</option>';
+    }
+  };
+
+  // ── Rules engine ──
+  const THRESH = { high: 1000, vhigh: 3000, freq_ms: 25000, freq_n: 3 };
+
+  function buildInsight(amount, category, merchant, isIncome) {
+    const amt = parseInt(amount) || 0;
+    const desc = merchant || '';
+
+    // Frequency check
+    const now = Date.now();
+    txTimestamps = txTimestamps.filter(t => now - t < THRESH.freq_ms);
+    txTimestamps.push(now);
+    if (txTimestamps.length >= THRESH.freq_n && !isIncome) {
+      txTimestamps = [];
+      return {
+        type: 'warning', icon: '⚡',
+        title: 'Frequent spending detected. Try to slow down.',
+        tag: '<span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>',
+        ai: `You've made <b>${txTimestamps.length + 2}+ transactions</b> in a short window. Impulse spending quietly erodes your monthly surplus. Your future self suggests a 10-minute pause before the next purchase.`,
+        meta: `${category} · ${amt} EGP`
+      };
+    }
+
+    if (isIncome || category === 'income' || category === 'other_income') {
+      return {
+        type: 'positive', icon: '💰',
+        title: 'Great decision! You added income — your future self is getting stronger.',
+        tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
+        ai: `Income of <b>${amt} EGP</b>${desc ? ' from ' + desc : ''} recorded. Consider allocating <b>${Math.round(amt * 0.2)} EGP (20%)</b> directly to savings — that keeps your Europe Trip goal on track.`,
+        meta: `Income${desc ? ' · ' + desc : ''} · +${amt} EGP`
+      };
+    }
+
+    if (category === 'investment') {
+      return {
+        type: 'positive', icon: '✅',
+        title: 'Smart move! Investing now will benefit your future.',
+        tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
+        ai: `<b>${amt} EGP</b> invested${desc ? ' via ' + desc : ''}. At 8% annual growth, this becomes <b>${Math.round(amt * 1.47)} EGP in 5 years</b>. Your future self is building compounding momentum — keep going.`,
+        meta: `Investment${desc ? ' · ' + desc : ''} · ${amt} EGP`
+      };
+    }
+
+    if (category === 'health') {
+      return {
+        type: 'positive', icon: '✅',
+        title: 'Nice control! This expense is within a healthy range.',
+        tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
+        ai: `Health spending of <b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is essential. Your future self prioritizes staying healthy — this is money well spent and within your wellness budget.`,
+        meta: `Health${desc ? ' · ' + desc : ''} · ${amt} EGP`
+      };
+    }
+
+    if (amt >= THRESH.vhigh) {
+      return {
+        type: 'warning', icon: '🚨',
+        title: 'This expense is significantly above your normal range.',
+        tag: '<span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>',
+        ai: `<b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is a major transaction — <b>${Math.round(amt / 4180 * 100)}% of your current balance</b>. Your future self recommends reviewing if this is planned. This pushes your savings goal timeline back by <b>${Math.round(amt / 500)} weeks</b>.`,
+        meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
+      };
+    }
+
+    if (amt >= THRESH.high) {
+      return {
+        type: 'warning', icon: '⚠️',
+        title: 'This expense is higher than usual. Your future self is concerned.',
+        tag: '<span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>',
+        ai: `You just spent <b>${amt} EGP</b>${desc ? ' at ' + desc : ''} — above your average daily budget of ~330 EGP. If this recurs weekly, your monthly surplus shrinks by <b>${Math.round(amt * 0.3)} EGP</b>. Check if this was planned.`,
+        meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
+      };
+    }
+
+    if (category === 'shopping' || category === 'entertainment') {
+      if (amt < 400) {
+        return {
+          type: 'positive', icon: '✅',
+          title: 'Nice control! This expense is within a healthy range.',
+          tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
+          ai: `<b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is under your discretionary budget threshold. Keeping non-essential purchases below 400 EGP preserves your monthly surplus. Great discipline!`,
+          meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
+        };
+      }
+      return {
+        type: 'neutral', icon: '🔍',
+        title: 'This looks like a non-essential purchase.',
+        tag: '<span class="tag" style="background:rgba(120,80,200,.1);color:#7850C8;font-size:10px;white-space:nowrap">Heads Up</span>',
+        ai: `<b>${desc || 'This purchase'}</b> for ${amt} EGP appears discretionary. Your entertainment & shopping spending is already at <b>34% of monthly spend</b>. Consider if this aligns with your savings goals.`,
+        meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
+      };
+    }
+
+    // Default: small/normal
+    return {
+      type: 'positive', icon: '✅',
+      title: 'Nice control! This expense is within a healthy range.',
+      tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
+      ai: `<b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is within your normal spending range. Your daily average is ~330 EGP and this transaction keeps you on track for a healthy month.`,
+      meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
+    };
+  }
+
+  // ── Render a new FM card at the top of the list ──
+  function renderFmCard(insight, id) {
+    return `
+      <div class="fm-notif-card fm-${insight.type}" data-fmid="${id}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div class="fm-icon-box fm-${insight.type}-icon">${insight.icon}</div>
+            <div>
+              <div class="tx-name">${insight.title}</div>
+              <div class="tx-cat">✦ Future Me · just now</div>
+            </div>
+          </div>
+          ${insight.tag}
+        </div>
+        <div class="fm-ai-bubble">${insight.ai}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <span style="font-size:10px;color:var(--gray3)">${insight.meta}</span>
+          <button class="fm-dismiss-btn" onclick="fmDismiss(this)">Dismiss ×</button>
+        </div>
+      </div>`;
+  }
+
+  // ── Push insight into UI ──
+  function pushFmInsight(insight) {
+    const id = 'fm-' + (++fmIdCounter);
+    fmInsights.unshift(id);
+
+    // Trim to 5
+    if (fmInsights.length > 5) {
+      const oldId = fmInsights.pop();
+      const el = document.querySelector(`[data-fmid="${oldId}"]`);
+      if (el) { el.style.opacity = '0'; el.style.transition = 'opacity .2s'; setTimeout(() => el.remove(), 200); }
+    }
+
+    const list = document.getElementById('fm-notif-list');
+    list.insertAdjacentHTML('afterbegin', renderFmCard(insight, id));
+    document.getElementById('fm-notif-empty').style.display = 'none';
+
+    // Update notif dot on bell
+    const dot = document.querySelector('.notif-dot');
+    if (dot) dot.style.display = 'block';
+
+    updateFmBadges();
+    showFmToast(insight);
+
+    // Re-apply current filter so the futureme section obeys the active tab
+    if (window._notifActiveFilter && window._notifActiveFilter !== 'all') {
+      applyNotifFilter(window._notifActiveFilter);
+    }
+  }
+
+  // ── Toast popup ──
+  function showFmToast(insight) {
+    const toast = document.getElementById('fmToast');
+    document.getElementById('fmToastIcon').textContent = insight.icon;
+    document.getElementById('fmToastTitle').textContent = insight.title;
+    document.getElementById('fmToastSub').textContent = 'Tap Notifications to see the full insight.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // ── Badge sync ──
+  function updateFmBadges() {
+    const count = document.querySelectorAll('#fm-notif-list .fm-notif-card').length;
+    const el = document.getElementById('ntab-futureme');
+    if (el) el.textContent = count;
+    const allEl = document.getElementById('ntab-all');
+    if (allEl) allEl.textContent = 3 + 6 + count; // investments + alerts + fm
+  }
+
+  // ── Submit Transaction (called from modal) ──
+  window.submitTransaction = function() {
+    const amount = document.getElementById('txAmount').value;
+    const category = document.getElementById('txCategory').value;
+    const description = document.getElementById('txDescription').value.trim();
+    const isIncome = currentTxType === 'income';
+
+    if (!amount || parseFloat(amount) <= 0) {
+      document.getElementById('txAmount').style.borderColor = '#C1121F';
+      setTimeout(() => document.getElementById('txAmount').style.borderColor = '', 1200);
+      return;
+    }
+
+    // Save to localStorage (persist with existing user data)
+    try {
+      let user = JSON.parse(localStorage.getItem('fincircle_user') || '{}');
+      if (!user.transactions) user.transactions = [];
+      user.transactions.unshift({
+        id: Date.now(),
+        amount: isIncome ? parseFloat(amount) : -parseFloat(amount),
+        category,
+        description,
+        date: new Date().toISOString()
+      });
+      if (!isIncome) {
+        user.balance = Math.max(0, (user.balance || 4180) - parseFloat(amount));
+      } else {
+        user.balance = (user.balance || 4180) + parseFloat(amount);
+      }
+      localStorage.setItem('fincircle_user', JSON.stringify(user));
+    } catch(e) {}
+
+    // Generate Future Me insight
+    const insight = buildInsight(amount, category, description, isIncome);
+    pushFmInsight(insight);
+
+    // Close modal & reset
+    if (window.closeModal) closeModal('addExpenseModal');
+    document.getElementById('txAmount').value = '';
+    document.getElementById('txDescription').value = '';
+    setTxType('expense');
+  };
+
+  // ── Dismiss FM card ──
+  window.fmDismiss = function(btn) {
+    const card = btn.closest('.fm-notif-card');
+    const id = card.dataset.fmid;
+    card.style.transition = 'opacity .22s, transform .22s';
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(16px)';
+    setTimeout(() => {
+      card.remove();
+      fmInsights = fmInsights.filter(i => i !== id);
+      if (document.querySelectorAll('#fm-notif-list .fm-notif-card').length === 0) {
+        document.getElementById('fm-notif-empty').style.display = 'flex';
+      }
+      updateFmBadges();
+    }, 220);
+  };
+
+  // ── Clear all FM insights ──
+  window.fmClearAll = function() {
+    const list = document.getElementById('fm-notif-list');
+    list.innerHTML = '';
+    fmInsights = [];
+    document.getElementById('fm-notif-empty').style.display = 'flex';
+    updateFmBadges();
+    // Keep the section visible if user is on futureme tab
+    if (window._notifActiveFilter && window._notifActiveFilter !== 'all') {
+      applyNotifFilter(window._notifActiveFilter);
+    }
+  };
+
+  // ══════════════════════════════════════════
+  // NOTIFICATION FILTER SYSTEM
+  // ══════════════════════════════════════════
+
+  // Section key → which filter value shows it
+  const SECTION_MAP = {
+    'notif-section-investments': 'investments',
+    'notif-section-futureme':    'futureme',
+    'notif-section-alerts':      'alerts'
+  };
+
+  // Expose state so other code (e.g. pushFmInsight) can read it
+  window._notifActiveFilter = 'all';
+
+  function applyNotifFilter(filter) {
+    window._notifActiveFilter = filter;
+
+    // 1. Sync tab highlight
+    document.querySelectorAll('.notif-tab').forEach(function(tab) {
+      var tabFilter = tab.getAttribute('data-filter');
+      if (tabFilter === filter) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    // 2. Show / hide each section
+    Object.keys(SECTION_MAP).forEach(function(sectionId) {
+      var sectionType = SECTION_MAP[sectionId];
+      var el = document.getElementById(sectionId);
+      if (!el) return;
+
+      var shouldShow = (filter === 'all' || filter === sectionType);
+
+      if (shouldShow) {
+        // Force display:block first, then animate in
+        el.style.transition = 'none';
+        el.style.display    = 'block';
+        el.style.opacity    = '0';
+        el.style.transform  = 'translateY(8px)';
+        // Double-rAF ensures the browser has painted display:block before we transition
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            el.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            el.style.opacity    = '1';
+            el.style.transform  = 'translateY(0)';
+          });
+        });
+      } else {
+        el.style.transition = 'none';
+        el.style.display    = 'none';
+        el.style.opacity    = '';
+        el.style.transform  = '';
+      }
+    });
+  }
+
+  // Global entry-point called by onclick="notifSetFilter(...)"
+  window.notifSetFilter = function(filter, btn) {
+    applyNotifFilter(filter);
+  };
+
+  // ── Mark all read ──
+  window.notifMarkAllRead = function() {
+    document.querySelectorAll('.notif-unread').forEach(n => {
+      n.style.background = '';
+      n.classList.remove('notif-unread');
+    });
+  };
+
+  // ── Init on load ──
+  function initNotifications() {
+    updateFmBadges();
+    applyNotifFilter('all'); // ensure all sections visible and tabs synced on first load
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNotifications);
+  } else {
+    initNotifications();
+  }
+
+})();
+</script>
+</body></html>
