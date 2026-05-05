@@ -336,8 +336,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
 .cs-send{width:34px;height:34px;border-radius:50%;background:var(--lime);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--teal);font-size:14px}
 
 /* ── NFC OVERLAY ── */
-.nfc-overlay{position:fixed;inset:0;background:rgba(8,40,48,.96);z-index:400;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px}
-.nfc-overlay.open{display:flex}
 .nfc-ring{width:160px;height:160px;border-radius:50%;border:3px solid var(--lime);display:flex;align-items:center;justify-content:center;animation:nfcPulse2 1.5s ease-in-out infinite}
 @keyframes nfcPulse2{0%,100%{box-shadow:0 0 0 0 rgba(230,255,43,.4),0 0 0 0 rgba(230,255,43,.2)}50%{box-shadow:0 0 0 20px rgba(230,255,43,.1),0 0 0 40px rgba(230,255,43,.05)}}
 .nfc-inner{font-size:60px}
@@ -485,9 +483,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
         <button class="curr-btn" onclick="setCurrency('SAR',this)">SAR</button>
       </div>
     </div>
-    <button class="icon-btn" onclick="toggleNFC()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg>
-    </button>
     <button class="icon-btn" style="position:relative" onclick="showPage('notifications',null)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       <span class="notif-dot"></span>
@@ -558,13 +553,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M16 13h.01"/><path d="M2 10h20"/></svg>
     <span data-en="Virtual Card" data-ar="البطاقة الافتراضية">Virtual Card</span>
   </button>
-  <button class="nav-item" onclick="showPage('intl',this)">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M17 7l-5 5-5-5"/></svg>
-    <span data-en="International" data-ar="تحويل دولي">International</span>
-  </button>
   <button class="nav-item" onclick="showPage('invest',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 18 7 13 11 15 16 8 21 5"/><circle cx="21" cy="5" r="2"/></svg>
-    <span data-en="Invest" data-ar="الاستثمار">Invest</span>
+    <span data-en="Investment Hub" data-ar="مركز الاستثمار">Investment Hub</span>
   </button>
   <button class="nav-item" onclick="showPage('salary',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>
@@ -574,19 +565,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     <span data-en="P2P Lending" data-ar="الإقراض">P2P Lending</span>
   </button>
-  <button class="nav-item" onclick="showPage('egx',this)">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="8" width="4" height="7" rx="1"/><rect x="10" y="6" width="4" height="9" rx="1"/><rect x="15" y="9" width="4" height="6" rx="1"/></svg>
-    <span data-en="EGX Trading" data-ar="البورصة">EGX Trading</span>
-  </button>
 
   <div class="nav-section" data-en="COMMUNITY" data-ar="المجتمع">COMMUNITY</div>
   <button class="nav-item" onclick="showPage('zakat',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22C12 22 3 17 3 10a9 9 0 0 1 18 0c0 7-9 12-9 12z"/><path d="M12 6v6l4 2"/></svg>
     <span data-en="Zakat & Sadaqa" data-ar="زكاة وصدقة">Zakat & Sadaqa</span>
-  </button>
-  <button class="nav-item" onclick="showPage('sme',this)">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-    <span data-en="Business Hub" data-ar="ركن الأعمال">Business Hub</span>
   </button>
 
   <div class="sidebar-footer">
@@ -659,7 +642,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
       <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="9" y2="15"/></svg></div>
       <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Pay" data-ar="دفع">Pay</div>
     </button>
-    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="toggleNFC()">
+    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="alert('QR Pay coming soon!')">
       <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="var(--teal3)"/></svg></div>
       <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="NFC Pay" data-ar="دفع NFC">NFC Pay</div>
     </button>
@@ -682,10 +665,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
     <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('pockets',null)">
       <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="8" width="20" height="13" rx="2"/><path d="M16 8V6a4 4 0 00-8 0v2"/></svg></div>
       <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Pockets" data-ar="الجيوب">Pockets</div>
-    </button>
-    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('intl',null)">
-      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Send Intl" data-ar="تحويل دولي">Send Intl</div>
     </button>
   </div>
 
@@ -723,24 +702,24 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
 <!-- ══ VIRTUAL CARD ══ -->
 <div class="page" id="page-wallet">
   <div class="page-title" data-en="Virtual Card" data-ar="البطاقة الافتراضية">Virtual Card</div>
-  <div class="page-sub" data-en="Your digital wallet & NFC payments" data-ar="محفظتك الرقمية ودفع NFC">Your digital wallet & NFC payments</div>
+  <div class="page-sub" data-en="Your digital wallet & virtual card" data-ar="محفظتك الرقمية والبطاقة الافتراضية">Your digital wallet & virtual card</div>
   <div class="grid-2" style="margin-bottom:20px;align-items:start">
     <div>
-      <div class="virtual-card" onclick="toggleNFC()">
+      <div class="virtual-card" onclick="alert('QR Pay coming soon!')">
         <div class="vc-chip">CHIP</div>
         <div class="vc-number">•••• •••• •••• 4821</div>
         <div class="vc-footer">
           <div><div class="vc-label">CARD HOLDER</div><div class="vc-val">JANA M. ELHENAWY</div></div>
           <div><div class="vc-label">EXPIRES</div><div class="vc-val">12/28</div></div>
-          <div><div class="vc-nfc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg> NFC</div></div>
+          
         </div>
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
-        <button class="btn primary" onclick="toggleNFC()" style="flex:1">Tap to Pay (NFC)</button>
+        <button class="btn primary" onclick="alert('QR Pay coming soon!')" style="flex:1">Tap to Pay (QR)</button>
         <button class="btn secondary" style="flex:1">Freeze Card</button>
       </div>
       <div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.15);border-radius:12px;padding:12px;margin-top:10px;font-size:12px;color:var(--teal)">
-        <b>Offline NFC available</b> — Transactions sync when connected
+        <b>Secure virtual card</b> — Use online for payments
       </div>
     </div>
     <div>
@@ -1108,64 +1087,195 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
   </div>
 </div>
 
-<!-- ══ INVEST ══ -->
+<!-- ══ INVESTMENT LEARNING HUB ══ -->
 <div class="page" id="page-invest">
-  <div class="page-title">Invest</div>
-  <div class="page-sub">Start investing from just 1 EGP. Grow your wealth.</div>
+  <div class="flex-between" style="margin-bottom:4px">
+    <div>
+      <div class="page-title" data-en="Investment Learning Hub" data-ar="مركز تعلم الاستثمار">Investment Learning Hub</div>
+      <div class="page-sub" data-en="Understand markets, build knowledge, get AI-powered advice — no real transactions." data-ar="افهم الأسواق، وابنِ معرفتك، واحصل على نصائح ذكية — بدون معاملات حقيقية.">Understand markets, build knowledge, get AI-powered advice — no real transactions.</div>
+    </div>
+    <span class="tag yellow">Advisory Only</span>
+  </div>
+
+  <!-- AI Risk Profile Banner -->
   <div class="card dark" style="margin-bottom:16px;padding:20px">
-    <div class="flex-between">
-      <div><div class="label light">PORTFOLIO VALUE</div><div style="font-family:var(--font-display);font-size:32px;color:var(--offwhite)">1,240 <span style="font-size:14px;font-family:'DM Sans'">EGP</span></div></div>
-      <div style="text-align:right"><div style="font-size:11px;color:rgba(249,247,242,.5);margin-bottom:4px">Total Return</div><div style="font-size:18px;font-weight:700;color:#4CAF50">+140 EGP (+12.7%)</div></div>
+    <div class="flex-between" style="margin-bottom:10px">
+      <div>
+        <div class="label light">YOUR INVESTOR PROFILE</div>
+        <div style="font-family:var(--font-display);font-size:22px;color:var(--offwhite);margin-top:4px">🌱 Cautious Learner</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:rgba(249,247,242,.5);margin-bottom:4px">Risk Tolerance</div>
+        <div style="display:flex;gap:4px">
+          <div style="width:18px;height:8px;background:var(--lime);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:var(--lime);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:rgba(249,247,242,.15);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:rgba(249,247,242,.15);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:rgba(249,247,242,.15);border-radius:2px"></div>
+        </div>
+        <div style="font-size:10px;color:rgba(249,247,242,.4);margin-top:3px">Low · 2/5</div>
+      </div>
     </div>
-    <div class="divider" style="border-color:rgba(249,247,242,.1)"></div>
-    <div style="display:flex;gap:12px">
-      <button class="btn primary sm">+ Add Funds</button>
-      <button class="btn ghost sm">Withdraw</button>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-    <div class="invest-option selected">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9h3L14 15h-4.5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div>
-      <div class="name">Gold Fund</div>
-      <div class="ret">+11.2% YTD</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 1 EGP</div>
-    </div>
-    <div class="invest-option">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-      <div class="name">EGX30 Index</div>
-      <div class="ret">+8.7% YTD</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 10 EGP</div>
-    </div>
-    <div class="invest-option">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round"><path d="M3 22v-9M21 22v-9M2 13h20M12 2L2 8h20L12 2z"/></svg></div>
-      <div class="name">Treasury Bills</div>
-      <div class="ret">27.5% p.a.</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 50 EGP</div>
-    </div>
-    <div class="invest-option">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--lime3)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-      <div class="name">Real Estate</div>
-      <div class="ret">+15.3% YTD</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 100 EGP</div>
+    <div style="background:rgba(249,247,242,.07);border-radius:10px;padding:11px 13px;font-size:12px;color:rgba(249,247,242,.75);line-height:1.65">
+      <b style="color:var(--lime)">AI Insight:</b> Based on your spending patterns and balance, you're best suited for low-risk instruments like Treasury Bills and Gold Funds. Avoid individual stocks until you have 3+ months of savings buffer.
     </div>
   </div>
-  <div class="card" style="border-color:rgba(230,255,43,.25);background:rgba(230,255,43,.02)">
-    <div class="label" style="margin-bottom:12px;color:var(--teal2)">QUICK INVEST – GOLD FUND</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-      <button class="btn secondary sm" onclick="setInvestAmt(1)">1 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(10)">10 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(50)">50 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(100)">100 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(500)">500 EGP</button>
+
+  <!-- Educational Cards: What Can I Invest In? -->
+  <div class="label" style="margin-bottom:10px">WHAT CAN YOU INVEST IN? — LEARN THE BASICS</div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card" style="border-left:3px solid #B8860B">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(184,134,11,.1);font-size:20px">🥇</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">Gold Fund</div>
+          <div class="tag orange" style="font-size:10px;margin-top:3px">Low Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">A pool of money invested in gold. Protects against inflation — when the Egyptian pound weakens, gold value typically rises. Good for beginners.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">Historical return</span><span style="font-weight:700;color:var(--teal3)">+11.2% YTD</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">1 EGP</span></div>
+      </div>
+      <div style="background:rgba(230,255,43,.08);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:var(--teal2)">
+        ⚠️ <b>Risk:</b> Gold prices fluctuate daily. Not guaranteed returns.
+      </div>
     </div>
-    <div style="display:flex;gap:10px;align-items:center">
-      <input id="investAmt" type="number" value="100" min="1" style="max-width:150px">
-      <span style="font-size:12px;color:var(--teal2)">EGP</span>
-      <button class="btn primary">Invest Now →</button>
+    <div class="card" style="border-left:3px solid var(--teal3)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(11,70,80,.08);font-size:20px">🏛️</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">Treasury Bills (T-Bills)</div>
+          <div class="tag green" style="font-size:10px;margin-top:3px">Very Low Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">You lend money to the Egyptian government for 91–364 days. The government pays you back with interest. Almost zero default risk — backed by the state.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">Current rate</span><span style="font-weight:700;color:var(--teal3)">27.5% p.a.</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">50 EGP</span></div>
+      </div>
+      <div style="background:rgba(11,70,80,.06);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:var(--teal2)">
+        💡 <b>Best for:</b> Short-term savings you don't need for 3–6 months.
+      </div>
     </div>
-    <div style="font-size:11px;color:var(--gray);margin-top:8px">Investments involve risk. Past performance does not guarantee future results.</div>
+    <div class="card" style="border-left:3px solid var(--teal2)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(11,70,80,.06);font-size:20px">📊</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">EGX30 Index Fund</div>
+          <div class="tag yellow" style="font-size:10px;margin-top:3px">Medium Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">Instead of picking one company, you invest in Egypt's top 30 companies at once. If the Egyptian economy grows, your investment grows too. Diversified = safer than single stocks.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">5-yr avg return</span><span style="font-weight:700;color:var(--teal3)">+8.7% / yr</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">10 EGP</span></div>
+      </div>
+      <div style="background:rgba(193,18,31,.05);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:#C1121F">
+        ⚠️ <b>Risk:</b> Can lose value in market downturns. Invest only what you can keep for 1+ year.
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid #7C3AED">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(124,58,237,.08);font-size:20px">🏠</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">Real Estate Fund</div>
+          <div class="tag" style="background:rgba(124,58,237,.1);color:#7C3AED;font-size:10px;margin-top:3px">Medium-High Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">Pool money with others to invest in Egyptian property developments. You earn from rental income and property appreciation without buying a full apartment.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">Historical return</span><span style="font-weight:700;color:var(--teal3)">+15.3% YTD</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">100 EGP</span></div>
+      </div>
+      <div style="background:rgba(124,58,237,.06);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:#7C3AED">
+        💡 <b>Liquidity:</b> Harder to cash out quickly. Think 2–5 year horizon.
+      </div>
+    </div>
+  </div>
+
+  <!-- What If Simulator -->
+  <div class="card" style="margin-bottom:16px;background:linear-gradient(160deg,rgba(230,255,43,.04),white);border-color:rgba(230,255,43,.3)">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label" style="color:var(--teal2)">🔮 WHAT IF SIMULATOR — NO REAL MONEY</div>
+      <span class="tag yellow" style="font-size:10px">Educational</span>
+    </div>
+    <div class="grid-2" style="margin-bottom:12px">
+      <div class="input-group">
+        <div class="input-label">If I save monthly (EGP)</div>
+        <input type="number" id="simAmt" value="200" min="1" oninput="runSim()">
+      </div>
+      <div class="input-group">
+        <div class="input-label">For how long (months)</div>
+        <input type="number" id="simMonths" value="12" min="1" max="120" oninput="runSim()">
+      </div>
+    </div>
+    <div class="grid-3" style="gap:10px;margin-bottom:12px" id="simResults">
+      <div style="background:var(--offwhite);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Treasury Bills</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--teal)" id="sim-tbill">3,016 EGP</div>
+        <div style="font-size:10px;color:var(--teal3);margin-top:3px">+27.5% p.a.</div>
+      </div>
+      <div style="background:var(--offwhite);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Gold Fund</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--teal)" id="sim-gold">2,531 EGP</div>
+        <div style="font-size:10px;color:var(--teal3);margin-top:3px">+11.2% p.a.</div>
+      </div>
+      <div style="background:var(--offwhite);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">EGX30 Index</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--teal)" id="sim-egx">2,481 EGP</div>
+        <div style="font-size:10px;color:var(--teal3);margin-top:3px">+8.7% p.a.</div>
+      </div>
+    </div>
+    <div style="background:rgba(11,70,80,.05);border-radius:10px;padding:11px 13px;font-size:11.5px;color:var(--teal2);line-height:1.6" id="simAdvice">
+      <b>AI Says:</b> At 200 EGP/month for 12 months, Treasury Bills give the best guaranteed return right now. You'd earn about 616 EGP in interest — that's more than 2.5x the monthly contribution!
+    </div>
+    <div style="font-size:10px;color:var(--gray3);margin-top:8px;text-align:center">⚠️ Projections are estimates only. Not financial advice. Past performance ≠ future results.</div>
+  </div>
+
+  <!-- EGX Stock Explainer (Read-Only) -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="flex-between" style="margin-bottom:12px">
+      <div class="label">📈 EGX30 SNAPSHOT — LEARN HOW STOCKS MOVE</div>
+      <span class="tag" style="background:rgba(193,18,31,.08);color:#C1121F;font-size:10px">Read Only · No Trading</span>
+    </div>
+    <div style="font-size:12px;color:var(--gray2);margin-bottom:12px;line-height:1.6;background:var(--offwhite);border-radius:8px;padding:10px 12px">
+      💡 <b>What is EGX?</b> The Egyptian Exchange (EGX) is where you can buy shares in Egyptian companies. A share = a small ownership stake. When the company earns more money, your share's value can rise.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="stock-row"><div class="stock-ticker">COMI</div><div class="stock-name">CIB – Commercial Intl Bank</div><div class="stock-price">78.50 EGP</div><div class="stock-chg" style="color:#4CAF50">+1.2%</div><span class="tag green" style="font-size:10px">Stable Blue Chip</span></div>
+      <div class="stock-row"><div class="stock-ticker">HRHO</div><div class="stock-name">EFG Hermes Holdings</div><div class="stock-price">22.30 EGP</div><div class="stock-chg" style="color:var(--red)">-0.8%</div><span class="tag red" style="font-size:10px">Volatile</span></div>
+      <div class="stock-row"><div class="stock-ticker">EAST</div><div class="stock-name">Eastern Company</div><div class="stock-price">15.60 EGP</div><div class="stock-chg" style="color:#4CAF50">+2.1%</div><span class="tag orange" style="font-size:10px">Defensive</span></div>
+      <div class="stock-row"><div class="stock-ticker">SWDY</div><div class="stock-name">El Sewedy Electric</div><div class="stock-price">42.80 EGP</div><div class="stock-chg" style="color:var(--red)">-1.3%</div><span class="tag yellow" style="font-size:10px">Cyclical</span></div>
+    </div>
+    <div style="background:rgba(11,70,80,.05);border-radius:10px;padding:11px 13px;margin-top:12px;font-size:12px;color:var(--teal2);line-height:1.6">
+      <b>📚 Glossary:</b> <b>Blue Chip</b> = large, well-established company (low risk). <b>Volatile</b> = price swings a lot (higher risk, higher reward). <b>Defensive</b> = holds value in downturns. <b>Cyclical</b> = tied to economic cycles.
+    </div>
+  </div>
+
+  <!-- Readiness Quiz -->
+  <div class="card" style="background:linear-gradient(160deg,rgba(11,70,80,.04),white);border-color:rgba(11,70,80,.15)">
+    <div class="label" style="margin-bottom:12px;color:var(--teal2)">🎯 AM I READY TO INVEST?</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:12px;background:var(--offwhite);border-radius:10px;padding:10px 13px">
+        <div style="width:24px;height:24px;border-radius:50%;background:#4CAF50;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;flex-shrink:0">✓</div>
+        <div style="font-size:12.5px;color:var(--teal)">Emergency fund covers 3 months of expenses</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--offwhite);border-radius:10px;padding:10px 13px">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(193,18,31,.15);display:flex;align-items:center;justify-content:center;color:#C1121F;font-size:12px;flex-shrink:0">✗</div>
+        <div style="font-size:12.5px;color:var(--teal)">No high-interest debt (credit card, BNPL) outstanding</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--offwhite);border-radius:10px;padding:10px 13px">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(230,255,43,.3);display:flex;align-items:center;justify-content:center;color:var(--teal2);font-size:12px;flex-shrink:0">~</div>
+        <div style="font-size:12.5px;color:var(--teal)">Investing money you won't need for 6+ months</div>
+      </div>
+    </div>
+    <div style="background:rgba(193,18,31,.06);border:1px solid rgba(193,18,31,.15);border-radius:10px;padding:11px 13px;margin-top:12px;font-size:12px;color:#C1121F;line-height:1.6">
+      <b>⚠️ AI Recommendation:</b> Pay off your BNPL installments first before investing — 25% BNPL interest rates will always outweigh investment gains.
+    </div>
   </div>
 </div>
+
 
 <!-- ══ SALARY ADVANCE ══ -->
 <div class="page" id="page-salary">
@@ -1217,26 +1327,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
   </div>
 </div>
 
-<!-- ══ EGX ══ -->
-<div class="page" id="page-egx">
-  <div class="page-title">EGX Paper Trading</div>
-  <div class="page-sub">Simulated trading — no real money involved. Learn before you invest.</div>
-  <div style="background:rgba(193,18,31,.08);border:1px solid rgba(193,18,31,.2);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px">All trading is simulated for educational purposes only.</div>
-  <div class="grid-3" style="margin-bottom:16px">
-    <div class="card green"><div class="label light">Virtual Balance</div><div class="val md light">47,320 EGP</div></div>
-    <div class="card"><div class="label">Portfolio Value</div><div class="val md" style="color:var(--teal3)">12,680 EGP</div></div>
-    <div class="card"><div class="label">Total Return</div><div class="val md" style="color:var(--teal2)">+2,680 EGP</div><div class="sub">+26.8%</div></div>
-  </div>
-  <div class="card">
-    <div class="flex-between" style="margin-bottom:12px"><div class="label">EGX30 STOCKS</div><span class="tag yellow" style="font-size:10px">Last updated 11:30 AM</span></div>
-    <div class="stock-row"><div class="stock-ticker">COMI</div><div class="stock-name">CIB – Commercial Intl Bank</div><div class="stock-price">78.50 EGP</div><div class="stock-chg" style="color:#4CAF50">+1.2%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">HRHO</div><div class="stock-name">EFG Hermes Holdings</div><div class="stock-price">22.30 EGP</div><div class="stock-chg" style="color:var(--red)">-0.8%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">EAST</div><div class="stock-name">Eastern Company</div><div class="stock-price">15.60 EGP</div><div class="stock-chg" style="color:#4CAF50">+2.1%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">SWDY</div><div class="stock-name">El Sewedy Electric</div><div class="stock-price">42.80 EGP</div><div class="stock-chg" style="color:var(--red)">-1.3%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">TMGH</div><div class="stock-name">Talaat Mustafa Group</div><div class="stock-price">31.10 EGP</div><div class="stock-chg" style="color:#4CAF50">+0.5%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-  </div>
-</div>
-
 <!-- ══ ZAKAT ══ -->
 <div class="page" id="page-zakat">
   <div class="page-title">Zakat & Sadaqa</div>
@@ -1262,41 +1352,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
         <div style="background:var(--offwhite);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Resala Charity</div><div style="font-size:11px;color:var(--gray)">رسالة للأعمال الخيرية</div></div><button class="btn primary sm">Donate</button></div>
         <div style="background:var(--offwhite);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Orphans Support</div><div style="font-size:11px;color:var(--gray)">Verified NGO</div></div><button class="btn primary sm">Donate</button></div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ BUSINESS HUB ══ -->
-<div class="page" id="page-sme">
-  <div class="flex-between" style="margin-bottom:4px">
-    <div class="page-title">Business Hub</div>
-    <span class="tag teal">SME Tools</span>
-  </div>
-  <div class="page-sub">Tools for small business owners — payroll, transfers, and AI insights.</div>
-  <div class="grid-3" style="margin-bottom:16px">
-    <div class="card dark"><div class="label light">Employees</div><div class="val md light">8</div><div class="sub" style="color:rgba(249,247,242,.6)">Active payroll</div></div>
-    <div class="card"><div class="label">Total Payroll</div><div class="val md">42,000 EGP</div><div class="sub">This month</div></div>
-    <div class="card teal" style="color:white"><div class="label" style="color:rgba(255,255,255,.6)">Next Payday</div><div style="font-family:var(--font-display);font-size:20px;color:white">May 1</div><div style="font-size:11px;color:rgba(255,255,255,.7)">21 days</div></div>
-  </div>
-  <div class="card" style="margin-bottom:14px">
-    <div class="flex-between" style="margin-bottom:12px"><div class="label">BULK SALARY TRANSFER</div><button class="btn primary sm">Process All</button></div>
-    <div class="emp-row"><div class="emp-avatar" style="background:var(--teal3)">أ</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Ahmed Khaled</div><div style="font-size:11px;color:var(--gray)">Software Dev</div></div><div style="font-weight:700;font-size:13px">7,500 EGP</div><span class="tag green" style="font-size:10px">Pending</span></div>
-    <div class="emp-row"><div class="emp-avatar" style="background:var(--lime3);color:var(--teal)">م</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Mohamed Ragab</div><div style="font-size:11px;color:var(--gray)">Designer</div></div><div style="font-weight:700;font-size:13px">6,000 EGP</div><span class="tag green" style="font-size:10px">Pending</span></div>
-    <div class="emp-row"><div class="emp-avatar" style="background:var(--teal2)">ف</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Fatma Hassan</div><div style="font-size:11px;color:var(--gray)">Accountant</div></div><div style="font-weight:700;font-size:13px">5,500 EGP</div><span class="tag orange" style="font-size:10px">Review</span></div>
-    <div style="padding:8px 12px;background:var(--offwhite2);border-radius:8px;font-size:11.5px;color:var(--teal2);text-align:center">+5 more employees</div>
-  </div>
-  <div class="card" style="background:rgba(11,70,80,.04);border-color:rgba(11,70,80,.15)">
-    <div class="flex-between" style="margin-bottom:10px">
-      <div class="label" style="color:var(--teal2)">AI BUSINESS ADVISOR</div>
-      <div style="display:flex;align-items:center;gap:5px"><div style="width:7px;height:7px;background:#4CAF50;border-radius:50%"></div><span style="font-size:10px;color:var(--gray)">Live</span></div>
-    </div>
-    <div style="background:white;border-radius:10px;padding:12px;font-size:12.5px;color:var(--teal2);margin-bottom:10px;line-height:1.6">
-      <b>Cash Flow Alert:</b> Your operating expenses increased 18% last month. If this trend continues, you'll need additional working capital by June.
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="chip">Cash flow forecast</button>
-      <button class="chip">Payroll optimization</button>
-      <button class="chip">Tax planning</button>
     </div>
   </div>
 </div>
@@ -1333,7 +1388,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
       <div class="label" style="color:var(--teal2)">📈 INVESTMENT OPPORTUNITIES — AI PICKS FOR YOU</div>
       <button class="btn sm primary" onclick="showPage('invest',null)">View All</button>
     </div>
-    <div class="notif-unread" style="background:rgba(230,255,43,.05);border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(230,255,43,.2);cursor:pointer" onclick="showPage('egx',null)">
+    <div class="notif-unread" style="background:rgba(230,255,43,.05);border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(230,255,43,.2);cursor:pointer" onclick="showPage('invest',null)">
       <div class="flex-between" style="margin-bottom:6px">
         <div style="display:flex;align-items:center;gap:8px">
           <div class="icon-box" style="background:rgba(11,70,80,.08);width:32px;height:32px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><polyline points="3 18 7 13 11 15 16 8 21 5"/><circle cx="21" cy="5" r="2"/></svg></div>
@@ -1344,7 +1399,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
       <div style="font-size:11.5px;color:var(--teal2);line-height:1.6;background:white;border-radius:8px;padding:10px 12px">
         <b>AI says:</b> Based on your 100 EGP/month investment pattern and current balance of 4,180 EGP, CIB stock at <b>78.50 EGP</b> has strong upside potential. Projected 3-month return: <b style="color:var(--teal3)">+8–12%</b>. You can afford <b>5 shares (392 EGP)</b> with low portfolio risk.
       </div>
-      <button class="btn sm primary" style="margin-top:10px" onclick="showPage('egx',null)">Buy Now →</button>
+      <button class="btn sm primary" style="margin-top:10px" onclick="showPage('invest',null)">Buy Now →</button>
     </div>
     <div style="background:rgba(230,255,43,.04);border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(230,255,43,.15);cursor:pointer">
       <div class="flex-between" style="margin-bottom:6px">
@@ -1543,62 +1598,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
 </div>
 
 <!-- ══ INTERNATIONAL ══ -->
-<div class="page" id="page-intl">
-  <div class="flex-between" style="margin-bottom:4px">
-    <div>
-      <div class="page-title">International Transfers</div>
-      <div class="page-sub">Send money abroad. Competitive rates, fast settlement.</div>
-    </div>
-    <button class="btn primary" onclick="openModal('intlSendModal')">→ Send Money</button>
-  </div>
-  <div class="card green" style="padding:18px;margin-bottom:16px">
-    <div class="flex-between">
-      <div>
-        <div class="label light" style="margin-bottom:6px">TODAY'S EXCHANGE RATES</div>
-        <div style="display:flex;gap:20px;flex-wrap:wrap">
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">USD</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">49.80 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">EUR</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">53.60 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">SAR</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">13.27 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">GBP</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">63.20 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">AED</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">13.55 <span style="font-size:11px">EGP</span></div></div>
-        </div>
-      </div>
-      <div style="text-align:right"><div style="font-size:10px;color:rgba(249,247,242,.4)">Live rates · 11:45 AM</div></div>
-    </div>
-  </div>
-  <div class="grid-2" style="align-items:start">
-    <div class="card">
-      <div class="label" style="margin-bottom:14px">QUICK TRANSFER CALCULATOR</div>
-      <div class="input-group"><div class="input-label">You Send (EGP)</div><input id="intlSendAmt" type="number" value="5000" oninput="calcIntl()"></div>
-      <div class="input-group"><div class="input-label">Destination Currency</div>
-        <select id="intlCurr" onchange="calcIntl()">
-          <option value="49.80">USD – US Dollar</option>
-          <option value="53.60">EUR – Euro</option>
-          <option value="13.27">SAR – Saudi Riyal</option>
-          <option value="63.20">GBP – British Pound</option>
-          <option value="13.55">AED – UAE Dirham</option>
-        </select>
-      </div>
-      <div style="background:var(--offwhite);border-radius:12px;padding:14px;margin-bottom:12px">
-        <div style="font-size:11px;color:var(--teal2);margin-bottom:3px">Recipient Gets</div>
-        <div id="intlResult" style="font-family:var(--font-display);font-size:26px;color:var(--teal)">100.40 USD</div>
-        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--gray)">
-          <span>Transfer fee: 25 EGP</span><span>Arrives in 1–2 days</span>
-        </div>
-      </div>
-      <button class="btn primary" style="width:100%" onclick="openModal('intlSendModal')">Send Now</button>
-    </div>
-    <div class="card">
-      <div class="label" style="margin-bottom:10px">SUPPORTED CORRIDORS</div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">US</div><div style="flex:1"><div class="tx-name">United States (USD)</div><div class="tx-cat">Bank transfer · 1-2 days</div></div><span class="tag green">Active</span></div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">EU</div><div style="flex:1"><div class="tx-name">Eurozone (EUR)</div><div class="tx-cat">SEPA · 1-3 days</div></div><span class="tag green">Active</span></div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">SA</div><div style="flex:1"><div class="tx-name">Saudi Arabia (SAR)</div><div class="tx-cat">SWIFT · Same day</div></div><span class="tag green">Active</span></div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">AE</div><div style="flex:1"><div class="tx-name">UAE (AED)</div><div class="tx-cat">SWIFT · Same day</div></div><span class="tag green">Active</span></div>
-    </div>
-  </div>
-</div>
-
-
 <!-- ══ FUTURE ME AI ══ -->
 <div id="page-future" class="page">
 
@@ -1780,19 +1779,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
 </div>
 
 <!-- ══ NFC OVERLAY ══ -->
-<div class="nfc-overlay" id="nfcOverlay">
-  <div class="nfc-ring"><div class="nfc-inner" style="display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="1.5" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="2" fill="var(--lime)"/></svg></div></div>
-  <div style="font-family:var(--font-display);font-size:28px;color:var(--offwhite)">Ready to Pay</div>
-  <div style="font-size:14px;color:rgba(249,247,242,.6)">Hold your phone near the payment terminal</div>
-  <div style="font-size:11px;color:rgba(230,255,43,.6);margin-top:4px">Works offline — transactions sync automatically</div>
-  <div style="display:flex;gap:12px;margin-top:16px">
-    <button class="btn primary" onclick="simulateNFC()">Simulate Tap</button>
-    <button class="btn ghost" onclick="toggleNFC()">Cancel</button>
-  </div>
-</div>
-
-
-<!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="addExpenseModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('addExpenseModal')">×</button>
@@ -1829,7 +1815,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
       <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Investments</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
       <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Gam'eya</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
       <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Pockets</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Business Hub</span><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+      
     </div>
     <div class="divider"></div>
     <button class="btn primary" style="width:100%" onclick="closeModal('customizeModal')">Save Changes</button>
@@ -1858,970 +1844,639 @@ input:focus,select:focus,textarea:focus{border-color:var(--teal3)}
   </div>
 </div>
 
-<div class="modal-overlay" id="intlSendModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('intlSendModal')">×</button>
-    <div class="modal-title">Send International Transfer</div>
-    <div class="input-group"><div class="input-label">Recipient Full Name</div><input placeholder="As on bank account"></div>
-    <div class="input-group"><div class="input-label">Recipient IBAN / Account No.</div><input placeholder="e.g. GB29NWBK60161331926819"></div>
-    <div class="grid-2">
-      <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
-      <div class="input-group"><div class="input-label">Currency</div><select><option>USD</option><option>EUR</option><option>SAR</option><option>GBP</option><option>AED</option></select></div>
-    </div>
-    <button class="btn primary" style="width:100%" onclick="closeModal('intlSendModal')">Review & Send</button>
-  </div>
-</div>
-
 <script>
+// ═══════════════════════════════════════════════════════
+//  FinCircle Personal Dashboard — Full JS Logic
+// ═══════════════════════════════════════════════════════
+
+// ── USER STATE ──
+const userData = JSON.parse(localStorage.getItem('fincircle_user') || '{}');
 let currentLang = 'en';
-let advisorLang = 'ar';
+let currentCurrency = 'EGP';
+const FX = { EGP: 1, USD: 1/49.8, EUR: 1/54.2, SAR: 1/13.3 };
 
-function setLang(lang) {
-  currentLang = lang;
-  const html = document.documentElement;
-  html.setAttribute('lang', lang);
-  html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-  document.querySelectorAll('[data-' + lang + ']').forEach(el => { el.textContent = el.getAttribute('data-' + lang); });
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+// Seed default transactions if none
+if (!userData.transactions) userData.transactions = [];
+if (!userData.installments) userData.installments = [];
+if (!userData.notifications) userData.notifications = [];
+if (!userData.pockets) userData.pockets = [
+  { name: 'Rent', amount: 2500, auto: 2500, color: 'var(--lime)' },
+  { name: 'Europe Trip', amount: 680, auto: 0, target: 5000, color: 'var(--teal3)' },
+  { name: 'Emergency', amount: 1000, auto: 0, color: 'var(--gray)' }
+];
+if (userData.name) {
+  document.querySelectorAll('.user-name').forEach(el => el.textContent = userData.name.split(' ')[0] + ' M.');
+  document.querySelectorAll('.user-avatar').forEach(el => el.textContent = userData.name[0].toUpperCase());
 }
 
-function setAdvisorLang(lang) {
-  advisorLang = lang;
-  const greeting = document.getElementById('aiGreeting');
-  if (lang === 'ar') { greeting.innerHTML = 'مرحباً يا جنا! أنا مستشارك المالي الذكي. إزيك؟ عندي كل بياناتك المالية وقادر أساعدك في أي حاجة!'; }
-  else { greeting.innerHTML = "Hi Jana! I'm your AI financial advisor with access to all your financial data. Ask me anything!"; }
-}
+function saveUser() { localStorage.setItem('fincircle_user', JSON.stringify(userData)); }
 
+// ── NAVIGATION ──
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  const p = document.getElementById('page-' + id);
-  if (p) p.classList.add('active');
-  if (btn) btn.classList.add('active');
-  else document.querySelectorAll('.nav-item').forEach(b => { if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) b.classList.add('active'); });
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    document.querySelectorAll('.nav-item').forEach(b => {
+      const oc = b.getAttribute('onclick') || '';
+      if (oc.includes("'" + id + "'")) b.classList.add('active');
+    });
+  }
+  // Scroll main to top
+  document.querySelector('.main').scrollTop = 0;
+  // Page-specific init
+  if (id === 'future') fmaiInit();
+  if (id === 'pockets') renderPockets();
+  if (id === 'bnpl') { document.getElementById('bnplResult').innerHTML = ''; }
 }
 
-const rates = { EGP: 1, USD: 0.0201, EUR: 0.0186, SAR: 0.0754 };
-function setCurrency(curr, btn) {
+// ── MODALS ──
+function openModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('open');
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); });
+});
+
+// ── TOAST ──
+function showToast(msg, type='success') {
+  const t = document.createElement('div');
+  const bg = type === 'error' ? '#C1121F' : type === 'warn' ? '#92400E' : 'var(--teal)';
+  t.style.cssText = `position:fixed;bottom:20px;right:20px;background:${bg};color:white;padding:12px 20px;border-radius:12px;z-index:999;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.2);animation:fadeIn .2s ease`;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ── LANGUAGE TOGGLE ──
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = lang === 'ar' ? (el.dataset.ar || el.dataset.en) : el.dataset.en;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  const target = lang === 'ar' ? document.querySelectorAll('.lang-btn')[1] : document.querySelectorAll('.lang-btn')[0];
+  if (target) target.classList.add('active');
+}
+
+// ── CURRENCY ──
+function setCurrency(cur, btn) {
+  currentCurrency = cur;
   document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const factor = rates[curr];
-  const fmt = n => (n * factor).toLocaleString(undefined, {maximumFractionDigits:2});
-  document.getElementById('balVal').textContent = fmt(4180);
-  document.getElementById('balCurr').textContent = curr;
-  document.getElementById('incomeCurr').textContent = curr + ' this month';
+  if (btn) btn.classList.add('active');
+  const rate = FX[cur] || 1;
+  const base = userData.balance || 4180;
+  const income = userData.income || 8500;
+  const sym = cur;
+  const fmt = v => (v * rate).toLocaleString('en-US', { maximumFractionDigits: 0 });
+  const balEl = document.getElementById('balVal');
+  const balCurr = document.getElementById('balCurr');
+  const incCurr = document.getElementById('incomeCurr');
+  if (balEl) balEl.textContent = fmt(base);
+  if (balCurr) balCurr.textContent = sym;
+  if (incCurr) incCurr.textContent = sym + ' this month';
 }
 
-function toggleNFC() { document.getElementById('nfcOverlay').classList.toggle('open'); }
-function simulateNFC() {
-  document.getElementById('nfcOverlay').classList.remove('open');
-  setTimeout(() => {
-    const banner = document.createElement('div');
-    banner.style.cssText = 'position:fixed;top:70px;right:24px;z-index:500;padding:12px 16px;width:300px;border-radius:14px;display:flex;gap:10px;align-items:center;background:var(--teal);color:var(--offwhite);box-shadow:0 4px 20px rgba(0,0,0,.3)';
-    banner.innerHTML = '<div><b>NFC Payment Success</b><div style="font-size:11px;opacity:.8">180 EGP · Domino\'s · Offline (will sync)</div></div>';
-    document.body.appendChild(banner);
-    setTimeout(() => banner.remove(), 3000);
-  }, 300);
+// ── CUSTOMER SUPPORT CHAT ──
+function toggleCS() {
+  const panel = document.getElementById('csPanel');
+  panel.classList.toggle('open');
 }
-
-const aiResponses = {
-  'afford': {en: "Looking at your data: <b>4,180 EGP</b> balance and <b>1,950 EGP/month</b> in obligations. A laptop at 800 EGP/month over 24 months → ratio <b>32%</b> — <span style='color:var(--teal);font-weight:600'>Low Risk</span>. Clear your overdue MacBook payment first!", ar: "بص على أرقامك: عندك <b>4,180 ج.م</b> رصيد و<b>1,950 ج.م</b> التزامات. لو اشتريت لاب توب بـ800 ج.م × 24 شهر، النسبة <b>32%</b> — مخاطرة منخفضة. بس خلص قسط الماك بوك الأول!"},
-  'score': {en: "Your 78 score breaks down: Payment Punctuality 88, Savings 62, Spending 74, Gam'eya 95. Fix the MacBook payment → score jumps to ~86!", ar: "نقاطك 78: انتظام السداد 88، توفير 62، إنفاق 74، جمعية 95. ادفع قسط الماك بوك → النقاط تطلع ~86!"},
-  'save': {en: "3 steps: 1. Cut Food by 200 EGP/month. 2. Automate 500 EGP to Europe Trip on salary day. 3. Skip shopping in May → frees 650 EGP.", ar: "3 خطوات: 1. قلل الأكل 200 ج.م. 2. تحويل تلقائي 500 ج.م لأوروبا. 3. مفيش شوبينج في مايو = 650 ج.م توفير."},
-  'food': {en: "Yes — 3 months overspending! Food avg: <b>920 EGP</b>. Target: <b>700 EGP</b>. That's 2,640 EGP/year you could save!", ar: "آه — 3 شهور زيادة! متوسطك <b>920 ج.م</b>. الهدف <b>700 ج.م</b>. يعني 2,640 ج.م في السنة ممكن توفرها!"},
-  'april': {en: "April 2026: Income 8,500 · Spent 4,320 (50.8%) · Balance 4,180 · Savings 0 · Score 78 (+3). Overdue MacBook needs attention.", ar: "أبريل 2026: دخل 8,500 · مصروف 4,320 · رصيد 4,180 · توفير 0 · نقاط 78. قسط الماك بوك متأخر!"},
+const csReplies = {
+  'report a problem': "I'm sorry to hear that! Please describe the issue and I'll log a ticket for you.",
+  'how to use nfc?': "Tap your phone to any NFC-enabled terminal with your virtual card active. Make sure NFC is enabled in your phone settings!",
+  'reset my pin': "For security, PIN resets require identity verification. Please visit Settings → Security → Reset PIN.",
+  'default': "Thanks for reaching out! Our team will get back to you within a few minutes. Is there anything else I can help with?"
 };
-
-function getAIResponse(msg) {
-  const lower = msg.toLowerCase();
-  if (lower.includes('afford') || lower.includes('laptop') || lower.includes('أقدر') || lower.includes('اشتري')) return aiResponses['afford'][advisorLang];
-  if (lower.includes('score') || lower.includes('نقاط') || lower.includes('78')) return aiResponses['score'][advisorLang];
-  if (lower.includes('save') || lower.includes('توفر')) return aiResponses['save'][advisorLang];
-  if (lower.includes('food') || lower.includes('أكل')) return aiResponses['food'][advisorLang];
-  if (lower.includes('april') || lower.includes('أبريل') || lower.includes('summarize')) return aiResponses['april'][advisorLang];
-  return advisorLang === 'ar' ? "سؤال كويس! بناءً على بياناتك — رصيد <b>4,180 ج.م</b> ونقاط <b>78</b>. اسألني عن الأفوردابيلتي أو التوفير!" : "Based on your profile — <b>4,180 EGP</b> balance, score <b>78</b>. Try asking about affordability or savings tips!";
-}
-
-function sendMsg() {
-  const input = document.getElementById('chatInput');
-  const msg = input.value.trim();
-  if (!msg) return;
-  addChatMsg(msg, 'user', 'chatMessages', 'J');
-  input.value = '';
-  showTyping('chatMessages', 'FC');
-  setTimeout(() => { removeTyping('chatMessages'); addChatMsg(getAIResponse(msg), 'ai', 'chatMessages', 'FC'); }, 1300);
-}
-
-function sendChip(chip) {
-  const msg = chip.textContent;
-  addChatMsg(msg, 'user', 'chatMessages', 'J');
-  showTyping('chatMessages', 'FC');
-  setTimeout(() => { removeTyping('chatMessages'); addChatMsg(getAIResponse(msg), 'ai', 'chatMessages', 'FC'); }, 1300);
-}
-
-const csReplies = ["I understand! Let me look into that for you. Can you share more details?","For NFC: ensure it's enabled on your phone, then tap and hold near the terminal.","To reset your PIN: Virtual Card → Settings → Change PIN. Verify via OTP first.","I'll escalate this. You'll hear back within 2 hours. Ticket #FC-2847 created."];
-let csIdx = 0;
-
 function sendCS() {
   const input = document.getElementById('csInput');
   const msg = input.value.trim();
   if (!msg) return;
-  addChatMsg(msg, 'user', 'csMessages', 'J');
+  addCSMsg(msg, 'user');
   input.value = '';
-  showTyping('csMessages', 'CS');
-  const reply = csReplies[csIdx++ % csReplies.length];
-  setTimeout(() => { removeTyping('csMessages'); addChatMsg(reply, 'ai', 'csMessages', 'CS'); }, 1200);
+  setTimeout(() => {
+    const key = msg.toLowerCase();
+    const reply = csReplies[key] || csReplies['default'];
+    addCSMsg(reply, 'ai');
+  }, 700);
 }
-
-function sendCSChip(chip) {
-  const msg = chip.textContent;
-  addChatMsg(msg, 'user', 'csMessages', 'J');
-  showTyping('csMessages', 'CS');
-  const reply = csReplies[csIdx++ % csReplies.length];
-  setTimeout(() => { removeTyping('csMessages'); addChatMsg(reply, 'ai', 'csMessages', 'CS'); }, 1200);
+function sendCSChip(btn) {
+  addCSMsg(btn.textContent, 'user');
+  const key = btn.textContent.toLowerCase();
+  setTimeout(() => addCSMsg(csReplies[key] || csReplies['default'], 'ai'), 700);
 }
-
-function toggleCS() { document.getElementById('csPanel').classList.toggle('open'); }
-
-function addChatMsg(text, type, containerId, initials) {
-  const wrap = document.getElementById(containerId);
-  const div = document.createElement('div');
-  div.className = 'msg ' + type;
-  const bg = type === 'ai' ? 'var(--lime)' : 'var(--teal)';
-  const col = type === 'ai' ? 'var(--teal)' : 'var(--offwhite)';
-  div.innerHTML = `<div class="msg-avatar" style="background:${bg};color:${col}">${initials}</div><div class="msg-bubble">${text}</div>`;
-  wrap.appendChild(div);
+function addCSMsg(text, from) {
+  const wrap = document.getElementById('csMessages');
+  const d = document.createElement('div');
+  d.className = 'msg ' + from;
+  d.innerHTML = `<div class="msg-avatar" style="background:${from==='ai'?'var(--lime)':'var(--teal)'};color:${from==='ai'?'var(--teal)':'var(--offwhite)'}">${from==='ai'?'CS':'J'}</div><div class="msg-bubble" style="font-size:12px">${text}</div>`;
+  wrap.appendChild(d);
   wrap.scrollTop = wrap.scrollHeight;
 }
 
-function showTyping(containerId, initials) {
-  const wrap = document.getElementById(containerId);
-  const div = document.createElement('div');
-  div.className = 'msg ai'; div.id = containerId + '_typing';
-  div.innerHTML = `<div class="msg-avatar" style="background:var(--lime);color:var(--teal)">${initials}</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
-  wrap.appendChild(div); wrap.scrollTop = wrap.scrollHeight;
+// ── AI ADVISOR CHAT ──
+let advisorLang = 'ar';
+function setAdvisorLang(l) { advisorLang = l; }
+
+const aiResponses = {
+  en: {
+    'can i afford a new laptop': "Based on your current balance of 4,180 EGP and monthly obligations of 1,950 EGP, I'd recommend waiting. A 12-month instalment on a mid-range laptop would add ~500 EGP/month, pushing your obligation ratio to 29% — still manageable, but tight.",
+    'why is my score 78': "Your 78/100 score breaks down as: Payment Punctuality (88) — great job! Savings Consistency (62) — you haven't contributed this month. Spending Control (74) — food spending is 8% above your average. Fix the overdue MacBook payment for an instant +8 points.",
+    'how do i save faster': "Three quick wins: (1) Set an auto-transfer of 500 EGP on payday to your Europe Trip pocket. (2) Reduce Uber rides — you spent 95 EGP in the last 3 days. (3) Use the BNPL Advisor before any purchase over 1,000 EGP.",
+    'am i overspending on food': "Yes — your food spending this month is 920 EGP, which is 21% of your income. The recommended cap is 15%. Try limiting dining out to 2x per week to save ~300 EGP/month.",
+    'summarize april': "April Summary: Income 8,500 EGP. Expenses 4,320 EGP (50.8%). Installments: 3 active (1,950 EGP/month). Savings: 0 contributions. Big spends: iPhone instalment (850), H&M (650), Carrefour (320). Surplus: ~4,180 EGP."
+  },
+  ar: {
+    'default': "أنا فاهم سؤالك! بناءً على بياناتك الحالية، رصيدك 4,180 جنيه ونسبة الإنفاق 50.8%. نصيحتي: ابدأ بتوفير 500 جنيه أوتوماتيك كل أول الشهر. محتاج تفاصيل أكتر؟"
+  }
+};
+
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  addChatMsg(text, 'user');
+  input.value = '';
+  // Typing indicator
+  const typingId = 'typing_' + Date.now();
+  addChatMsg('<div class="typing-dots"><span></span><span></span><span></span></div>', 'ai', typingId);
+  setTimeout(() => {
+    const el = document.getElementById(typingId);
+    if (el) el.remove();
+    const key = text.toLowerCase().replace(/[?!]/g,'');
+    const bucket = advisorLang === 'ar' ? aiResponses.ar : aiResponses.en;
+    const reply = bucket[key] || aiResponses.en[key] || "Great question! Based on your spending patterns, I'd recommend reviewing the Analytics page for a full breakdown. You can also ask me about installments, savings, or investment options.";
+    addChatMsg(reply, 'ai');
+  }, 1200);
+}
+function sendChip(chip) {
+  document.getElementById('chatInput').value = chip.textContent;
+  sendMsg();
+}
+function addChatMsg(html, from, id) {
+  const wrap = document.getElementById('chatMessages');
+  const d = document.createElement('div');
+  d.className = 'msg ' + from;
+  if (id) d.id = id;
+  d.innerHTML = `<div class="msg-avatar">${from==='ai'?'FC':'J'}</div><div class="msg-bubble">${html}</div>`;
+  wrap.appendChild(d);
+  wrap.scrollTop = wrap.scrollHeight;
 }
 
-function removeTyping(containerId) {
-  const el = document.getElementById(containerId + '_typing');
-  if (el) el.remove();
+// ── TRANSACTION MODAL ──
+let txType = 'expense';
+function setTxType(type) {
+  txType = type;
+  document.getElementById('txTypeExpenseBtn').className = type === 'expense' ? 'btn primary sm' : 'btn secondary sm';
+  document.getElementById('txTypeIncomeBtn').className = type === 'income' ? 'btn primary sm' : 'btn secondary sm';
+  document.getElementById('txTypeIncomeBtn').style.flex = '1';
+  document.getElementById('txTypeExpenseBtn').style.flex = '1';
+}
+function submitTransaction() {
+  const amount = parseFloat(document.getElementById('txAmount').value);
+  const cat = document.getElementById('txCategory').value;
+  const desc = document.getElementById('txDescription').value.trim() || 'Transaction';
+  if (!amount || amount <= 0) { showToast('Please enter a valid amount', 'error'); return; }
+  const tx = { amount, cat, desc, type: txType, date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }) };
+  userData.transactions.unshift(tx);
+  if (txType === 'expense') userData.balance = (userData.balance || 4180) - amount;
+  else userData.balance = (userData.balance || 4180) + amount;
+  saveUser();
+  closeModal('addExpenseModal');
+  showToast(`✓ ${txType === 'expense' ? '–' : '+'}${amount} EGP recorded`);
+  // Reset form
+  document.getElementById('txAmount').value = '';
+  document.getElementById('txDescription').value = '';
+  // Trigger Future Me notification
+  triggerFMNotif(tx);
 }
 
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(ov => { ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); }); });
+// ── FUTURE ME NOTIFICATION ──
+function triggerFMNotif(tx) {
+  const list = document.getElementById('fm-notif-list');
+  if (!list) return;
+  const isLarge = tx.amount > 500;
+  const isInvest = tx.cat === 'investment';
+  let type, icon, title, body, tag;
+  if (isInvest) {
+    type = 'fm-positive'; icon = '✅';
+    title = 'Smart move! Investing now will benefit your future.';
+    body = `Your ${tx.amount} EGP investment in ${tx.desc} compounds over time. Keep this habit and your portfolio could grow significantly in 5 years.`;
+    tag = '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px">Good Move</span>';
+  } else if (isLarge) {
+    type = 'fm-warning'; icon = '⚠️';
+    title = 'This expense is higher than usual. Your future self is concerned.';
+    body = `You spent <b>${tx.amount} EGP</b> on ${tx.desc}. This is a large transaction — review if it was planned.`;
+    tag = '<span class="tag red" style="font-size:10px">Warning</span>';
+  } else {
+    type = 'fm-neutral'; icon = '🔍';
+    title = 'Transaction recorded by Future Me AI.';
+    body = `${tx.desc} (${tx.amount} EGP) logged. ${tx.type === 'expense' ? 'Consider if this aligns with your savings goals.' : 'Nice income — allocate some to savings!'}`;
+    tag = '<span class="tag" style="background:rgba(120,80,200,.1);color:#7850C8;font-size:10px">Heads Up</span>';
+  }
+  const card = document.createElement('div');
+  card.className = `fm-notif-card ${type}`;
+  card.innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div class="fm-icon-box ${type}-icon">${icon}</div>
+        <div>
+          <div class="tx-name">${title}</div>
+          <div class="tx-cat">✦ Future Me · Just now</div>
+        </div>
+      </div>${tag}
+    </div>
+    <div class="fm-ai-bubble">${body}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+      <span style="font-size:10px;color:var(--gray3)">${tx.desc} · ${tx.amount} EGP</span>
+      <button class="fm-dismiss-btn" onclick="fmDismiss(this)">Dismiss ×</button>
+    </div>`;
+  // Keep max 5 cards
+  const existing = list.querySelectorAll('.fm-notif-card');
+  if (existing.length >= 5) existing[existing.length - 1].remove();
+  list.insertBefore(card, list.firstChild);
+  document.getElementById('fm-notif-empty').style.display = 'none';
+  // Show toast
+  const toast = document.createElement('div');
+  toast.className = 'fm-toast show';
+  toast.innerHTML = `<span class="fm-toast-icon">${icon}</span><div><div class="fm-toast-title">Future Me noticed</div><div class="fm-toast-sub">${title}</div></div>`;
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+}
+function fmDismiss(btn) {
+  const card = btn.closest('.fm-notif-card');
+  card.style.opacity = '0'; card.style.transform = 'translateX(20px)'; card.style.transition = 'all .25s';
+  setTimeout(() => {
+    card.remove();
+    const list = document.getElementById('fm-notif-list');
+    if (list && list.querySelectorAll('.fm-notif-card').length === 0) {
+      document.getElementById('fm-notif-empty').style.display = 'flex';
+    }
+  }, 250);
+}
+function fmClearAll() {
+  const list = document.getElementById('fm-notif-list');
+  if (list) list.innerHTML = '';
+  document.getElementById('fm-notif-empty').style.display = 'flex';
+}
 
+// ── NOTIFICATION FILTER ──
+function notifSetFilter(filter, btn) {
+  document.querySelectorAll('.notif-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const sections = { investments: 'notif-section-investments', alerts: 'notif-section-alerts', futureme: 'notif-section-futureme' };
+  if (filter === 'all') {
+    Object.values(sections).forEach(id => { const el = document.getElementById(id); if(el) el.style.display=''; });
+  } else {
+    Object.entries(sections).forEach(([k, id]) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = k === filter ? '' : 'none';
+    });
+  }
+}
+function notifMarkAllRead() {
+  document.querySelectorAll('.notif-unread').forEach(el => el.classList.remove('notif-unread'));
+  showToast('All notifications marked as read');
+}
+
+// ── BNPL CALCULATOR ──
 function calcBNPL() {
-  const income = +document.getElementById('bnplIncome').value || 8500;
-  const monthly = +document.getElementById('bnplMonthly').value || 1000;
-  const months = +document.getElementById('bnplMonths').value || 12;
   const item = document.getElementById('bnplItem').value || 'Item';
-  const existing = 1950;
-  const newTotal = existing + monthly;
-  const ratio = (newTotal / income * 100).toFixed(1);
-  let risk, riskColor, msg, bg, tip;
-  if (+ratio <= 35) { risk='Low'; riskColor='var(--teal)'; msg='Safe to proceed'; bg='rgba(11,70,80,.06)'; tip='Your income-to-obligation ratio stays healthy. You can comfortably take this plan.'; }
-  else if (+ratio <= 50) { risk='Medium'; riskColor='#A07800'; msg='Caution advised'; bg='rgba(230,255,43,.08)'; tip='Approaching the safe limit. Monitor spending and avoid additional obligations.'; }
-  else { risk='High'; riskColor='#C1121F'; msg='Not recommended'; bg='rgba(193,18,31,.06)'; tip='Over 50% of income goes to obligations. Consider a higher down payment or longer duration.'; }
-  const altMonthly = Math.max(0, Math.floor(income * 0.35 - existing));
+  const income = parseFloat(document.getElementById('bnplIncome').value) || 8500;
+  const monthly = parseFloat(document.getElementById('bnplMonthly').value) || 1000;
+  const months = parseInt(document.getElementById('bnplMonths').value) || 12;
   const total = monthly * months;
+  const ratio = (monthly / income) * 100;
+  const currentObligations = 1950;
+  const newRatio = ((monthly + currentObligations) / income) * 100;
+  let verdict, color, icon;
+  if (newRatio < 30) { verdict = 'SAFE TO PROCEED'; color = 'var(--teal3)'; icon = '✅'; }
+  else if (newRatio < 40) { verdict = 'PROCEED WITH CAUTION'; color = '#F59E0B'; icon = '⚠️'; }
+  else { verdict = 'NOT RECOMMENDED'; color = '#C1121F'; icon = '❌'; }
   document.getElementById('bnplResult').innerHTML = `
-    <div style="font-size:14.5px;font-weight:700;color:var(--teal);margin-bottom:14px;font-family:var(--font-display)">Risk Assessment — ${item}</div>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">Existing obligations</span><span style="font-weight:700">${existing.toLocaleString()} EGP</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">New instalment/month</span><span style="font-weight:700;color:var(--teal2)">${monthly.toLocaleString()} EGP</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">Total cost over ${months} months</span><span style="font-weight:700">${total.toLocaleString()} EGP</span></div>
-      <div style="height:1px;background:var(--offwhite2)"></div>
-      <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--teal2)">Income-to-Obligation Ratio</span><span style="font-weight:700;color:${riskColor}">${ratio}%</span></div>
+    <div style="text-align:center;padding:10px 0 16px">
+      <div style="font-size:36px;margin-bottom:6px">${icon}</div>
+      <div style="font-family:var(--font-display);font-size:18px;color:${color}">${verdict}</div>
     </div>
-    <div style="background:${bg};border:1px solid ${riskColor}33;border-radius:12px;padding:13px;margin-bottom:10px">
-      <div style="font-weight:700;font-size:14px;color:${riskColor};margin-bottom:5px">${msg} — ${risk} Risk</div>
-      <div style="font-size:12px;color:var(--teal2);line-height:1.6">${tip}</div>
-    </div>
-    ${risk !== 'Low' ? `<div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.2);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--teal2)"><b style="color:var(--teal)">Suggested:</b> Max safe instalment = <b>${altMonthly.toLocaleString()} EGP/month</b></div>` : '<div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.2);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--teal3)"><b>Great choice!</b> This plan fits well within your budget.</div>'}
-    <button class="btn primary sm" style="margin-top:10px;width:100%" onclick="showPage('installments',null)">Add This Plan →</button>
-  `;
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:var(--offwhite);border-radius:10px;padding:11px 13px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px"><span>Monthly Instalment</span><b>${monthly.toLocaleString()} EGP</b></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:4px"><span>Total Cost</span><b>${total.toLocaleString()} EGP</b></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:4px"><span>Duration</span><b>${months} months</b></div>
+      </div>
+      <div style="background:var(--offwhite);border-radius:10px;padding:11px 13px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);margin-bottom:7px">OBLIGATION ANALYSIS</div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Current obligations</span><b>1,950 EGP/mo (23%)</b></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px"><span>With ${item}</span><b style="color:${color}">${(currentObligations+monthly).toLocaleString()} EGP/mo (${newRatio.toFixed(1)}%)</b></div>
+        <div class="progress-bg" style="margin-top:8px"><div class="progress-fill" style="width:${Math.min(newRatio,100)}%;background:${color}"></div></div>
+        <div style="font-size:10px;color:var(--gray);margin-top:3px">Safe zone: under 35%</div>
+      </div>
+      <div style="background:rgba(11,70,80,.05);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--teal2);line-height:1.6">
+        <b>AI says:</b> ${newRatio < 30 ? `This instalment fits comfortably in your budget. Your obligation ratio of ${newRatio.toFixed(1)}% is well within the safe zone.` : newRatio < 40 ? `This will stretch your budget. Consider negotiating a lower monthly payment or waiting 2 months to build more buffer.` : `At ${newRatio.toFixed(1)}% obligation ratio, you risk financial stress. Pay off an existing instalment first before taking this on.`}
+      </div>
+    </div>`;
 }
 
-function calcIntl() {
-  const amt = +document.getElementById('intlSendAmt').value || 0;
-  const rate = +document.getElementById('intlCurr').selectedOptions[0].value;
-  const fee = 25;
-  const converted = ((Math.max(0, amt - fee)) / rate).toFixed(2);
-  const curr = document.getElementById('intlCurr').selectedOptions[0].text.split(' – ')[0];
-  document.getElementById('intlResult').textContent = `${converted} ${curr}`;
+// ── INVESTMENT SIMULATOR ──
+function runSim() {
+  const amt = parseFloat(document.getElementById('simAmt').value) || 200;
+  const months = parseInt(document.getElementById('simMonths').value) || 12;
+  const tbillRate = 0.275 / 12;
+  const goldRate = 0.112 / 12;
+  const egxRate = 0.087 / 12;
+  const calc = (rate) => { let v = 0; for (let i = 0; i < months; i++) v = (v + amt) * (1 + rate); return Math.round(v); };
+  const tbill = calc(tbillRate);
+  const gold = calc(goldRate);
+  const egx = calc(egxRate);
+  document.getElementById('sim-tbill').textContent = tbill.toLocaleString() + ' EGP';
+  document.getElementById('sim-gold').textContent = gold.toLocaleString() + ' EGP';
+  document.getElementById('sim-egx').textContent = egx.toLocaleString() + ' EGP';
+  const earned = tbill - amt * months;
+  document.getElementById('simAdvice').innerHTML = `<b>AI Says:</b> At ${amt.toLocaleString()} EGP/month for ${months} months, Treasury Bills give the best guaranteed return right now. You'd earn about <b>${earned.toLocaleString()} EGP</b> in interest — that's more than ${(earned/amt).toFixed(1)}x the monthly contribution!`;
 }
 
-function setInvestAmt(n) { document.getElementById('investAmt').value = n; }
-
-let pocketCount = 3;
-const pocketColors = ['var(--lime)','var(--teal3)','var(--teal2)','var(--gray)','#4CAF50'];
+// ── POCKETS ──
+function renderPockets() {
+  const grid = document.getElementById('pocketsGrid');
+  if (!grid) return;
+  const pockets = userData.pockets || [];
+  grid.innerHTML = pockets.map((p, i) => `
+    <div class="card" style="padding:18px;border-left:3px solid ${p.color};border-radius:0 var(--r2) var(--r2) 0">
+      <div class="flex-between" style="margin-bottom:10px">
+        <div style="font-weight:700;font-size:13px">${p.name}</div>
+        <button onclick="editPocket(this)" data-idx="${i}" style="background:none;border:none;cursor:pointer;color:var(--gray3);padding:2px">✎</button>
+      </div>
+      <div style="font-family:var(--font-display);font-size:22px;color:var(--teal);line-height:1">${p.amount.toLocaleString()} <span style="font-size:12px;font-family:'DM Sans'">EGP</span></div>
+      ${p.target ? `<div class="progress-bg" style="margin-top:8px"><div class="progress-fill" style="width:${Math.min((p.amount/p.target)*100,100).toFixed(0)}%;background:${p.color}"></div></div><div style="font-size:10px;color:var(--gray);margin-top:3px">${p.amount.toLocaleString()} / ${p.target.toLocaleString()} EGP target</div>` : ''}
+      ${p.auto ? `<div style="margin-top:10px;font-size:10px;color:var(--lime3);font-weight:600;background:rgba(230,255,43,.08);border-radius:6px;padding:4px 7px;width:fit-content">Auto: ${p.auto.toLocaleString()} EGP/mo</div>` : `<div style="margin-top:10px;font-size:10px;color:var(--gray3);font-style:italic">No auto-transfer set</div>`}
+    </div>`).join('');
+}
 
 function createPocket() {
   const name = document.getElementById('newPocketName').value.trim();
-  const amt = +document.getElementById('newPocketAmt').value || 0;
-  const auto = +document.getElementById('newPocketAuto').value || 0;
-  if (!name) return;
-  const color = pocketColors[pocketCount % pocketColors.length];
-  const grid = document.getElementById('pocketsGrid');
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.style.cssText = `padding:18px;border-left:3px solid ${color};border-radius:0 var(--r2) var(--r2) 0`;
-  card.innerHTML = `
-    <div class="flex-between" style="margin-bottom:10px">
-      <div style="font-weight:700;font-size:13px">${name}</div>
-      <button onclick="editPocket(this)" style="background:none;border:none;cursor:pointer;color:var(--gray3);padding:2px">✎</button>
-    </div>
-    <div style="font-family:var(--font-display);font-size:22px;color:var(--teal);line-height:1">${amt.toLocaleString()} <span style="font-size:12px;font-family:'DM Sans'">EGP</span></div>
-    ${auto > 0 ? `<div style="margin-top:10px;font-size:10px;color:${color};font-weight:600;background:rgba(11,70,80,.06);border-radius:6px;padding:4px 7px;width:fit-content">Auto: ${auto.toLocaleString()} EGP/mo</div>` : `<div style="margin-top:10px;font-size:10px;color:var(--gray3);font-style:italic">No auto-transfer set</div>`}
-  `;
-  grid.appendChild(card);
-  const sel = document.getElementById('toPocketSelect');
-  const opt = document.createElement('option');
-  opt.textContent = `${name} – ${amt.toLocaleString()} EGP`;
-  sel.appendChild(opt);
-  pocketCount++;
+  const amt = parseFloat(document.getElementById('newPocketAmt').value) || 0;
+  const auto = parseFloat(document.getElementById('newPocketAuto').value) || 0;
+  if (!name) { showToast('Please enter a pocket name', 'error'); return; }
+  const colors = ['var(--lime3)', 'var(--teal3)', 'var(--teal)', '#7C3AED', '#F59E0B'];
+  userData.pockets = userData.pockets || [];
+  userData.pockets.push({ name, amount: amt, auto, color: colors[userData.pockets.length % colors.length] });
+  userData.balance = (userData.balance || 4180) - amt;
+  saveUser();
   closeModal('newPocketModal');
+  renderPockets();
+  showToast(`✓ "${name}" pocket created`);
   document.getElementById('newPocketName').value = '';
   document.getElementById('newPocketAmt').value = '';
   document.getElementById('newPocketAuto').value = '';
 }
 
 function editPocket(btn) {
-  const card = btn.closest('.card');
-  const nameEl = card.querySelector('[style*="font-weight:700"]');
-  if (nameEl) {
-    const current = nameEl.textContent;
-    const newName = prompt('Rename pocket:', current);
-    if (newName && newName.trim()) nameEl.textContent = newName.trim();
-  }
+  const idx = parseInt(btn.dataset.idx);
+  const pocket = (userData.pockets || [])[idx];
+  if (!pocket) return;
+  const newName = prompt('Pocket name:', pocket.name);
+  if (newName) { pocket.name = newName.trim(); saveUser(); renderPockets(); showToast('Pocket updated'); }
 }
 
+// ── FUTURE ME AI ──
+const FMAI = {
+  balance: 14800, income: 8500, expenses: 6200,
+  savingsBoost: 0, extraSpend: 0, investPct: 0,
+  timeline: 6, behavior: 'current'
+};
 
-// ══ FUTURE ME AI ══
-function getUserFinancialContext() {
-  let user = {};
-  try { user = JSON.parse(localStorage.getItem('fincircle_user') || '{}'); } catch(e) {}
-  const txs = user.transactions || [];
-  const installments = user.installments || [];
+let fmaiChartCtx = null;
+let fmaiChartData = [];
 
-  const catTotals = {};
-  let totalIncome = 0;
-  txs.forEach(t => {
-    if (t.amount < 0) {
-      const cat = t.category || 'Other';
-      catTotals[cat] = (catTotals[cat] || 0) + Math.abs(t.amount);
-    } else {
-      totalIncome += t.amount;
-    }
+function fmaiInit() {
+  if (!document.getElementById('fmaiChart')) return;
+  renderFmaiChart();
+  renderFmaiAdvice();
+  renderFmaiMilestones();
+}
+
+function fmaiSetBehavior(mode) {
+  FMAI.behavior = mode;
+  document.getElementById('fmaiBtnCurrent').className = mode === 'current' ? 'fmai-btog active' : 'fmai-btog';
+  document.getElementById('fmaiBtnImproved').className = mode === 'improved' ? 'fmai-btog active' : 'fmai-btog';
+  document.getElementById('fmaiBehaviorChip').textContent = mode === 'current' ? 'Current Behavior' : 'Improved Behavior';
+  if (mode === 'improved') {
+    FMAI.savingsBoost = 500; FMAI.extraSpend = 0; FMAI.investPct = 10;
+    document.getElementById('fmaiSliderSav').value = 500;
+    document.getElementById('fmaiSliderSpend').value = 0;
+    document.getElementById('fmaiSliderInv').value = 10;
+  } else {
+    FMAI.savingsBoost = 0; FMAI.extraSpend = 0; FMAI.investPct = 0;
+    document.getElementById('fmaiSliderSav').value = 0;
+    document.getElementById('fmaiSliderSpend').value = 0;
+    document.getElementById('fmaiSliderInv').value = 0;
+  }
+  fmaiHandleSlider();
+}
+
+function fmaiSetTimeline(months, btn) {
+  FMAI.timeline = months;
+  document.querySelectorAll('.fmai-ttab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderFmaiChart();
+  renderFmaiMilestones();
+}
+
+function fmaiHandleSlider() {
+  FMAI.savingsBoost = parseInt(document.getElementById('fmaiSliderSav').value) || 0;
+  FMAI.extraSpend = parseInt(document.getElementById('fmaiSliderSpend').value) || 0;
+  FMAI.investPct = parseInt(document.getElementById('fmaiSliderInv').value) || 0;
+  document.getElementById('fmaiSavLbl').textContent = '+' + FMAI.savingsBoost + ' EGP';
+  document.getElementById('fmaiSpendLbl').textContent = '+' + FMAI.extraSpend + ' EGP';
+  document.getElementById('fmaiInvLbl').textContent = FMAI.investPct + '%';
+  // Highlight changed badges
+  ['fmaiSavLbl','fmaiSpendLbl','fmaiInvLbl'].forEach(id => {
+    const el = document.getElementById(id);
+    const isOn = parseInt(el.textContent) !== 0;
+    el.className = 'fmai-sv-badge' + (isOn ? ' on' : '');
   });
-
-  const income = user.income || 8500;
-  const balance = user.balance !== undefined ? user.balance : Math.round(income * 0.49);
-  const totalSpent = Object.values(catTotals).reduce((a,b) => a+b, 0);
-  const monthlyInstallments = installments.reduce((s,i) => s + (i.monthly || 0), 0);
-  const savingsRate = income > 0 ? Math.round(((income - totalSpent) / income) * 100) : 0;
-
-  return {
-    name: (user.name || 'Friend').split(' ')[0],
-    income,
-    balance: Math.round(balance),
-    totalSpent: Math.round(totalSpent),
-    monthlyInstallments: Math.round(monthlyInstallments),
-    spendingByCategory: catTotals,
-    transactionCount: txs.length,
-    installmentCount: installments.length,
-    savingsRate,
-    hasData: txs.length > 0 || installments.length > 0
-  };
+  renderFmaiChart();
+  renderFmaiMilestones();
+  renderFmaiAdvice();
 }
 
-calcBNPL();
-calcIntl();
-
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script>
-// ══ FUTURE ME AI ENGINE (Prototype — no real AI) ══
-(function() {
-  const FMAI = {
-    BASE_BAL:  14800,
-    INCOME:    8500,
-    EXPENSES:  6200,
-    timeline:  6,
-    chart:     null,
-    debounce:  null,
+function fmaiPreset(mode) {
+  const presets = {
+    conservative: { sav: 300, spend: 0, inv: 5 },
+    balanced:     { sav: 700, spend: 0, inv: 10 },
+    aggressive:   { sav: 1500, spend: 0, inv: 20 },
+    reset:        { sav: 0, spend: 0, inv: 0 }
   };
+  const p = presets[mode];
+  document.getElementById('fmaiSliderSav').value = p.sav;
+  document.getElementById('fmaiSliderSpend').value = p.spend;
+  document.getElementById('fmaiSliderInv').value = p.inv;
+  fmaiHandleSlider();
+  if (mode !== 'reset') showToast('✓ ' + mode.charAt(0).toUpperCase() + mode.slice(1) + ' preset applied');
+}
 
-  // ── Get slider values ──
-  function sliders() {
-    return {
-      sav:   parseInt(document.getElementById('fmaiSliderSav').value)   || 0,
-      spend: parseInt(document.getElementById('fmaiSliderSpend').value) || 0,
-      inv:   parseInt(document.getElementById('fmaiSliderInv').value)   || 0,
-    };
+function renderFmaiChart() {
+  const net = FMAI.income - FMAI.expenses + FMAI.savingsBoost - FMAI.extraSpend;
+  const invest = FMAI.income * FMAI.investPct / 100;
+  const monthlyGain = net - invest;
+  const months = FMAI.timeline;
+  let bal = FMAI.balance;
+  const labels = [], data = [];
+  const now = new Date();
+  for (let i = 0; i <= months; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    labels.push(d.toLocaleString('en-US', { month: 'short' }));
+    data.push(Math.round(bal));
+    bal += monthlyGain + (invest * 1.02); // 2% investment return/month simplified
   }
-
-  // ── Core projection math ──
-  function project(months) {
-    const { sav, spend, inv } = sliders();
-    const baseNet = FMAI.INCOME - FMAI.EXPENSES;          // 2300
-    const scenNet = baseNet + sav - spend;
-    const invMonthly = FMAI.INCOME * inv / 100;
-    const labels = [], base = [], scen = [];
-
-    for (let i = 0; i <= months; i++) {
-      labels.push(i === 0 ? 'Now' : 'M' + i);
-      base.push(Math.round(FMAI.BASE_BAL + baseNet * i));
-      const compound = invMonthly * 0.009 * i * (i + 1) / 2;
-      scen.push(Math.round(FMAI.BASE_BAL + scenNet * i + compound));
-    }
-    return { labels, base, scen, scenNet };
-  }
-
-  function stats(months) {
-    const { base, scen, scenNet } = project(months);
-    const projEnd = scen[scen.length - 1];
-    const growth  = (((projEnd - FMAI.BASE_BAL) / FMAI.BASE_BAL) * 100).toFixed(1);
-    return { projEnd, scenNet, growth };
-  }
-
-  // ── Chart ──
-  function renderChart(months) {
-    const { labels, base, scen } = project(months);
-    const ctx = document.getElementById('fmaiChart');
-    if (!ctx) return;
-    const c2d = ctx.getContext('2d');
-    const hasChange = scen[scen.length-1] !== base[base.length-1];
-
-    const g1 = c2d.createLinearGradient(0, 0, 0, 220);
-    g1.addColorStop(0, 'rgba(11,70,80,0.15)'); g1.addColorStop(1, 'rgba(11,70,80,0)');
-    const g2 = c2d.createLinearGradient(0, 0, 0, 220);
-    g2.addColorStop(0, 'rgba(230,255,43,0.22)'); g2.addColorStop(1, 'rgba(230,255,43,0)');
-
-    const datasets = [{
-      label: 'Current Trend',
-      data: base,
-      borderColor: 'rgba(11,70,80,0.38)',
-      backgroundColor: hasChange ? 'transparent' : g1,
-      borderWidth: hasChange ? 1.5 : 2,
-      borderDash: hasChange ? [5, 4] : [],
-      fill: !hasChange,
-      tension: 0.4,
-      pointRadius: 3,
-      pointBackgroundColor: '#0B4650',
-    }];
-    if (hasChange) {
-      datasets.push({
-        label: 'Your Scenario',
-        data: scen,
-        borderColor: '#0B4650',
-        backgroundColor: g2,
-        borderWidth: 2.5,
-        fill: true,
-        tension: 0.4,
-        pointRadius: 3,
-        pointBackgroundColor: '#E6FF2B',
-        pointBorderColor: '#0B4650',
-        pointBorderWidth: 1.5,
-      });
-    }
-
-    if (FMAI.chart) {
-      FMAI.chart.data.labels = labels;
-      FMAI.chart.data.datasets = datasets;
-      FMAI.chart.update('active');
-    } else {
-      FMAI.chart = new Chart(c2d, {
-        type: 'line',
-        data: { labels, datasets },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: {
-              display: hasChange,
-              labels: { font: { family: 'DM Sans', size: 11 }, color: '#0B4650', boxWidth: 18, boxHeight: 2 }
-            },
-            tooltip: {
-              backgroundColor: '#0B4650', titleColor: '#E6FF2B', bodyColor: '#F9F7F2',
-              borderColor: 'rgba(230,255,43,.2)', borderWidth: 1, padding: 10,
-              callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString() + ' EGP' }
-            }
-          },
-          scales: {
-            x: { grid: { display: false }, ticks: { font: { family: 'DM Sans', size: 10 }, color: '#0F6070' } },
-            y: {
-              grid: { color: 'rgba(11,70,80,.06)' },
-              ticks: { font: { family: 'DM Sans', size: 10 }, color: '#0F6070', callback: v => (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v) + ' EGP' }
-            }
-          }
-        }
-      });
-    }
-  }
-
-  // ── Advice rules ──
-  function renderAdvice() {
-    const s = sliders();
-    const rules = [
-      { type:'warn', icon:'🍽️', title:'Reduce Dining Expenses',
-        text:'Your food spending is 22% above average for your income bracket.',
-        save:'Save up to 400 EGP/month', show: true },
-      { type:'succ', icon:'📈', title:'Start Investing Now',
-        text:'Investing 10% monthly could grow your savings by 25% in a year via compound returns.',
-        save:'+2,100 EGP in 12 months', show: s.inv < 5 },
-      { type:'succ', icon:'💪', title:'Great Investment Strategy!',
-        text:'You\'re investing ' + s.inv + '% of income. Keep it consistent for maximum compound growth.',
-        save:'+' + Math.round(FMAI.INCOME * s.inv / 100 * 12 * 1.08).toLocaleString() + ' EGP projected', show: s.inv >= 10 },
-      { type:'info', icon:'🏦', title:'Build Emergency Fund',
-        text:'Aim for 3–6 months of expenses (18,600–37,200 EGP) as a safety net.',
-        save:'Target: 18,600 EGP', show: s.sav < 500 },
-      { type:'warn', icon:'⚠️', title:'Extra Spending Alert',
-        text:'Your extra spending scenario significantly reduces monthly savings.',
-        save:'Cut by 50% → save ' + Math.round(s.spend * 0.5).toLocaleString() + ' EGP/mo', show: s.spend > 500 },
-      { type:'succ', icon:'🎯', title:'Savings Boost Working!',
-        text:'Great move! Automate this transfer on payday to lock in discipline.',
-        save:'+' + s.sav.toLocaleString() + ' EGP/month', show: s.sav >= 500 },
-      { type:'info', icon:'💡', title:"Gam'eya Opportunity",
-        text:"Joining a 2,000 EGP monthly Gam'eya circle could accelerate your goal by 4 months.",
-        save:'Goal 4 months earlier', show: true },
-    ];
-    const active = rules.filter(r => r.show).slice(0, 4);
-    const el = document.getElementById('fmaiAdviceList');
-    if (!el) return;
-    el.innerHTML = active.map((a, i) => `
-      <div class="fmai-advice-card ${a.type}" style="animation-delay:${i * 0.07}s;animation:slideIn .4s ease both">
-        <div class="fmai-adv-icon">${a.icon}</div>
-        <div style="flex:1">
-          <div class="fmai-adv-title">${a.title}</div>
-          <div class="fmai-adv-text">${a.text}</div>
-          <span class="fmai-adv-save">${a.save}</span>
-        </div>
-      </div>`).join('');
-  }
-
-  // ── Milestones ──
-  function renderMilestones(months) {
-    const { scen } = project(months);
-    const pts = months <= 6 ? [1,2,3,6] : months <= 12 ? [2,4,6,9,12] : [3,6,9,12,18,24];
-    const el = document.getElementById('fmaiMilestones');
-    if (!el) return;
-    el.className = 'fmai-ms-track';
-    el.innerHTML = pts.map((m, i) => {
-      const val = scen[Math.min(m, scen.length - 1)];
-      const reached = m <= 2, soon = m === 3;
-      return `<div class="fmai-ms-item" style="animation-delay:${i * 0.06}s">
-        <div class="fmai-ms-dot ${reached ? 'reached' : soon ? 'soon' : ''}">${reached ? '✓' : soon ? '→' : ''}</div>
-        <div class="fmai-ms-month">Month ${m}${reached ? ' · <span style="color:#16a34a;font-size:9px">REACHED</span>' : soon ? ' · <span style="color:var(--teal3);font-size:9px">Soon</span>' : ''}</div>
-        <div class="fmai-ms-amount">${val.toLocaleString()} EGP</div>
-      </div>`;
-    }).join('');
-  }
-
-  // ── Future Me card ──
-  const MSGS = {
-    great:   ["Keep going — future you will have {n} EGP saved. Discipline today builds tomorrow's freedom.", "Investing and saving simultaneously? Future you is genuinely impressed. {n} EGP and growing!"],
-    good:    ["You're on track. Keep saving consistently and you'll reach {n} EGP. Small steps, big results.", "Steady progress! {n} EGP is your projected balance. Don't break the streak."],
-    warning: ["The extra spending is eating into your future. A few tweaks could reclaim {n} EGP.", "At this rate you'll reach only {n} EGP. Small cuts now = big gains later."],
-    danger:  ["This path is risky. Future you won't have enough cushion. Reduce spending — every EGP counts.", "Red flag! Your scenario threatens your financial health. Adjust those sliders now."],
+  const projEnd = data[data.length - 1];
+  const growth = ((projEnd - FMAI.balance) / FMAI.balance * 100).toFixed(0);
+  document.getElementById('fmaiProjEnd').textContent = projEnd.toLocaleString() + ' EGP';
+  document.getElementById('fmaiProjEnd').className = 'fmai-ps-val ' + (projEnd > FMAI.balance ? 'up' : 'down');
+  document.getElementById('fmaiProjNet').textContent = (monthlyGain >= 0 ? '+' : '') + monthlyGain.toLocaleString() + ' EGP';
+  document.getElementById('fmaiProjGrowth').textContent = (growth >= 0 ? '+' : '') + growth + '%';
+  document.getElementById('fmaiProjGrowth').className = 'fmai-ps-val ' + (growth >= 0 ? 'up' : 'down');
+  document.getElementById('fmaiProjSubtext').innerHTML = `At this rate, your savings will reach <strong>${projEnd.toLocaleString()} EGP</strong> in ${months} months`;
+  // Hero card update
+  const outlook = projEnd > FMAI.balance * 1.15 ? '🟢 Great' : projEnd > FMAI.balance ? '🟡 Good' : '🔴 Needs Work';
+  document.getElementById('fmaiGoal').textContent = projEnd.toLocaleString();
+  document.getElementById('fmaiOutlook').textContent = outlook;
+  const msgs = {
+    '🟢 Great': `Excellent trajectory! In ${months} months you'll have ${projEnd.toLocaleString()} EGP — that's a ${growth}% growth. Your future self is proud!`,
+    '🟡 Good': `You're on a stable path. In ${months} months: ${projEnd.toLocaleString()} EGP. Increase savings by 500 EGP/month to accelerate.`,
+    '🔴 Needs Work': `Warning — your balance is projected to shrink to ${projEnd.toLocaleString()} EGP. Reduce discretionary spending immediately.`
   };
+  document.getElementById('fmaiHeroMsg').textContent = msgs[outlook] || msgs['🟡 Good'];
+  document.getElementById('fmaiAvatar').textContent = outlook.includes('Great') ? '😄' : outlook.includes('Good') ? '🙂' : '😟';
+  // Draw chart using canvas
+  drawFmaiCanvas(labels, data);
+}
 
-  function updateFutureMe(months) {
-    const { projEnd, scenNet } = stats(months);
-    let mood, healthScore, outlookStr, avatar;
-    if (scenNet >= 1500)      { mood = 'great';   healthScore = 92; outlookStr = '🟢 Excellent'; avatar = '🤩'; }
-    else if (scenNet >= 500)  { mood = 'good';    healthScore = 78; outlookStr = '🟢 Good';      avatar = '🙂'; }
-    else if (scenNet >= 0)    { mood = 'warning'; healthScore = 54; outlookStr = '🟡 Watch Out'; avatar = '😕'; }
-    else                      { mood = 'danger';  healthScore = 30; outlookStr = '🔴 Danger';    avatar = '😰'; }
-
-    const pool = MSGS[mood];
-    const msg  = pool[Math.floor(Math.random() * pool.length)].replace('{n}', projEnd.toLocaleString());
-
-    const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-    set('fmaiHeroMsg', msg);
-    set('fmaiAvatar',  avatar);
-    set('fmaiOutlook', outlookStr);
-    set('fmaiHealth',  healthScore + '/100');
-    set('fmaiGoal',    projEnd.toLocaleString());
+function drawFmaiCanvas(labels, data) {
+  const canvas = document.getElementById('fmaiChart');
+  if (!canvas) return;
+  canvas.width = canvas.parentElement.offsetWidth || 400;
+  canvas.height = 220;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 20, right: 16, bottom: 28, left: 60 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  const minV = Math.min(...data) * 0.95;
+  const maxV = Math.max(...data) * 1.05;
+  ctx.clearRect(0, 0, W, H);
+  // Grid lines
+  ctx.strokeStyle = '#EDE9E0'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (cH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    const val = Math.round(maxV - (maxV - minV) / 4 * i);
+    ctx.fillStyle = '#898A8D'; ctx.font = '9px DM Sans'; ctx.textAlign = 'right';
+    ctx.fillText(val >= 1000 ? (val/1000).toFixed(0)+'k' : val, pad.left - 4, y + 3);
   }
+  // Gradient fill
+  const pts = data.map((v, i) => ({ x: pad.left + (i / (data.length - 1)) * cW, y: pad.top + (1 - (v - minV) / (maxV - minV)) * cH }));
+  const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+  grad.addColorStop(0, 'rgba(11,70,80,0.15)');
+  grad.addColorStop(1, 'rgba(11,70,80,0)');
+  ctx.beginPath(); ctx.moveTo(pts[0].x, H - pad.bottom);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length-1].x, H - pad.bottom); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+  // Line
+  ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = '#0B4650'; ctx.lineWidth = 2.5; ctx.stroke();
+  // Dots
+  pts.forEach((p, i) => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI*2);
+    ctx.fillStyle = i === pts.length-1 ? '#E6FF2B' : 'white';
+    ctx.strokeStyle = '#0B4650'; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+  });
+  // Labels
+  ctx.fillStyle = '#898A8D'; ctx.font = '9px DM Sans'; ctx.textAlign = 'center';
+  labels.forEach((l, i) => {
+    const x = pad.left + (i / (labels.length - 1)) * cW;
+    ctx.fillText(l, x, H - 4);
+  });
+}
 
-  // ── Stats bar ──
-  function updateStats(months) {
-    const { projEnd, scenNet, growth } = stats(months);
-    const s = sliders();
-
-    const setEl = (id, txt, cls) => {
-      const e = document.getElementById(id);
-      if (!e) return;
-      e.textContent = txt;
-      if (cls !== undefined) e.className = 'fmai-ps-val ' + (cls ? 'up' : 'down');
-    };
-
-    setEl('fmaiProjEnd',    projEnd.toLocaleString() + ' EGP', parseFloat(growth) >= 0);
-    setEl('fmaiProjNet',    (scenNet >= 0 ? '+' : '') + scenNet.toLocaleString() + ' EGP');
-    setEl('fmaiProjGrowth', (parseFloat(growth) >= 0 ? '+' : '') + growth + '%', parseFloat(growth) >= 0);
-
-    const pnEl = document.getElementById('fmaiProjNet');
-    if (pnEl) pnEl.style.color = scenNet >= 500 ? '#16a34a' : scenNet >= 0 ? 'var(--teal3)' : 'var(--red)';
-
-    const dir = projEnd > FMAI.BASE_BAL ? 'reach' : 'drop to';
-    const sub = document.getElementById('fmaiProjSubtext');
-    if (sub) sub.innerHTML = `At this rate, your savings will ${dir} <strong>${projEnd.toLocaleString()} EGP</strong> in ${months} months`;
-
-    const expTotal = FMAI.EXPENSES + s.spend;
-    const expRatio = Math.min(100, (expTotal / FMAI.INCOME) * 100);
-    const bar = document.getElementById('fmaiExpBar');
-    if (bar) { bar.style.width = expRatio + '%'; bar.style.background = expRatio > 85 ? 'var(--red)' : ''; }
-    const expEl = document.getElementById('fmaiExpenses');
-    if (expEl) expEl.textContent = expTotal.toLocaleString();
-  }
-
-  // ── Slider labels ──
-  function updateLabels() {
-    const { sav, spend, inv } = sliders();
-    const up = (id, txt, active) => {
-      const e = document.getElementById(id);
-      if (e) { e.textContent = txt; e.className = 'fmai-sv-badge' + (active ? ' on' : ''); }
-    };
-    up('fmaiSavLbl',   (sav > 0 ? '+' : '') + sav.toLocaleString()   + ' EGP', sav   > 0);
-    up('fmaiSpendLbl', (spend > 0 ? '+' : '') + spend.toLocaleString() + ' EGP', spend > 0);
-    up('fmaiInvLbl',   inv + '%', inv > 0);
-  }
-
-  // ── Full refresh ──
-  function refresh() {
-    updateLabels();
-    renderChart(FMAI.timeline);
-    updateStats(FMAI.timeline);
-    renderAdvice();
-    renderMilestones(FMAI.timeline);
-    updateFutureMe(FMAI.timeline);
-  }
-
-  // ── Public handlers ──
-  window.fmaiHandleSlider = function() {
-    updateLabels();
-    clearTimeout(FMAI.debounce);
-    const toast = document.getElementById('fmaiToast');
-    if (toast) toast.classList.add('show');
-    FMAI.debounce = setTimeout(() => {
-      refresh();
-      if (toast) toast.classList.remove('show');
-    }, 580);
-  };
-
-  window.fmaiSetTimeline = function(m, btn) {
-    FMAI.timeline = m;
-    document.querySelectorAll('.fmai-ttab').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    refresh();
-  };
-
-  window.fmaiSetBehavior = function(mode) {
-    document.getElementById('fmaiBtnCurrent').classList.toggle('active', mode === 'current');
-    document.getElementById('fmaiBtnImproved').classList.toggle('active', mode === 'improved');
-    const chip = document.getElementById('fmaiBehaviorChip');
-    if (chip) chip.textContent = mode === 'current' ? 'Current Behavior' : 'Improved Behavior';
-    fmaiPreset(mode === 'improved' ? 'balanced' : 'reset');
-  };
-
-  window.fmaiPreset = function(name) {
-    const p = { conservative:{sav:500,spend:0,inv:5}, balanced:{sav:1000,spend:0,inv:10}, aggressive:{sav:2000,spend:0,inv:20}, reset:{sav:0,spend:0,inv:0} };
-    const v = p[name]; if (!v) return;
-    document.getElementById('fmaiSliderSav').value   = v.sav;
-    document.getElementById('fmaiSliderSpend').value = v.spend;
-    document.getElementById('fmaiSliderInv').value   = v.inv;
-    const toast = document.getElementById('fmaiToast');
-    if (toast) toast.classList.add('show');
-    setTimeout(() => { refresh(); if (toast) toast.classList.remove('show'); }, 750);
-  };
-
-  // ── Init: run when Chart.js is ready ──
-  function tryInit() {
-    if (typeof Chart === 'undefined') { setTimeout(tryInit, 200); return; }
-    refresh();
-  }
-
-  // Init on page show (FinCircle's showPage fires before this)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', tryInit);
-  } else {
-    tryInit();
-  }
-
-  // Also re-render if someone clicks the Future Me nav item
-  const origShowPage = window.showPage;
-  window.showPage = function(id, btn) {
-    origShowPage && origShowPage(id, btn);
-    if (id === 'future') setTimeout(tryInit, 50);
-  };
-
-})();
-</script>
-
-<!-- ── FUTURE ME TOAST ── -->
-<div class="fm-toast" id="fmToast">
-  <div class="fm-toast-icon" id="fmToastIcon">✦</div>
-  <div>
-    <div class="fm-toast-title" id="fmToastTitle">Future Me Insight</div>
-    <div class="fm-toast-sub" id="fmToastSub">New insight generated.</div>
-  </div>
-</div>
-
-<script>
-// ══════════════════════════════════════════════════════
-// FUTURE ME INSIGHTS — Full Integration Engine
-// ══════════════════════════════════════════════════════
-(function() {
-
-  // ── State ──
-  let fmInsights = ['seed1','seed2','seed3']; // track IDs
-  let txTimestamps = [];
-  let fmIdCounter = 200;
-  let currentTxType = 'expense';
-
-  // ── Transaction type toggle ──
-  window.setTxType = function(type) {
-    currentTxType = type;
-    document.getElementById('txTypeExpenseBtn').className = type === 'expense' ? 'btn primary sm' : 'btn secondary sm';
-    document.getElementById('txTypeIncomeBtn').className = type === 'income' ? 'btn primary sm' : 'btn secondary sm';
-    const catSel = document.getElementById('txCategory');
-    if (type === 'income') {
-      catSel.innerHTML = '<option value="income">💰 Salary / Income</option><option value="investment">📈 Investment Return</option><option value="other_income">🎁 Other Income</option>';
-    } else {
-      catSel.innerHTML = '<option value="food">Food & Dining</option><option value="transport">Transport</option><option value="bills">Bills</option><option value="shopping">Shopping</option><option value="entertainment">Entertainment</option><option value="health">Health</option><option value="investment">Investment</option>';
-    }
-  };
-
-  // ── Rules engine ──
-  const THRESH = { high: 1000, vhigh: 3000, freq_ms: 25000, freq_n: 3 };
-
-  function buildInsight(amount, category, merchant, isIncome) {
-    const amt = parseInt(amount) || 0;
-    const desc = merchant || '';
-
-    // Frequency check
-    const now = Date.now();
-    txTimestamps = txTimestamps.filter(t => now - t < THRESH.freq_ms);
-    txTimestamps.push(now);
-    if (txTimestamps.length >= THRESH.freq_n && !isIncome) {
-      txTimestamps = [];
-      return {
-        type: 'warning', icon: '⚡',
-        title: 'Frequent spending detected. Try to slow down.',
-        tag: '<span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>',
-        ai: `You've made <b>${txTimestamps.length + 2}+ transactions</b> in a short window. Impulse spending quietly erodes your monthly surplus. Your future self suggests a 10-minute pause before the next purchase.`,
-        meta: `${category} · ${amt} EGP`
-      };
-    }
-
-    if (isIncome || category === 'income' || category === 'other_income') {
-      return {
-        type: 'positive', icon: '💰',
-        title: 'Great decision! You added income — your future self is getting stronger.',
-        tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
-        ai: `Income of <b>${amt} EGP</b>${desc ? ' from ' + desc : ''} recorded. Consider allocating <b>${Math.round(amt * 0.2)} EGP (20%)</b> directly to savings — that keeps your Europe Trip goal on track.`,
-        meta: `Income${desc ? ' · ' + desc : ''} · +${amt} EGP`
-      };
-    }
-
-    if (category === 'investment') {
-      return {
-        type: 'positive', icon: '✅',
-        title: 'Smart move! Investing now will benefit your future.',
-        tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
-        ai: `<b>${amt} EGP</b> invested${desc ? ' via ' + desc : ''}. At 8% annual growth, this becomes <b>${Math.round(amt * 1.47)} EGP in 5 years</b>. Your future self is building compounding momentum — keep going.`,
-        meta: `Investment${desc ? ' · ' + desc : ''} · ${amt} EGP`
-      };
-    }
-
-    if (category === 'health') {
-      return {
-        type: 'positive', icon: '✅',
-        title: 'Nice control! This expense is within a healthy range.',
-        tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
-        ai: `Health spending of <b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is essential. Your future self prioritizes staying healthy — this is money well spent and within your wellness budget.`,
-        meta: `Health${desc ? ' · ' + desc : ''} · ${amt} EGP`
-      };
-    }
-
-    if (amt >= THRESH.vhigh) {
-      return {
-        type: 'warning', icon: '🚨',
-        title: 'This expense is significantly above your normal range.',
-        tag: '<span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>',
-        ai: `<b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is a major transaction — <b>${Math.round(amt / 4180 * 100)}% of your current balance</b>. Your future self recommends reviewing if this is planned. This pushes your savings goal timeline back by <b>${Math.round(amt / 500)} weeks</b>.`,
-        meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
-      };
-    }
-
-    if (amt >= THRESH.high) {
-      return {
-        type: 'warning', icon: '⚠️',
-        title: 'This expense is higher than usual. Your future self is concerned.',
-        tag: '<span class="tag red" style="font-size:10px;white-space:nowrap">Warning</span>',
-        ai: `You just spent <b>${amt} EGP</b>${desc ? ' at ' + desc : ''} — above your average daily budget of ~330 EGP. If this recurs weekly, your monthly surplus shrinks by <b>${Math.round(amt * 0.3)} EGP</b>. Check if this was planned.`,
-        meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
-      };
-    }
-
-    if (category === 'shopping' || category === 'entertainment') {
-      if (amt < 400) {
-        return {
-          type: 'positive', icon: '✅',
-          title: 'Nice control! This expense is within a healthy range.',
-          tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
-          ai: `<b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is under your discretionary budget threshold. Keeping non-essential purchases below 400 EGP preserves your monthly surplus. Great discipline!`,
-          meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
-        };
-      }
-      return {
-        type: 'neutral', icon: '🔍',
-        title: 'This looks like a non-essential purchase.',
-        tag: '<span class="tag" style="background:rgba(120,80,200,.1);color:#7850C8;font-size:10px;white-space:nowrap">Heads Up</span>',
-        ai: `<b>${desc || 'This purchase'}</b> for ${amt} EGP appears discretionary. Your entertainment & shopping spending is already at <b>34% of monthly spend</b>. Consider if this aligns with your savings goals.`,
-        meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
-      };
-    }
-
-    // Default: small/normal
-    return {
-      type: 'positive', icon: '✅',
-      title: 'Nice control! This expense is within a healthy range.',
-      tag: '<span class="tag" style="background:rgba(194,220,8,.15);color:var(--teal2);font-size:10px;white-space:nowrap">Good Move</span>',
-      ai: `<b>${amt} EGP</b>${desc ? ' at ' + desc : ''} is within your normal spending range. Your daily average is ~330 EGP and this transaction keeps you on track for a healthy month.`,
-      meta: `${category}${desc ? ' · ' + desc : ''} · ${amt} EGP`
-    };
-  }
-
-  // ── Render a new FM card at the top of the list ──
-  function renderFmCard(insight, id) {
+function renderFmaiMilestones() {
+  const net = FMAI.income - FMAI.expenses + FMAI.savingsBoost - FMAI.extraSpend;
+  const container = document.getElementById('fmaiMilestones');
+  if (!container) return;
+  const milestones = [15000, 20000, 25000, 35000];
+  let bal = FMAI.balance;
+  const now = new Date();
+  container.innerHTML = milestones.map((target, idx) => {
+    let months = 0;
+    let tmp = bal;
+    while (tmp < target && months < 60) { tmp += net; months++; }
+    const reached = bal >= target;
+    const soon = months <= 3;
+    const date = new Date(now.getFullYear(), now.getMonth() + months, 1);
+    const label = date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+    const dotClass = reached ? 'reached' : soon ? 'soon' : '';
     return `
-      <div class="fm-notif-card fm-${insight.type}" data-fmid="${id}">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px">
-          <div style="display:flex;align-items:center;gap:9px">
-            <div class="fm-icon-box fm-${insight.type}-icon">${insight.icon}</div>
-            <div>
-              <div class="tx-name">${insight.title}</div>
-              <div class="tx-cat">✦ Future Me · just now</div>
-            </div>
-          </div>
-          ${insight.tag}
-        </div>
-        <div class="fm-ai-bubble">${insight.ai}</div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
-          <span style="font-size:10px;color:var(--gray3)">${insight.meta}</span>
-          <button class="fm-dismiss-btn" onclick="fmDismiss(this)">Dismiss ×</button>
-        </div>
+      <div class="fmai-ms-item" style="animation-delay:${idx*0.08}s">
+        <div class="fmai-ms-dot ${dotClass}">${reached ? '✓' : soon ? '!' : (idx+1)}</div>
+        <div class="fmai-ms-month">${label}</div>
+        <div class="fmai-ms-amount">${target.toLocaleString()} EGP</div>
+        <div style="font-size:11px;color:var(--gray);margin-top:2px">${reached ? 'Reached ✅' : `~${months} months away`}</div>
       </div>`;
+  }).join('');
+}
+
+function renderFmaiAdvice() {
+  const list = document.getElementById('fmaiAdviceList');
+  if (!list) return;
+  const net = FMAI.income - FMAI.expenses + FMAI.savingsBoost;
+  const advices = [];
+  if (net < 1000) advices.push({ type:'warn', icon:'⚠️', title:'Low monthly surplus', text:`Your monthly surplus of ${net.toLocaleString()} EGP is tight. Try reducing discretionary expenses by 10%.`, save:null });
+  else advices.push({ type:'succ', icon:'✅', title:'Healthy surplus', text:`You're saving ${net.toLocaleString()} EGP/month — great discipline!`, save:'+' + net.toLocaleString() + ' EGP/mo' });
+  if (FMAI.investPct < 5) advices.push({ type:'warn', icon:'📈', title:'Consider investing', text:'Allocating even 5% of your income to T-bills would earn significantly more than keeping cash idle.', save:null });
+  else advices.push({ type:'succ', icon:'📈', title:'Investing actively', text:`You're investing ${FMAI.investPct}% of income. At T-bill rates, that's ~${Math.round(FMAI.income*FMAI.investPct/100*0.275/12*12).toLocaleString()} EGP/year in returns.`, save:null });
+  advices.push({ type:'info', icon:'🎯', title:'Europe Trip Goal', text:'At current pace you\'ll reach your 15,000 EGP travel goal by mid-2027. Increase monthly contribution by 200 EGP to hit it 5 months earlier.', save:'-5 months' });
+  list.innerHTML = advices.map(a => `
+    <div class="fmai-advice-card ${a.type}">
+      <div class="fmai-adv-icon">${a.icon}</div>
+      <div>
+        <div class="fmai-adv-title">${a.title}</div>
+        <div class="fmai-adv-text">${a.text}</div>
+        ${a.save ? `<span class="fmai-adv-save">${a.save}</span>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+// ── INIT ──
+(function init() {
+  // Restore balance from stored user
+  if (userData.balance) {
+    const balEl = document.getElementById('balVal');
+    if (balEl) balEl.textContent = Math.round(userData.balance).toLocaleString();
+    FMAI.balance = userData.balance;
   }
-
-  // ── Push insight into UI ──
-  function pushFmInsight(insight) {
-    const id = 'fm-' + (++fmIdCounter);
-    fmInsights.unshift(id);
-
-    // Trim to 5
-    if (fmInsights.length > 5) {
-      const oldId = fmInsights.pop();
-      const el = document.querySelector(`[data-fmid="${oldId}"]`);
-      if (el) { el.style.opacity = '0'; el.style.transition = 'opacity .2s'; setTimeout(() => el.remove(), 200); }
-    }
-
-    const list = document.getElementById('fm-notif-list');
-    list.insertAdjacentHTML('afterbegin', renderFmCard(insight, id));
-    document.getElementById('fm-notif-empty').style.display = 'none';
-
-    // Update notif dot on bell
-    const dot = document.querySelector('.notif-dot');
-    if (dot) dot.style.display = 'block';
-
-    updateFmBadges();
-    showFmToast(insight);
-
-    // Re-apply current filter so the futureme section obeys the active tab
-    if (window._notifActiveFilter && window._notifActiveFilter !== 'all') {
-      applyNotifFilter(window._notifActiveFilter);
-    }
-  }
-
-  // ── Toast popup ──
-  function showFmToast(insight) {
-    const toast = document.getElementById('fmToast');
-    document.getElementById('fmToastIcon').textContent = insight.icon;
-    document.getElementById('fmToastTitle').textContent = insight.title;
-    document.getElementById('fmToastSub').textContent = 'Tap Notifications to see the full insight.';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4000);
-  }
-
-  // ── Badge sync ──
-  function updateFmBadges() {
-    const count = document.querySelectorAll('#fm-notif-list .fm-notif-card').length;
-    const el = document.getElementById('ntab-futureme');
-    if (el) el.textContent = count;
-    const allEl = document.getElementById('ntab-all');
-    if (allEl) allEl.textContent = 3 + 6 + count; // investments + alerts + fm
-  }
-
-  // ── Submit Transaction (called from modal) ──
-  window.submitTransaction = function() {
-    const amount = document.getElementById('txAmount').value;
-    const category = document.getElementById('txCategory').value;
-    const description = document.getElementById('txDescription').value.trim();
-    const isIncome = currentTxType === 'income';
-
-    if (!amount || parseFloat(amount) <= 0) {
-      document.getElementById('txAmount').style.borderColor = '#C1121F';
-      setTimeout(() => document.getElementById('txAmount').style.borderColor = '', 1200);
-      return;
-    }
-
-    // Save to localStorage (persist with existing user data)
-    try {
-      let user = JSON.parse(localStorage.getItem('fincircle_user') || '{}');
-      if (!user.transactions) user.transactions = [];
-      user.transactions.unshift({
-        id: Date.now(),
-        amount: isIncome ? parseFloat(amount) : -parseFloat(amount),
-        category,
-        description,
-        date: new Date().toISOString()
-      });
-      if (!isIncome) {
-        user.balance = Math.max(0, (user.balance || 4180) - parseFloat(amount));
-      } else {
-        user.balance = (user.balance || 4180) + parseFloat(amount);
-      }
-      localStorage.setItem('fincircle_user', JSON.stringify(user));
-    } catch(e) {}
-
-    // Generate Future Me insight
-    const insight = buildInsight(amount, category, description, isIncome);
-    pushFmInsight(insight);
-
-    // Close modal & reset
-    if (window.closeModal) closeModal('addExpenseModal');
-    document.getElementById('txAmount').value = '';
-    document.getElementById('txDescription').value = '';
-    setTxType('expense');
-  };
-
-  // ── Dismiss FM card ──
-  window.fmDismiss = function(btn) {
-    const card = btn.closest('.fm-notif-card');
-    const id = card.dataset.fmid;
-    card.style.transition = 'opacity .22s, transform .22s';
-    card.style.opacity = '0';
-    card.style.transform = 'translateX(16px)';
-    setTimeout(() => {
-      card.remove();
-      fmInsights = fmInsights.filter(i => i !== id);
-      if (document.querySelectorAll('#fm-notif-list .fm-notif-card').length === 0) {
-        document.getElementById('fm-notif-empty').style.display = 'flex';
-      }
-      updateFmBadges();
-    }, 220);
-  };
-
-  // ── Clear all FM insights ──
-  window.fmClearAll = function() {
-    const list = document.getElementById('fm-notif-list');
-    list.innerHTML = '';
-    fmInsights = [];
-    document.getElementById('fm-notif-empty').style.display = 'flex';
-    updateFmBadges();
-    // Keep the section visible if user is on futureme tab
-    if (window._notifActiveFilter && window._notifActiveFilter !== 'all') {
-      applyNotifFilter(window._notifActiveFilter);
-    }
-  };
-
-  // ══════════════════════════════════════════
-  // NOTIFICATION FILTER SYSTEM
-  // ══════════════════════════════════════════
-
-  // Section key → which filter value shows it
-  const SECTION_MAP = {
-    'notif-section-investments': 'investments',
-    'notif-section-futureme':    'futureme',
-    'notif-section-alerts':      'alerts'
-  };
-
-  // Expose state so other code (e.g. pushFmInsight) can read it
-  window._notifActiveFilter = 'all';
-
-  function applyNotifFilter(filter) {
-    window._notifActiveFilter = filter;
-
-    // 1. Sync tab highlight
-    document.querySelectorAll('.notif-tab').forEach(function(tab) {
-      var tabFilter = tab.getAttribute('data-filter');
-      if (tabFilter === filter) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    });
-
-    // 2. Show / hide each section
-    Object.keys(SECTION_MAP).forEach(function(sectionId) {
-      var sectionType = SECTION_MAP[sectionId];
-      var el = document.getElementById(sectionId);
-      if (!el) return;
-
-      var shouldShow = (filter === 'all' || filter === sectionType);
-
-      if (shouldShow) {
-        // Force display:block first, then animate in
-        el.style.transition = 'none';
-        el.style.display    = 'block';
-        el.style.opacity    = '0';
-        el.style.transform  = 'translateY(8px)';
-        // Double-rAF ensures the browser has painted display:block before we transition
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            el.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-            el.style.opacity    = '1';
-            el.style.transform  = 'translateY(0)';
-          });
-        });
-      } else {
-        el.style.transition = 'none';
-        el.style.display    = 'none';
-        el.style.opacity    = '';
-        el.style.transform  = '';
-      }
-    });
-  }
-
-  // Global entry-point called by onclick="notifSetFilter(...)"
-  window.notifSetFilter = function(filter, btn) {
-    applyNotifFilter(filter);
-  };
-
-  // ── Mark all read ──
-  window.notifMarkAllRead = function() {
-    document.querySelectorAll('.notif-unread').forEach(n => {
-      n.style.background = '';
-      n.classList.remove('notif-unread');
-    });
-  };
-
-  // ── Init on load ──
-  function initNotifications() {
-    updateFmBadges();
-    applyNotifFilter('all'); // ensure all sections visible and tabs synced on first load
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNotifications);
-  } else {
-    initNotifications();
-  }
-
+  // Modal overlay close
+  document.querySelectorAll('.modal-overlay').forEach(ov => {
+    ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); });
+  });
+  // Run investment sim on load
+  if (document.getElementById('sim-tbill')) runSim();
+  // Keyboard ESC closes modals
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  });
 })();
 </script>
+
 </body></html>

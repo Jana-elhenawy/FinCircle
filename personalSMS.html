@@ -6,7 +6,69 @@
 <title>FinCircle – دائرتك المالية</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="StyleSMS.css" rel="stylesheet">
-</head>
+<style>
+/* ── FUTURE ME AI ── */
+.future-me-card{background:linear-gradient(135deg,#062830 0%,#0A3D48 40%,#0D5260 100%);border:1px solid rgba(230,255,43,.25);border-radius:20px;padding:20px;position:relative;overflow:hidden}
+.future-me-card::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(230,255,43,.12),transparent 70%);pointer-events:none}
+.fm-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(230,255,43,.15);border:1px solid rgba(230,255,43,.3);border-radius:50px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--lime);margin-bottom:10px;letter-spacing:.04em}
+.fm-prediction{font-family:var(--font-display);font-size:20px;color:var(--offwhite);line-height:1.35;margin-bottom:8px}
+.fmai-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;gap:16px;flex-wrap:wrap}
+.fmai-live-badge{display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:var(--lime);font-size:10.5px;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:.05em;text-transform:uppercase}
+.fmai-live-badge::before{content:'';width:6px;height:6px;background:var(--lime);border-radius:50%;animation:fmDotBlink 1.8s ease-in-out infinite}
+@keyframes fmDotBlink{0%,80%,100%{opacity:0}40%{opacity:1}}
+.fmai-behavior-chip{font-size:11px;font-weight:600;color:var(--gray2);padding:4px 10px;background:var(--offwhite);border-radius:50px;border:1px solid var(--offwhite3)}
+.fmai-toggle-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fmai-behavior-toggle{display:flex;gap:0;background:var(--offwhite2);border-radius:50px;padding:4px}
+.fmai-btog{border:none;background:none;padding:8px 18px;border-radius:50px;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;color:var(--teal2);transition:all .25s}
+.fmai-btog.active{background:var(--teal);color:var(--lime);box-shadow:0 2px 8px rgba(11,70,80,.25)}
+.fmai-main-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:20px}
+.fmai-chip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:50px}
+.fmai-chip.up{background:rgba(22,163,74,.15);color:#16a34a}
+.fmai-chip.down{background:rgba(193,18,31,.12);color:var(--red)}
+.fmai-ttab{border:1.5px solid var(--offwhite3);background:white;border-radius:50px;padding:5px 13px;font-family:var(--font-body);font-size:11.5px;font-weight:600;cursor:pointer;color:var(--teal3);transition:all .2s}
+.fmai-ttab.active{border-color:var(--teal);background:var(--teal);color:var(--lime)}
+.fmai-proj-stat{flex:1;min-width:80px}
+.fmai-ps-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);font-weight:600;margin-bottom:4px}
+.fmai-ps-val{font-family:var(--font-display);font-size:17px;color:var(--teal)}
+.fmai-ps-val.up{color:#16a34a}
+.fmai-ps-val.down{color:var(--red)}
+.fmai-slider-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.fmai-slider-label{font-size:13px;font-weight:500;color:var(--teal);display:flex;align-items:center;gap:8px}
+.fmai-slider-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.fmai-sv-badge{font-family:var(--font-display);font-size:13.5px;color:var(--teal);background:var(--offwhite);border-radius:8px;padding:3px 10px;min-width:70px;text-align:center;transition:background .2s,color .2s;border:1px solid var(--offwhite3)}
+.fmai-sv-badge.on{background:var(--teal);color:var(--lime);border-color:var(--teal)}
+.fmai-range{-webkit-appearance:none;width:100%;height:5px;background:var(--offwhite2);border-radius:50px;outline:none;cursor:pointer;margin-bottom:16px;display:block}
+.fmai-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--teal);border:3px solid var(--lime);cursor:pointer;box-shadow:0 2px 6px rgba(11,70,80,.25);transition:transform .15s}
+.fmai-range::-webkit-slider-thumb:hover{transform:scale(1.25)}
+.fmai-avatar{width:46px;height:46px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;box-shadow:0 4px 14px rgba(230,255,43,.3)}
+.fmai-fstat{background:rgba(249,247,242,.08);border:1px solid rgba(249,247,242,.12);border-radius:10px;padding:9px 13px;flex:1;min-width:78px}
+.fmai-fstat-label{font-size:9.5px;color:rgba(249,247,242,.45);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.fmai-fstat-val{font-family:var(--font-display);font-size:16px;color:var(--lime)}
+.fmai-advice-card{display:flex;align-items:flex-start;gap:11px;padding:13px 14px;border-radius:12px;border:1px solid var(--offwhite2);background:var(--offwhite);transition:box-shadow .2s,transform .2s}
+.fmai-advice-card:hover{box-shadow:0 4px 18px rgba(11,70,80,.1);transform:translateX(3px)}
+.fmai-advice-card.warn{border-left:3px solid #F59E0B}
+.fmai-advice-card.succ{border-left:3px solid #16a34a}
+.fmai-advice-card.info{border-left:3px solid var(--teal3)}
+.fmai-adv-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.fmai-advice-card.warn .fmai-adv-icon{background:#FEF3C7}
+.fmai-advice-card.succ .fmai-adv-icon{background:#DCFCE7}
+.fmai-advice-card.info .fmai-adv-icon{background:rgba(15,96,112,.1)}
+.fmai-adv-title{font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:2px}
+.fmai-adv-text{font-size:11.5px;color:var(--teal2);line-height:1.5}
+.fmai-adv-save{font-size:11px;font-weight:700;margin-top:5px;display:inline-block;padding:2px 8px;border-radius:20px}
+.fmai-advice-card.succ .fmai-adv-save{background:#DCFCE7;color:#16a34a}
+.fmai-advice-card.warn .fmai-adv-save{background:#FEF3C7;color:#92400E}
+.fmai-advice-card.info .fmai-adv-save{background:rgba(15,96,112,.1);color:var(--teal3)}
+.fmai-ms-track{position:relative}
+.fmai-ms-track::before{content:'';position:absolute;left:-18px;top:12px;bottom:12px;width:1.5px;background:var(--offwhite3)}
+.fmai-ms-item{position:relative;padding:0 0 16px 0}
+.fmai-ms-dot{position:absolute;left:-27px;top:2px;width:20px;height:20px;border-radius:50%;background:white;border:2px solid var(--offwhite3);display:flex;align-items:center;justify-content:center;font-size:9.5px;z-index:1;transition:all .3s}
+.fmai-ms-dot.reached{background:var(--teal);border-color:var(--teal);color:var(--lime)}
+.fmai-ms-dot.soon{background:var(--lime);border-color:var(--lime3);color:var(--teal)}
+.fmai-ms-month{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);margin-bottom:1px}
+.fmai-ms-amount{font-family:var(--font-display);font-size:15px;color:var(--teal)}
+@media(max-width:900px){.fmai-main-grid{grid-template-columns:1fr}.fmai-header{flex-direction:column}}
+</style>
 <body>
 <div class="app" id="app">
 
@@ -36,9 +98,6 @@
         <button class="curr-btn" onclick="setCurrency('SAR',this)">SAR</button>
       </div>
     </div>
-    <button class="icon-btn" onclick="toggleNFC()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg>
-    </button>
     <button class="icon-btn" style="position:relative" onclick="showPage('notifications',null)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       <span class="notif-dot"></span>
@@ -80,6 +139,10 @@
   </button>
 
   <div class="nav-section" data-en="SMART TOOLS" data-ar="أدوات ذكية">SMART TOOLS</div>
+  <button class="nav-item" onclick="showPage('future',this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 L12 12"/><path d="M16 2h6v6"/></svg>
+    <span data-en="Future Me AI" data-ar="المستشار المستقبلي">Future Me AI</span>
+  </button>
   <button class="nav-item" onclick="showPage('health',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.9 17A9 9 0 1,1 19.1 17"/><line x1="12" y1="12" x2="16" y2="9"/><circle cx="12" cy="12" r="2"/></svg>
     <span data-en="Health Score" data-ar="نقاط الصحة">Health Score</span>
@@ -102,13 +165,9 @@
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M16 13h.01"/><path d="M2 10h20"/></svg>
     <span data-en="Virtual Card" data-ar="البطاقة الافتراضية">Virtual Card</span>
   </button>
-  <button class="nav-item" onclick="showPage('intl',this)">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M17 7l-5 5-5-5"/></svg>
-    <span data-en="International" data-ar="تحويل دولي">International</span>
-  </button>
   <button class="nav-item" onclick="showPage('invest',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 18 7 13 11 15 16 8 21 5"/><circle cx="21" cy="5" r="2"/></svg>
-    <span data-en="Invest" data-ar="الاستثمار">Invest</span>
+    <span data-en="Investment Hub" data-ar="مركز الاستثمار">Investment Hub</span>
   </button>
   <button class="nav-item" onclick="showPage('salary',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>
@@ -118,19 +177,11 @@
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     <span data-en="P2P Lending" data-ar="الإقراض">P2P Lending</span>
   </button>
-  <button class="nav-item" onclick="showPage('egx',this)">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="8" width="4" height="7" rx="1"/><rect x="10" y="6" width="4" height="9" rx="1"/><rect x="15" y="9" width="4" height="6" rx="1"/></svg>
-    <span data-en="EGX Trading" data-ar="البورصة">EGX Trading</span>
-  </button>
 
   <div class="nav-section" data-en="COMMUNITY" data-ar="المجتمع">COMMUNITY</div>
   <button class="nav-item" onclick="showPage('zakat',this)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22C12 22 3 17 3 10a9 9 0 0 1 18 0c0 7-9 12-9 12z"/><path d="M12 6v6l4 2"/></svg>
     <span data-en="Zakat & Sadaqa" data-ar="زكاة وصدقة">Zakat & Sadaqa</span>
-  </button>
-  <button class="nav-item" onclick="showPage('sme',this)">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-    <span data-en="Business Hub" data-ar="ركن الأعمال">Business Hub</span>
   </button>
 
   <div class="sidebar-footer">
@@ -203,10 +254,6 @@
       <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="9" y2="15"/></svg></div>
       <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Pay" data-ar="دفع">Pay</div>
     </button>
-    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="toggleNFC()">
-      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="var(--teal3)"/></svg></div>
-      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="NFC Pay" data-ar="دفع NFC">NFC Pay</div>
-    </button>
     <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('bnpl',null)">
       <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="8" y2="6" stroke-width="3"/><line x1="12" y1="6" x2="12" y2="6" stroke-width="3"/><line x1="16" y1="6" x2="16" y2="6" stroke-width="3"/><line x1="8" y1="10" x2="8" y2="10" stroke-width="3"/><line x1="12" y1="10" x2="12" y2="10" stroke-width="3"/><line x1="16" y1="10" x2="16" y2="10" stroke-width="3"/></svg></div>
       <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="BNPL Check" data-ar="تحقق تقسيط">BNPL Check</div>
@@ -226,10 +273,6 @@
     <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('pockets',null)">
       <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="8" width="20" height="13" rx="2"/><path d="M16 8V6a4 4 0 00-8 0v2"/></svg></div>
       <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Pockets" data-ar="الجيوب">Pockets</div>
-    </button>
-    <button class="card" style="padding:14px 8px;text-align:center;cursor:pointer;border:none;background:white;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="showPage('intl',null)">
-      <div style="margin-bottom:6px;display:flex;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-      <div style="font-size:10px;font-weight:600;color:var(--teal2)" data-en="Send Intl" data-ar="تحويل دولي">Send Intl</div>
     </button>
   </div>
 
@@ -267,44 +310,132 @@
 <!-- ══ VIRTUAL CARD ══ -->
 <div class="page" id="page-wallet">
   <div class="page-title" data-en="Virtual Card" data-ar="البطاقة الافتراضية">Virtual Card</div>
-  <div class="page-sub" data-en="Your digital wallet & NFC payments" data-ar="محفظتك الرقمية ودفع NFC">Your digital wallet & NFC payments</div>
-  <div class="grid-2" style="margin-bottom:20px;align-items:start">
-    <div>
-      <div class="virtual-card" onclick="toggleNFC()">
-        <div class="vc-chip">CHIP</div>
-        <div class="vc-number">•••• •••• •••• 4821</div>
-        <div class="vc-footer">
-          <div><div class="vc-label">CARD HOLDER</div><div class="vc-val">JANA M. ELHENAWY</div></div>
-          <div><div class="vc-label">EXPIRES</div><div class="vc-val">12/28</div></div>
-          <div><div class="vc-nfc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg> NFC</div></div>
+  <div class="page-sub" data-en="Your digital wallet & virtual card" data-ar="محفظتك الرقمية والبطاقة الافتراضية">Your digital wallet & virtual card</div>
+
+  <!-- Empty State (shown by default, hidden after card created) -->
+  <div id="vcEmptyState" style="margin-bottom:20px">
+    <div class="grid-2" style="align-items:start">
+      <div>
+        <!-- Empty Card Placeholder -->
+        <div style="background:linear-gradient(135deg,#EDE9E0,#DDD8CC);border-radius:22px;padding:28px 24px;aspect-ratio:1.6/1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #B0B1B4;position:relative;overflow:hidden;min-height:170px">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.3) 10px,rgba(255,255,255,.3) 11px)"></div>
+          <div style="text-align:center;position:relative;z-index:1">
+            <div style="font-size:36px;margin-bottom:10px;opacity:.4">💳</div>
+            <div style="font-size:14px;font-weight:700;color:var(--teal2);margin-bottom:4px">No virtual card yet</div>
+            <div style="font-size:11.5px;color:var(--gray2)">Create one to pay online & track spending</div>
+          </div>
+        </div>
+        <button class="btn primary" onclick="openModal('createCardModal')" style="width:100%;margin-top:12px;font-size:14px;padding:13px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-right:6px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          + Create Virtual Card
+        </button>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="label">WALLET BALANCE</div>
+          <div class="val lg">2,450 <span style="font-size:16px;font-family:'DM Sans'">EGP</span></div>
+          <div class="divider"></div>
+          <div class="grid-2">
+            <button class="btn primary sm">+ Top Up</button>
+            <button class="btn secondary sm">→ Transfer</button>
+          </div>
+        </div>
+        <div class="card" style="padding:16px;background:rgba(11,70,80,.04);border:1.5px dashed rgba(11,70,80,.2)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;background:rgba(11,70,80,.08);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔐</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:3px">Bank-grade security</div>
+              <div style="font-size:11.5px;color:var(--gray2);line-height:1.5">Your virtual card is generated locally and uses end-to-end encryption for every transaction.</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button class="btn primary" onclick="toggleNFC()" style="flex:1">Tap to Pay (NFC)</button>
-        <button class="btn secondary" style="flex:1">Freeze Card</button>
-      </div>
-      <div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.15);border-radius:12px;padding:12px;margin-top:10px;font-size:12px;color:var(--teal)">
-        <b>Offline NFC available</b> — Transactions sync when connected
-      </div>
     </div>
-    <div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="label">WALLET BALANCE</div>
-        <div class="val lg">2,450 <span style="font-size:16px;font-family:'DM Sans'">EGP</span></div>
-        <div class="divider"></div>
-        <div class="grid-2">
-          <button class="btn primary sm">+ Top Up</button>
-          <button class="btn secondary sm">→ Transfer</button>
+  </div>
+
+  <!-- Active Card State (hidden by default, shown after creation) -->
+  <div id="vcActiveState" style="display:none;margin-bottom:20px">
+    <div class="grid-2" style="align-items:start">
+      <div>
+        <div class="virtual-card" id="vcCard" onclick="alert('QR Pay coming soon!')">
+          <div class="vc-chip">CHIP</div>
+          <div class="vc-number" id="vcNumber">•••• •••• •••• ····</div>
+          <div class="vc-footer">
+            <div><div class="vc-label">CARD HOLDER</div><div class="vc-val" id="vcName">—</div></div>
+            <div><div class="vc-label">EXPIRES</div><div class="vc-val" id="vcExpiry">—</div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn primary" onclick="alert('QR Pay coming soon!')" style="flex:1">Tap to Pay (QR)</button>
+          <button class="btn secondary" id="vcFreezeBtn" onclick="toggleFreezeCard()" style="flex:1">Freeze Card</button>
+        </div>
+        <div style="background:rgba(11,70,80,.06);border:1px solid rgba(11,70,80,.15);border-radius:12px;padding:12px;margin-top:10px;font-size:12px;color:var(--teal)">
+          <b>Secure virtual card</b> — Use online for payments
         </div>
       </div>
-      <div class="card">
-        <div class="label" style="margin-bottom:10px">MULTI-CURRENCY</div>
-        <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:var(--offwhite2);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0">EG</div><div style="flex:1"><div class="tx-name">Egyptian Pound</div><div class="tx-cat">Primary</div></div><div class="tx-amt">2,450 EGP</div></div>
-        <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(11,70,80,.08);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0">US</div><div style="flex:1"><div class="tx-name">US Dollar</div><div class="tx-cat">Rate: 49.80</div></div><div class="tx-amt">49.20 USD</div></div>
-        <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(230,255,43,.1);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal2);flex-shrink:0">SA</div><div style="flex:1"><div class="tx-name">Saudi Riyal</div><div class="tx-cat">Rate: 13.27</div></div><div class="tx-amt">184.60 SAR</div></div>
-        <button class="btn secondary sm" style="margin-top:8px;width:100%">+ Add Currency</button>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="label">WALLET BALANCE</div>
+          <div class="val lg">2,450 <span style="font-size:16px;font-family:'DM Sans'">EGP</span></div>
+          <div class="divider"></div>
+          <div class="grid-2">
+            <button class="btn primary sm">+ Top Up</button>
+            <button class="btn secondary sm">→ Transfer</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label" style="margin-bottom:10px">MULTI-CURRENCY</div>
+          <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:var(--offwhite2);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0">EG</div><div style="flex:1"><div class="tx-name">Egyptian Pound</div><div class="tx-cat">Primary</div></div><div class="tx-amt">2,450 EGP</div></div>
+          <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(11,70,80,.08);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0">US</div><div style="flex:1"><div class="tx-name">US Dollar</div><div class="tx-cat">Rate: 49.80</div></div><div class="tx-amt">49.20 USD</div></div>
+          <div class="row-item"><div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(230,255,43,.1);border-radius:6px;font-size:10px;font-weight:700;color:var(--teal2);flex-shrink:0">SA</div><div style="flex:1"><div class="tx-name">Saudi Riyal</div><div class="tx-cat">Rate: 13.27</div></div><div class="tx-amt">184.60 SAR</div></div>
+          <button class="btn secondary sm" style="margin-top:8px;width:100%">+ Add Currency</button>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Create Card Modal -->
+<div class="modal-overlay" id="createCardModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('createCardModal')">×</button>
+    <div class="modal-title">Create Your Virtual Card</div>
+    <div style="font-size:13px;color:var(--teal2);margin-bottom:18px">Fill in your details to generate a secure virtual card instantly.</div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:var(--teal);margin-bottom:6px">Card Holder Name</div>
+      <input id="vcNameInput" type="text" placeholder="e.g. JANA M. ELHENAWY" style="width:100%;padding:12px 14px;border:1.5px solid #DDD8CC;border-radius:12px;font-size:14px;font-family:inherit;text-transform:uppercase;color:var(--teal)" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <div style="margin-bottom:18px">
+      <div style="font-size:12px;font-weight:600;color:var(--teal);margin-bottom:6px">Card Type</div>
+      <div style="display:flex;gap:10px">
+        <div class="card" id="vcTypeVisa" onclick="selectCardType('VISA')" style="flex:1;padding:12px;text-align:center;cursor:pointer;border:2px solid var(--teal);background:rgba(11,70,80,.04)">
+          <div style="font-size:20px;margin-bottom:4px">💙</div>
+          <div style="font-size:12px;font-weight:700;color:var(--teal)">Visa</div>
+        </div>
+        <div class="card" id="vcTypeMC" onclick="selectCardType('MASTERCARD')" style="flex:1;padding:12px;text-align:center;cursor:pointer;border:2px solid #DDD8CC">
+          <div style="font-size:20px;margin-bottom:4px">🔴</div>
+          <div style="font-size:12px;font-weight:700;color:var(--teal2)">Mastercard</div>
+        </div>
+      </div>
+    </div>
+    <!-- Preview -->
+    <div id="vcPreview" style="background:linear-gradient(135deg,#0B4650,#0D5260);border-radius:16px;padding:18px 20px;margin-bottom:18px;color:white;font-family:'DM Sans',sans-serif">
+      <div style="font-size:11px;opacity:.5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">PREVIEW</div>
+      <div style="font-size:13px;letter-spacing:.18em;font-weight:600;margin-bottom:14px" id="vcPreviewNum">•••• •••• •••• ····</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div>
+          <div style="font-size:9px;opacity:.5;margin-bottom:2px">CARD HOLDER</div>
+          <div style="font-size:11px;font-weight:700" id="vcPreviewName">YOUR NAME</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:9px;opacity:.5;margin-bottom:2px">EXPIRES</div>
+          <div style="font-size:11px;font-weight:700" id="vcPreviewExp">—</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn primary" style="width:100%;padding:13px;font-size:14px" onclick="createVirtualCard()">
+      ✨ Generate My Card
+    </button>
   </div>
 </div>
 
@@ -601,6 +732,150 @@
   </div>
 </div>
 
+<!-- ══ FUTURE ME AI ══ -->
+<div class="page" id="page-future">
+
+  <!-- Header -->
+  <div class="fmai-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div class="fmai-live-badge">✨ Future Me AI</div>
+        <span class="fmai-behavior-chip" id="fmaiBehaviorChip">Current Behavior</span>
+      </div>
+      <div class="page-title" style="margin-bottom:4px">Your <span style="color:var(--teal3);font-style:italic">Financial Future</span></div>
+      <div class="page-sub">See how your financial future could look based on your current habits — then simulate what happens when you change them.</div>
+    </div>
+    <div class="fmai-toggle-wrap">
+      <div class="fmai-behavior-toggle">
+        <button class="fmai-btog active" id="fmaiBtnCurrent" onclick="fmaiSetBehavior('current')">Current Behavior</button>
+        <button class="fmai-btog" id="fmaiBtnImproved" onclick="fmaiSetBehavior('improved')">Improved Behavior</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snapshot Row -->
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card green" style="padding:20px">
+      <div class="label light">Current Balance</div>
+      <div class="val lg light" id="fmaiBalance">4,180</div>
+      <div style="font-size:11px;color:rgba(249,247,242,.5);margin-top:2px">EGP</div>
+      <div class="fmai-chip up" style="margin-top:10px">↑ +320 EGP today</div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="label">Monthly Income</div>
+      <div class="val md" style="color:var(--teal3)" id="fmaiIncome">8,500</div>
+      <div class="sub">EGP per month</div>
+      <div class="progress-bg" style="margin-top:10px"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="label">Monthly Expenses</div>
+      <div class="val md" style="color:var(--teal2)" id="fmaiExpenses">4,320</div>
+      <div class="sub">EGP per month</div>
+      <div class="progress-bg" style="margin-top:10px"><div class="progress-fill" id="fmaiExpBar" style="width:51%"></div></div>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="fmai-main-grid">
+
+    <!-- LEFT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Chart Card -->
+      <div class="card" style="padding:22px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">Balance Projection</div>
+            <div style="font-size:12.5px;color:var(--teal3)" id="fmaiProjSubtext">At this rate, your savings will reach <strong>8,780 EGP</strong> in 6 months</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="fmai-ttab active" onclick="fmaiSetTimeline(6,this)">6 Months</button>
+            <button class="fmai-ttab" onclick="fmaiSetTimeline(12,this)">12 Months</button>
+            <button class="fmai-ttab" onclick="fmaiSetTimeline(24,this)">2 Years</button>
+          </div>
+        </div>
+        <div style="position:relative;height:220px;margin-bottom:14px">
+          <canvas id="fmaiChart"></canvas>
+        </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--offwhite2)">
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Starting Balance</div><div class="fmai-ps-val">4,180 EGP</div></div>
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Projected End</div><div class="fmai-ps-val up" id="fmaiProjEnd">8,780 EGP</div></div>
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Monthly Net</div><div class="fmai-ps-val" id="fmaiProjNet">+600 EGP</div></div>
+          <div class="fmai-proj-stat"><div class="fmai-ps-label">Growth</div><div class="fmai-ps-val up" id="fmaiProjGrowth">+110%</div></div>
+        </div>
+      </div>
+
+      <!-- AI Advice -->
+      <div class="card" style="padding:22px">
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">AI-Powered Advice</div>
+        <div style="font-size:12.5px;color:var(--teal3);margin-bottom:16px">Rule-based insights from your spending pattern</div>
+        <div id="fmaiAdviceList" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Scenario Simulator -->
+      <div class="card" style="padding:22px">
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:3px">Scenario Simulator</div>
+        <div style="font-size:12.5px;color:var(--teal3);margin-bottom:18px">Adjust sliders to see your future change instantly</div>
+
+        <div class="fmai-slider-row">
+          <div class="fmai-slider-label"><span class="fmai-slider-icon" style="background:#DCFCE7">💰</span>Monthly Savings Boost</div>
+          <div class="fmai-sv-badge" id="fmaiSavLbl">+0 EGP</div>
+        </div>
+        <input type="range" class="fmai-range" id="fmaiSliderSav" min="0" max="2000" step="100" value="0" oninput="fmaiHandleSlider()">
+
+        <div class="fmai-slider-row">
+          <div class="fmai-slider-label"><span class="fmai-slider-icon" style="background:#FEE2E2">🛍️</span>Extra Monthly Spending</div>
+          <div class="fmai-sv-badge" id="fmaiSpendLbl">+0 EGP</div>
+        </div>
+        <input type="range" class="fmai-range" id="fmaiSliderSpend" min="0" max="3000" step="100" value="0" oninput="fmaiHandleSlider()">
+
+        <div class="fmai-slider-row">
+          <div class="fmai-slider-label"><span class="fmai-slider-icon" style="background:rgba(15,96,112,.1)">📈</span>Investment % of Income</div>
+          <div class="fmai-sv-badge" id="fmaiInvLbl">0%</div>
+        </div>
+        <input type="range" class="fmai-range" id="fmaiSliderInv" min="0" max="30" step="1" value="0" oninput="fmaiHandleSlider()">
+
+        <div style="border-top:1px solid var(--offwhite2);padding-top:14px;margin-top:4px">
+          <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray2);margin-bottom:8px">Quick Presets</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <button class="btn secondary sm" onclick="fmaiPreset('conservative')">🛡 Conservative</button>
+            <button class="btn secondary sm" onclick="fmaiPreset('balanced')">⚖️ Balanced</button>
+            <button class="btn secondary sm" onclick="fmaiPreset('aggressive')">🚀 Aggressive</button>
+            <button class="btn secondary sm" onclick="fmaiPreset('reset')">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Future Me Card -->
+      <div class="future-me-card" id="fmaiHeroCard">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(249,247,242,.4);margin-bottom:10px">Message from your future self</div>
+        <div class="fmai-avatar" id="fmaiAvatar">🙂</div>
+        <div class="fm-badge" style="margin-bottom:10px">🔮 FUTURE YOU SAYS</div>
+        <div class="fm-prediction" id="fmaiHeroMsg">Keep going — you're on track. In 6 months, you'll have 8,780 EGP saved. Don't stop now!</div>
+        <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+          <div class="fmai-fstat"><div class="fmai-fstat-label">Projected</div><div class="fmai-fstat-val" id="fmaiGoal">8,780</div></div>
+          <div class="fmai-fstat"><div class="fmai-fstat-label">Health</div><div class="fmai-fstat-val" id="fmaiHealth">78/100</div></div>
+          <div class="fmai-fstat"><div class="fmai-fstat-label">Outlook</div><div class="fmai-fstat-val" id="fmaiOutlook" style="font-size:12px">🟡 Good</div></div>
+        </div>
+      </div>
+
+      <!-- Milestones -->
+      <div class="card" style="padding:22px">
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--teal);margin-bottom:12px">Savings Milestones</div>
+        <div class="fmai-ms-track" style="padding-left:24px">
+          <div id="fmaiMilestones"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- ══ AI ADVISOR ══ -->
 <div class="page" id="page-ai">
   <div class="flex-between" style="margin-bottom:4px">
@@ -640,64 +915,196 @@
   </div>
 </div>
 
-<!-- ══ INVEST ══ -->
+
+<!-- ══ INVESTMENT LEARNING HUB ══ -->
 <div class="page" id="page-invest">
-  <div class="page-title">Invest</div>
-  <div class="page-sub">Start investing from just 1 EGP. Grow your wealth.</div>
+  <div class="flex-between" style="margin-bottom:4px">
+    <div>
+      <div class="page-title" data-en="Investment Learning Hub" data-ar="مركز تعلم الاستثمار">Investment Learning Hub</div>
+      <div class="page-sub" data-en="Understand markets, build knowledge, get AI-powered advice — no real transactions." data-ar="افهم الأسواق، وابنِ معرفتك، واحصل على نصائح ذكية — بدون معاملات حقيقية.">Understand markets, build knowledge, get AI-powered advice — no real transactions.</div>
+    </div>
+    <span class="tag yellow">Advisory Only</span>
+  </div>
+
+  <!-- AI Risk Profile Banner -->
   <div class="card dark" style="margin-bottom:16px;padding:20px">
-    <div class="flex-between">
-      <div><div class="label light">PORTFOLIO VALUE</div><div style="font-family:var(--font-display);font-size:32px;color:var(--offwhite)">1,240 <span style="font-size:14px;font-family:'DM Sans'">EGP</span></div></div>
-      <div style="text-align:right"><div style="font-size:11px;color:rgba(249,247,242,.5);margin-bottom:4px">Total Return</div><div style="font-size:18px;font-weight:700;color:#4CAF50">+140 EGP (+12.7%)</div></div>
+    <div class="flex-between" style="margin-bottom:10px">
+      <div>
+        <div class="label light">YOUR INVESTOR PROFILE</div>
+        <div style="font-family:var(--font-display);font-size:22px;color:var(--offwhite);margin-top:4px">🌱 Cautious Learner</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:rgba(249,247,242,.5);margin-bottom:4px">Risk Tolerance</div>
+        <div style="display:flex;gap:4px">
+          <div style="width:18px;height:8px;background:var(--lime);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:var(--lime);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:rgba(249,247,242,.15);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:rgba(249,247,242,.15);border-radius:2px"></div>
+          <div style="width:18px;height:8px;background:rgba(249,247,242,.15);border-radius:2px"></div>
+        </div>
+        <div style="font-size:10px;color:rgba(249,247,242,.4);margin-top:3px">Low · 2/5</div>
+      </div>
     </div>
-    <div class="divider" style="border-color:rgba(249,247,242,.1)"></div>
-    <div style="display:flex;gap:12px">
-      <button class="btn primary sm">+ Add Funds</button>
-      <button class="btn ghost sm">Withdraw</button>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-    <div class="invest-option selected">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9h3L14 15h-4.5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div>
-      <div class="name">Gold Fund</div>
-      <div class="ret">+11.2% YTD</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 1 EGP</div>
-    </div>
-    <div class="invest-option">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal3)" stroke-width="1.8" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-      <div class="name">EGX30 Index</div>
-      <div class="ret">+8.7% YTD</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 10 EGP</div>
-    </div>
-    <div class="invest-option">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round"><path d="M3 22v-9M21 22v-9M2 13h20M12 2L2 8h20L12 2z"/></svg></div>
-      <div class="name">Treasury Bills</div>
-      <div class="ret">27.5% p.a.</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 50 EGP</div>
-    </div>
-    <div class="invest-option">
-      <div class="icon" style="display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--lime3)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-      <div class="name">Real Estate</div>
-      <div class="ret">+15.3% YTD</div>
-      <div style="font-size:10px;color:var(--gray);margin-top:4px">from 100 EGP</div>
+    <div style="background:rgba(249,247,242,.07);border-radius:10px;padding:11px 13px;font-size:12px;color:rgba(249,247,242,.75);line-height:1.65">
+      <b style="color:var(--lime)">AI Insight:</b> Based on your spending patterns and balance, you're best suited for low-risk instruments like Treasury Bills and Gold Funds. Avoid individual stocks until you have 3+ months of savings buffer.
     </div>
   </div>
-  <div class="card" style="border-color:rgba(230,255,43,.25);background:rgba(230,255,43,.02)">
-    <div class="label" style="margin-bottom:12px;color:var(--teal2)">QUICK INVEST – GOLD FUND</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-      <button class="btn secondary sm" onclick="setInvestAmt(1)">1 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(10)">10 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(50)">50 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(100)">100 EGP</button>
-      <button class="btn secondary sm" onclick="setInvestAmt(500)">500 EGP</button>
+
+  <!-- Educational Cards: What Can I Invest In? -->
+  <div class="label" style="margin-bottom:10px">WHAT CAN YOU INVEST IN? — LEARN THE BASICS</div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card" style="border-left:3px solid #B8860B">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(184,134,11,.1);font-size:20px">🥇</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">Gold Fund</div>
+          <div class="tag orange" style="font-size:10px;margin-top:3px">Low Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">A pool of money invested in gold. Protects against inflation — when the Egyptian pound weakens, gold value typically rises. Good for beginners.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">Historical return</span><span style="font-weight:700;color:var(--teal3)">+11.2% YTD</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">1 EGP</span></div>
+      </div>
+      <div style="background:rgba(230,255,43,.08);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:var(--teal2)">
+        ⚠️ <b>Risk:</b> Gold prices fluctuate daily. Not guaranteed returns.
+      </div>
     </div>
-    <div style="display:flex;gap:10px;align-items:center">
-      <input id="investAmt" type="number" value="100" min="1" style="max-width:150px">
-      <span style="font-size:12px;color:var(--teal2)">EGP</span>
-      <button class="btn primary">Invest Now →</button>
+    <div class="card" style="border-left:3px solid var(--teal3)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(11,70,80,.08);font-size:20px">🏛️</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">Treasury Bills (T-Bills)</div>
+          <div class="tag green" style="font-size:10px;margin-top:3px">Very Low Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">You lend money to the Egyptian government for 91–364 days. The government pays you back with interest. Almost zero default risk — backed by the state.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">Current rate</span><span style="font-weight:700;color:var(--teal3)">27.5% p.a.</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">50 EGP</span></div>
+      </div>
+      <div style="background:rgba(11,70,80,.06);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:var(--teal2)">
+        💡 <b>Best for:</b> Short-term savings you don't need for 3–6 months.
+      </div>
     </div>
-    <div style="font-size:11px;color:var(--gray);margin-top:8px">Investments involve risk. Past performance does not guarantee future results.</div>
+    <div class="card" style="border-left:3px solid var(--teal2)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(11,70,80,.06);font-size:20px">📊</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">EGX30 Index Fund</div>
+          <div class="tag yellow" style="font-size:10px;margin-top:3px">Medium Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">Instead of picking one company, you invest in Egypt's top 30 companies at once. If the Egyptian economy grows, your investment grows too. Diversified = safer than single stocks.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">5-yr avg return</span><span style="font-weight:700;color:var(--teal3)">+8.7% / yr</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">10 EGP</span></div>
+      </div>
+      <div style="background:rgba(193,18,31,.05);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:#C1121F">
+        ⚠️ <b>Risk:</b> Can lose value in market downturns. Invest only what you can keep for 1+ year.
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid #7C3AED">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-box" style="background:rgba(124,58,237,.08);font-size:20px">🏠</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">Real Estate Fund</div>
+          <div class="tag" style="background:rgba(124,58,237,.1);color:#7C3AED;font-size:10px;margin-top:3px">Medium-High Risk</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray2);line-height:1.6;margin-bottom:10px">Pool money with others to invest in Egyptian property developments. You earn from rental income and property appreciation without buying a full apartment.</div>
+      <div style="background:var(--offwhite);border-radius:8px;padding:9px 11px;font-size:11.5px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--gray)">Historical return</span><span style="font-weight:700;color:var(--teal3)">+15.3% YTD</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--gray)">Min. to start</span><span style="font-weight:700">100 EGP</span></div>
+      </div>
+      <div style="background:rgba(124,58,237,.06);border-radius:8px;padding:8px 11px;margin-top:8px;font-size:11px;color:#7C3AED">
+        💡 <b>Liquidity:</b> Harder to cash out quickly. Think 2–5 year horizon.
+      </div>
+    </div>
+  </div>
+
+  <!-- What If Simulator -->
+  <div class="card" style="margin-bottom:16px;background:linear-gradient(160deg,rgba(230,255,43,.04),white);border-color:rgba(230,255,43,.3)">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div class="label" style="color:var(--teal2)">🔮 WHAT IF SIMULATOR — NO REAL MONEY</div>
+      <span class="tag yellow" style="font-size:10px">Educational</span>
+    </div>
+    <div class="grid-2" style="margin-bottom:12px">
+      <div class="input-group">
+        <div class="input-label">If I save monthly (EGP)</div>
+        <input type="number" id="simAmt" value="200" min="1" oninput="runSim()">
+      </div>
+      <div class="input-group">
+        <div class="input-label">For how long (months)</div>
+        <input type="number" id="simMonths" value="12" min="1" max="120" oninput="runSim()">
+      </div>
+    </div>
+    <div class="grid-3" style="gap:10px;margin-bottom:12px" id="simResults">
+      <div style="background:var(--offwhite);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Treasury Bills</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--teal)" id="sim-tbill">3,016 EGP</div>
+        <div style="font-size:10px;color:var(--teal3);margin-top:3px">+27.5% p.a.</div>
+      </div>
+      <div style="background:var(--offwhite);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Gold Fund</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--teal)" id="sim-gold">2,531 EGP</div>
+        <div style="font-size:10px;color:var(--teal3);margin-top:3px">+11.2% p.a.</div>
+      </div>
+      <div style="background:var(--offwhite);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">EGX30 Index</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--teal)" id="sim-egx">2,481 EGP</div>
+        <div style="font-size:10px;color:var(--teal3);margin-top:3px">+8.7% p.a.</div>
+      </div>
+    </div>
+    <div style="background:rgba(11,70,80,.05);border-radius:10px;padding:11px 13px;font-size:11.5px;color:var(--teal2);line-height:1.6" id="simAdvice">
+      <b>AI Says:</b> At 200 EGP/month for 12 months, Treasury Bills give the best guaranteed return right now. You'd earn about 616 EGP in interest — that's more than 2.5x the monthly contribution!
+    </div>
+    <div style="font-size:10px;color:var(--gray3);margin-top:8px;text-align:center">⚠️ Projections are estimates only. Not financial advice. Past performance ≠ future results.</div>
+  </div>
+
+  <!-- EGX Stock Explainer (Read-Only) -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="flex-between" style="margin-bottom:12px">
+      <div class="label">📈 EGX30 SNAPSHOT — LEARN HOW STOCKS MOVE</div>
+      <span class="tag" style="background:rgba(193,18,31,.08);color:#C1121F;font-size:10px">Read Only · No Trading</span>
+    </div>
+    <div style="font-size:12px;color:var(--gray2);margin-bottom:12px;line-height:1.6;background:var(--offwhite);border-radius:8px;padding:10px 12px">
+      💡 <b>What is EGX?</b> The Egyptian Exchange (EGX) is where you can buy shares in Egyptian companies. A share = a small ownership stake. When the company earns more money, your share's value can rise.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="stock-row"><div class="stock-ticker">COMI</div><div class="stock-name">CIB – Commercial Intl Bank</div><div class="stock-price">78.50 EGP</div><div class="stock-chg" style="color:#4CAF50">+1.2%</div><span class="tag green" style="font-size:10px">Stable Blue Chip</span></div>
+      <div class="stock-row"><div class="stock-ticker">HRHO</div><div class="stock-name">EFG Hermes Holdings</div><div class="stock-price">22.30 EGP</div><div class="stock-chg" style="color:var(--red)">-0.8%</div><span class="tag red" style="font-size:10px">Volatile</span></div>
+      <div class="stock-row"><div class="stock-ticker">EAST</div><div class="stock-name">Eastern Company</div><div class="stock-price">15.60 EGP</div><div class="stock-chg" style="color:#4CAF50">+2.1%</div><span class="tag orange" style="font-size:10px">Defensive</span></div>
+      <div class="stock-row"><div class="stock-ticker">SWDY</div><div class="stock-name">El Sewedy Electric</div><div class="stock-price">42.80 EGP</div><div class="stock-chg" style="color:var(--red)">-1.3%</div><span class="tag yellow" style="font-size:10px">Cyclical</span></div>
+    </div>
+    <div style="background:rgba(11,70,80,.05);border-radius:10px;padding:11px 13px;margin-top:12px;font-size:12px;color:var(--teal2);line-height:1.6">
+      <b>📚 Glossary:</b> <b>Blue Chip</b> = large, well-established company (low risk). <b>Volatile</b> = price swings a lot (higher risk, higher reward). <b>Defensive</b> = holds value in downturns. <b>Cyclical</b> = tied to economic cycles.
+    </div>
+  </div>
+
+  <!-- Readiness Quiz -->
+  <div class="card" style="background:linear-gradient(160deg,rgba(11,70,80,.04),white);border-color:rgba(11,70,80,.15)">
+    <div class="label" style="margin-bottom:12px;color:var(--teal2)">🎯 AM I READY TO INVEST?</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:12px;background:var(--offwhite);border-radius:10px;padding:10px 13px">
+        <div style="width:24px;height:24px;border-radius:50%;background:#4CAF50;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;flex-shrink:0">✓</div>
+        <div style="font-size:12.5px;color:var(--teal)">Emergency fund covers 3 months of expenses</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--offwhite);border-radius:10px;padding:10px 13px">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(193,18,31,.15);display:flex;align-items:center;justify-content:center;color:#C1121F;font-size:12px;flex-shrink:0">✗</div>
+        <div style="font-size:12.5px;color:var(--teal)">No high-interest debt (credit card, BNPL) outstanding</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--offwhite);border-radius:10px;padding:10px 13px">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(230,255,43,.3);display:flex;align-items:center;justify-content:center;color:var(--teal2);font-size:12px;flex-shrink:0">~</div>
+        <div style="font-size:12.5px;color:var(--teal)">Investing money you won't need for 6+ months</div>
+      </div>
+    </div>
+    <div style="background:rgba(193,18,31,.06);border:1px solid rgba(193,18,31,.15);border-radius:10px;padding:11px 13px;margin-top:12px;font-size:12px;color:#C1121F;line-height:1.6">
+      <b>⚠️ AI Recommendation:</b> Pay off your BNPL installments first before investing — 25% BNPL interest rates will always outweigh investment gains.
+    </div>
   </div>
 </div>
+
 
 <!-- ══ SALARY ADVANCE ══ -->
 <div class="page" id="page-salary">
@@ -749,26 +1156,6 @@
   </div>
 </div>
 
-<!-- ══ EGX ══ -->
-<div class="page" id="page-egx">
-  <div class="page-title">EGX Paper Trading</div>
-  <div class="page-sub">Simulated trading — no real money involved. Learn before you invest.</div>
-  <div style="background:rgba(193,18,31,.08);border:1px solid rgba(193,18,31,.2);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px">All trading is simulated for educational purposes only.</div>
-  <div class="grid-3" style="margin-bottom:16px">
-    <div class="card green"><div class="label light">Virtual Balance</div><div class="val md light">47,320 EGP</div></div>
-    <div class="card"><div class="label">Portfolio Value</div><div class="val md" style="color:var(--teal3)">12,680 EGP</div></div>
-    <div class="card"><div class="label">Total Return</div><div class="val md" style="color:var(--teal2)">+2,680 EGP</div><div class="sub">+26.8%</div></div>
-  </div>
-  <div class="card">
-    <div class="flex-between" style="margin-bottom:12px"><div class="label">EGX30 STOCKS</div><span class="tag yellow" style="font-size:10px">Last updated 11:30 AM</span></div>
-    <div class="stock-row"><div class="stock-ticker">COMI</div><div class="stock-name">CIB – Commercial Intl Bank</div><div class="stock-price">78.50 EGP</div><div class="stock-chg" style="color:#4CAF50">+1.2%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">HRHO</div><div class="stock-name">EFG Hermes Holdings</div><div class="stock-price">22.30 EGP</div><div class="stock-chg" style="color:var(--red)">-0.8%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">EAST</div><div class="stock-name">Eastern Company</div><div class="stock-price">15.60 EGP</div><div class="stock-chg" style="color:#4CAF50">+2.1%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">SWDY</div><div class="stock-name">El Sewedy Electric</div><div class="stock-price">42.80 EGP</div><div class="stock-chg" style="color:var(--red)">-1.3%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-    <div class="stock-row"><div class="stock-ticker">TMGH</div><div class="stock-name">Talaat Mustafa Group</div><div class="stock-price">31.10 EGP</div><div class="stock-chg" style="color:#4CAF50">+0.5%</div><button class="btn primary sm" style="margin-left:4px">Buy</button></div>
-  </div>
-</div>
-
 <!-- ══ ZAKAT ══ -->
 <div class="page" id="page-zakat">
   <div class="page-title">Zakat & Sadaqa</div>
@@ -799,41 +1186,6 @@
 </div>
 
 <!-- ══ BUSINESS HUB ══ -->
-<div class="page" id="page-sme">
-  <div class="flex-between" style="margin-bottom:4px">
-    <div class="page-title">Business Hub</div>
-    <span class="tag teal">SME Tools</span>
-  </div>
-  <div class="page-sub">Tools for small business owners — payroll, transfers, and AI insights.</div>
-  <div class="grid-3" style="margin-bottom:16px">
-    <div class="card dark"><div class="label light">Employees</div><div class="val md light">8</div><div class="sub" style="color:rgba(249,247,242,.6)">Active payroll</div></div>
-    <div class="card"><div class="label">Total Payroll</div><div class="val md">42,000 EGP</div><div class="sub">This month</div></div>
-    <div class="card teal" style="color:white"><div class="label" style="color:rgba(255,255,255,.6)">Next Payday</div><div style="font-family:var(--font-display);font-size:20px;color:white">May 1</div><div style="font-size:11px;color:rgba(255,255,255,.7)">21 days</div></div>
-  </div>
-  <div class="card" style="margin-bottom:14px">
-    <div class="flex-between" style="margin-bottom:12px"><div class="label">BULK SALARY TRANSFER</div><button class="btn primary sm">Process All</button></div>
-    <div class="emp-row"><div class="emp-avatar" style="background:var(--teal3)">أ</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Ahmed Khaled</div><div style="font-size:11px;color:var(--gray)">Software Dev</div></div><div style="font-weight:700;font-size:13px">7,500 EGP</div><span class="tag green" style="font-size:10px">Pending</span></div>
-    <div class="emp-row"><div class="emp-avatar" style="background:var(--lime3);color:var(--teal)">م</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Mohamed Ragab</div><div style="font-size:11px;color:var(--gray)">Designer</div></div><div style="font-weight:700;font-size:13px">6,000 EGP</div><span class="tag green" style="font-size:10px">Pending</span></div>
-    <div class="emp-row"><div class="emp-avatar" style="background:var(--teal2)">ف</div><div style="flex:1"><div style="font-weight:600;font-size:12.5px">Fatma Hassan</div><div style="font-size:11px;color:var(--gray)">Accountant</div></div><div style="font-weight:700;font-size:13px">5,500 EGP</div><span class="tag orange" style="font-size:10px">Review</span></div>
-    <div style="padding:8px 12px;background:var(--offwhite2);border-radius:8px;font-size:11.5px;color:var(--teal2);text-align:center">+5 more employees</div>
-  </div>
-  <div class="card" style="background:rgba(11,70,80,.04);border-color:rgba(11,70,80,.15)">
-    <div class="flex-between" style="margin-bottom:10px">
-      <div class="label" style="color:var(--teal2)">AI BUSINESS ADVISOR</div>
-      <div style="display:flex;align-items:center;gap:5px"><div style="width:7px;height:7px;background:#4CAF50;border-radius:50%"></div><span style="font-size:10px;color:var(--gray)">Live</span></div>
-    </div>
-    <div style="background:white;border-radius:10px;padding:12px;font-size:12.5px;color:var(--teal2);margin-bottom:10px;line-height:1.6">
-      <b>Cash Flow Alert:</b> Your operating expenses increased 18% last month. If this trend continues, you'll need additional working capital by June.
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="chip">Cash flow forecast</button>
-      <button class="chip">Payroll optimization</button>
-      <button class="chip">Tax planning</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ NOTIFICATIONS ══ -->
 <div class="page" id="page-notifications">
   <div class="page-title">Notifications</div>
   <div class="page-sub">All your financial alerts in one place.</div>
@@ -901,99 +1253,6 @@
 </div>
 
 <!-- ══ INTERNATIONAL ══ -->
-<div class="page" id="page-intl">
-  <div class="flex-between" style="margin-bottom:4px">
-    <div>
-      <div class="page-title">International Transfers</div>
-      <div class="page-sub">Send money abroad. Competitive rates, fast settlement.</div>
-    </div>
-    <button class="btn primary" onclick="openModal('intlSendModal')">→ Send Money</button>
-  </div>
-  <div class="card green" style="padding:18px;margin-bottom:16px">
-    <div class="flex-between">
-      <div>
-        <div class="label light" style="margin-bottom:6px">TODAY'S EXCHANGE RATES</div>
-        <div style="display:flex;gap:20px;flex-wrap:wrap">
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">USD</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">49.80 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">EUR</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">53.60 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">SAR</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">13.27 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">GBP</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">63.20 <span style="font-size:11px">EGP</span></div></div>
-          <div><div style="font-size:10px;color:rgba(249,247,242,.5)">AED</div><div style="font-family:var(--font-display);font-size:18px;color:var(--offwhite)">13.55 <span style="font-size:11px">EGP</span></div></div>
-        </div>
-      </div>
-      <div style="text-align:right"><div style="font-size:10px;color:rgba(249,247,242,.4)">Live rates · 11:45 AM</div></div>
-    </div>
-  </div>
-  <div class="grid-2" style="align-items:start">
-    <div class="card">
-      <div class="label" style="margin-bottom:14px">QUICK TRANSFER CALCULATOR</div>
-      <div class="input-group"><div class="input-label">You Send (EGP)</div><input id="intlSendAmt" type="number" value="5000" oninput="calcIntl()"></div>
-      <div class="input-group"><div class="input-label">Destination Currency</div>
-        <select id="intlCurr" onchange="calcIntl()">
-          <option value="49.80">USD – US Dollar</option>
-          <option value="53.60">EUR – Euro</option>
-          <option value="13.27">SAR – Saudi Riyal</option>
-          <option value="63.20">GBP – British Pound</option>
-          <option value="13.55">AED – UAE Dirham</option>
-        </select>
-      </div>
-      <div style="background:var(--offwhite);border-radius:12px;padding:14px;margin-bottom:12px">
-        <div style="font-size:11px;color:var(--teal2);margin-bottom:3px">Recipient Gets</div>
-        <div id="intlResult" style="font-family:var(--font-display);font-size:26px;color:var(--teal)">100.40 USD</div>
-        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--gray)">
-          <span>Transfer fee: 25 EGP</span><span>Arrives in 1–2 days</span>
-        </div>
-      </div>
-      <button class="btn primary" style="width:100%" onclick="openModal('intlSendModal')">Send Now</button>
-    </div>
-    <div class="card">
-      <div class="label" style="margin-bottom:10px">SUPPORTED CORRIDORS</div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">US</div><div style="flex:1"><div class="tx-name">United States (USD)</div><div class="tx-cat">Bank transfer · 1-2 days</div></div><span class="tag green">Active</span></div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">EU</div><div style="flex:1"><div class="tx-name">Eurozone (EUR)</div><div class="tx-cat">SEPA · 1-3 days</div></div><span class="tag green">Active</span></div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">SA</div><div style="flex:1"><div class="tx-name">Saudi Arabia (SAR)</div><div class="tx-cat">SWIFT · Same day</div></div><span class="tag green">Active</span></div>
-      <div class="row-item"><div style="width:32px;height:24px;background:var(--offwhite2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal);flex-shrink:0">AE</div><div style="flex:1"><div class="tx-name">UAE (AED)</div><div class="tx-cat">SWIFT · Same day</div></div><span class="tag green">Active</span></div>
-    </div>
-  </div>
-</div>
-
-</div><!-- end .main -->
-</div><!-- end .app -->
-
-<!-- ══ CS CHAT ══ -->
-<button class="cs-badge" onclick="toggleCS()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
-<div class="cs-panel" id="csPanel">
-  <div class="cs-header">
-    <div style="width:32px;height:32px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">FC</div>
-    <div style="flex:1"><div style="font-size:13px;font-weight:600">Customer Support</div><div style="font-size:10px;opacity:.6">AI-powered · Available 24/7</div></div>
-    <button onclick="toggleCS()" style="background:rgba(249,247,242,.1);border:none;color:var(--offwhite);width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px">×</button>
-  </div>
-  <div class="cs-messages" id="csMessages">
-    <div class="msg ai"><div class="msg-avatar" style="background:var(--lime);color:var(--teal)">CS</div><div class="msg-bubble" style="font-size:12px">Hi Jana! How can I help you today?</div></div>
-  </div>
-  <div style="padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--offwhite2)">
-    <button class="chip" onclick="sendCSChip(this)" style="font-size:10px">Report a problem</button>
-    <button class="chip" onclick="sendCSChip(this)" style="font-size:10px">How to use NFC?</button>
-    <button class="chip" onclick="sendCSChip(this)" style="font-size:10px">Reset my PIN</button>
-  </div>
-  <div class="cs-input-row">
-    <input class="cs-input" id="csInput" placeholder="Type your question…" onkeydown="if(event.key==='Enter')sendCS()">
-    <button class="cs-send" onclick="sendCS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-  </div>
-</div>
-
-<!-- ══ NFC OVERLAY ══ -->
-<div class="nfc-overlay" id="nfcOverlay">
-  <div class="nfc-ring"><div class="nfc-inner" style="display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="1.5" stroke-linecap="round"><path d="M6 8.5a7.5 7.5 0 0 1 12 0"/><path d="M3.5 6a11.5 11.5 0 0 1 17 0"/><path d="M9 11a3 3 0 0 1 6 0"/><circle cx="12" cy="14" r="2" fill="var(--lime)"/></svg></div></div>
-  <div style="font-family:var(--font-display);font-size:28px;color:var(--offwhite)">Ready to Pay</div>
-  <div style="font-size:14px;color:rgba(249,247,242,.6)">Hold your phone near the payment terminal</div>
-  <div style="font-size:11px;color:rgba(230,255,43,.6);margin-top:4px">Works offline — transactions sync automatically</div>
-  <div style="display:flex;gap:12px;margin-top:16px">
-    <button class="btn primary" onclick="simulateNFC()">Simulate Tap</button>
-    <button class="btn ghost" onclick="toggleNFC()">Cancel</button>
-  </div>
-</div>
-
-<!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="addExpenseModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('addExpenseModal')">×</button>
@@ -1020,7 +1279,7 @@
       <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Investments</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
       <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Gam'eya</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
       <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Pockets</span><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-      <div class="nav-customize-item"><span class="drag-handle">⠿</span><span style="flex:1;font-size:13px;font-weight:500">Business Hub</span><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+      
     </div>
     <div class="divider"></div>
     <button class="btn primary" style="width:100%" onclick="closeModal('customizeModal')">Save Changes</button>
@@ -1046,20 +1305,6 @@
     <div class="input-group"><div class="input-label">To</div><select id="toPocketSelect"><option>Rent – 2,500 EGP</option><option>Europe Trip – 680 EGP</option><option>Emergency – 1,000 EGP</option></select></div>
     <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
     <button class="btn primary" style="width:100%">Transfer Now</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="intlSendModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('intlSendModal')">×</button>
-    <div class="modal-title">Send International Transfer</div>
-    <div class="input-group"><div class="input-label">Recipient Full Name</div><input placeholder="As on bank account"></div>
-    <div class="input-group"><div class="input-label">Recipient IBAN / Account No.</div><input placeholder="e.g. GB29NWBK60161331926819"></div>
-    <div class="grid-2">
-      <div class="input-group"><div class="input-label">Amount (EGP)</div><input type="number" placeholder="0.00"></div>
-      <div class="input-group"><div class="input-label">Currency</div><select><option>USD</option><option>EUR</option><option>SAR</option><option>GBP</option><option>AED</option></select></div>
-    </div>
-    <button class="btn primary" style="width:100%" onclick="closeModal('intlSendModal')">Review & Send</button>
   </div>
 </div>
 
@@ -1091,6 +1336,8 @@ function showPage(id, btn) {
   if (p) p.classList.add('active');
   if (btn) btn.classList.add('active');
   else document.querySelectorAll('.nav-item').forEach(b => { if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) b.classList.add('active'); });
+  // Page-specific init
+  if (id === 'future') setTimeout(fmaiInit, 50);
 }
 
 const rates = { EGP: 1, USD: 0.0201, EUR: 0.0186, SAR: 0.0754 };
@@ -1104,17 +1351,6 @@ function setCurrency(curr, btn) {
   document.getElementById('incomeCurr').textContent = curr + ' this month';
 }
 
-function toggleNFC() { document.getElementById('nfcOverlay').classList.toggle('open'); }
-function simulateNFC() {
-  document.getElementById('nfcOverlay').classList.remove('open');
-  setTimeout(() => {
-    const banner = document.createElement('div');
-    banner.style.cssText = 'position:fixed;top:70px;right:24px;z-index:500;padding:12px 16px;width:300px;border-radius:14px;display:flex;gap:10px;align-items:center;background:var(--teal);color:var(--offwhite);box-shadow:0 4px 20px rgba(0,0,0,.3)';
-    banner.innerHTML = '<div><b>NFC Payment Success</b><div style="font-size:11px;opacity:.8">180 EGP · Domino\'s · Offline (will sync)</div></div>';
-    document.body.appendChild(banner);
-    setTimeout(() => banner.remove(), 3000);
-  }, 300);
-}
 
 const aiResponses = {
   'afford': {en: "Looking at your data: <b>4,180 EGP</b> balance and <b>1,950 EGP/month</b> in obligations. A laptop at 800 EGP/month over 24 months → ratio <b>32%</b> — <span style='color:var(--teal);font-weight:600'>Low Risk</span>. Clear your overdue MacBook payment first!", ar: "بص على أرقامك: عندك <b>4,180 ج.م</b> رصيد و<b>1,950 ج.م</b> التزامات. لو اشتريت لاب توب بـ800 ج.م × 24 شهر، النسبة <b>32%</b> — مخاطرة منخفضة. بس خلص قسط الماك بوك الأول!"},
@@ -1235,15 +1471,6 @@ function calcBNPL() {
   `;
 }
 
-function calcIntl() {
-  const amt = +document.getElementById('intlSendAmt').value || 0;
-  const rate = +document.getElementById('intlCurr').selectedOptions[0].value;
-  const fee = 25;
-  const converted = ((Math.max(0, amt - fee)) / rate).toFixed(2);
-  const curr = document.getElementById('intlCurr').selectedOptions[0].text.split(' – ')[0];
-  document.getElementById('intlResult').textContent = `${converted} ${curr}`;
-}
-
 function setInvestAmt(n) { document.getElementById('investAmt').value = n; }
 
 let pocketCount = 3;
@@ -1291,6 +1518,296 @@ function editPocket(btn) {
 
 calcBNPL();
 calcIntl();
+
+// ── Investment Simulator ──
+window.runSim = function() {
+  const monthly = +document.getElementById('simAmt').value || 200;
+  const months = +document.getElementById('simMonths').value || 12;
+  function fv(rate, n, pmt) {
+    const r = rate / 12;
+    return pmt * ((Math.pow(1+r, n) - 1) / r);
+  }
+  const tbill = fv(0.275, months, monthly);
+  const gold  = fv(0.112, months, monthly);
+  const egx   = fv(0.087, months, monthly);
+  const fmt = v => Math.round(v).toLocaleString('en-EG') + ' EGP';
+  document.getElementById('sim-tbill').textContent = fmt(tbill);
+  document.getElementById('sim-gold').textContent  = fmt(gold);
+  document.getElementById('sim-egx').textContent   = fmt(egx);
+  const best = tbill >= gold ? 'Treasury Bills' : 'Gold Fund';
+  const profit = Math.round(Math.max(tbill,gold,egx) - monthly*months);
+  document.getElementById('simAdvice').innerHTML = '<b>AI Says:</b> At ' + monthly.toLocaleString() + ' EGP/month for ' + months + ' months, <b>' + best + '</b> gives the best estimated return. You\'d earn approximately <b style="color:var(--teal3)">' + profit.toLocaleString() + ' EGP</b> in growth!';
+};
+
+// ── VIRTUAL CARD ──
+let vcCardType = 'VISA';
+let vcCardCreated = false;
+
+function selectCardType(type) {
+  vcCardType = type;
+  document.getElementById('vcTypeVisa').style.borderColor = type === 'VISA' ? 'var(--teal)' : '#DDD8CC';
+  document.getElementById('vcTypeVisa').style.background = type === 'VISA' ? 'rgba(11,70,80,.04)' : '';
+  document.getElementById('vcTypeMC').style.borderColor = type === 'MASTERCARD' ? 'var(--teal)' : '#DDD8CC';
+  document.getElementById('vcTypeMC').style.background = type === 'MASTERCARD' ? 'rgba(11,70,80,.04)' : '';
+}
+
+// Live preview update for card name input
+const vcNameInput = document.getElementById('vcNameInput');
+if (vcNameInput) {
+  vcNameInput.addEventListener('input', function() {
+    const preview = document.getElementById('vcPreviewName');
+    if (preview) preview.textContent = this.value || 'YOUR NAME';
+  });
+}
+
+function createVirtualCard() {
+  const nameInput = document.getElementById('vcNameInput');
+  const name = nameInput ? nameInput.value.trim() : '';
+  if (!name) { alert('Please enter the card holder name.'); return; }
+
+  // Generate dummy card number
+  const last4 = Math.floor(1000 + Math.random() * 9000);
+  const cardNum = `•••• •••• •••• ${last4}`;
+
+  // Generate expiry 3 years from now
+  const now = new Date();
+  const expMonth = String(now.getMonth() + 1).padStart(2, '0');
+  const expYear = String(now.getFullYear() + 3).slice(-2);
+  const expiry = `${expMonth}/${expYear}`;
+
+  // Update real card display
+  document.getElementById('vcNumber').textContent = cardNum;
+  document.getElementById('vcName').textContent = name;
+  document.getElementById('vcExpiry').textContent = expiry;
+
+  // Show active state, hide empty state
+  document.getElementById('vcEmptyState').style.display = 'none';
+  document.getElementById('vcActiveState').style.display = 'block';
+
+  closeModal('createCardModal');
+  vcCardCreated = true;
+
+  // Reset inputs for next time
+  if (nameInput) nameInput.value = '';
+  const previewName = document.getElementById('vcPreviewName');
+  if (previewName) previewName.textContent = 'YOUR NAME';
+}
+
+let vcFrozen = false;
+function toggleFreezeCard() {
+  vcFrozen = !vcFrozen;
+  const card = document.getElementById('vcCard');
+  const btn = document.getElementById('vcFreezeBtn');
+  if (vcFrozen) {
+    card.style.filter = 'grayscale(1) opacity(.6)';
+    btn.textContent = '▶ Unfreeze Card';
+    btn.style.background = 'rgba(193,18,31,.1)';
+    btn.style.color = 'var(--red)';
+  } else {
+    card.style.filter = '';
+    btn.textContent = 'Freeze Card';
+    btn.style.background = '';
+    btn.style.color = '';
+  }
+}
+
+// ── FUTURE ME AI ──
+const FMAI = {
+  balance: 4180, income: 8500, expenses: 4320,
+  savingsBoost: 0, extraSpend: 0, investPct: 0,
+  timeline: 6, behavior: 'current'
+};
+
+function fmaiInit() {
+  if (!document.getElementById('fmaiChart')) return;
+  renderFmaiChart();
+  renderFmaiAdvice();
+  renderFmaiMilestones();
+}
+
+function fmaiSetBehavior(mode) {
+  FMAI.behavior = mode;
+  document.getElementById('fmaiBtnCurrent').className = mode === 'current' ? 'fmai-btog active' : 'fmai-btog';
+  document.getElementById('fmaiBtnImproved').className = mode === 'improved' ? 'fmai-btog active' : 'fmai-btog';
+  document.getElementById('fmaiBehaviorChip').textContent = mode === 'current' ? 'Current Behavior' : 'Improved Behavior';
+  if (mode === 'improved') {
+    FMAI.savingsBoost = 500; FMAI.extraSpend = 0; FMAI.investPct = 10;
+    document.getElementById('fmaiSliderSav').value = 500;
+    document.getElementById('fmaiSliderSpend').value = 0;
+    document.getElementById('fmaiSliderInv').value = 10;
+  } else {
+    FMAI.savingsBoost = 0; FMAI.extraSpend = 0; FMAI.investPct = 0;
+    document.getElementById('fmaiSliderSav').value = 0;
+    document.getElementById('fmaiSliderSpend').value = 0;
+    document.getElementById('fmaiSliderInv').value = 0;
+  }
+  fmaiHandleSlider();
+}
+
+function fmaiSetTimeline(months, btn) {
+  FMAI.timeline = months;
+  document.querySelectorAll('.fmai-ttab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderFmaiChart();
+  renderFmaiMilestones();
+}
+
+function fmaiHandleSlider() {
+  FMAI.savingsBoost = parseInt(document.getElementById('fmaiSliderSav').value) || 0;
+  FMAI.extraSpend = parseInt(document.getElementById('fmaiSliderSpend').value) || 0;
+  FMAI.investPct = parseInt(document.getElementById('fmaiSliderInv').value) || 0;
+  document.getElementById('fmaiSavLbl').textContent = '+' + FMAI.savingsBoost + ' EGP';
+  document.getElementById('fmaiSpendLbl').textContent = '+' + FMAI.extraSpend + ' EGP';
+  document.getElementById('fmaiInvLbl').textContent = FMAI.investPct + '%';
+  ['fmaiSavLbl','fmaiSpendLbl','fmaiInvLbl'].forEach(id => {
+    const el = document.getElementById(id);
+    const val = el.textContent;
+    const isOn = val !== '+0 EGP' && val !== '0%';
+    el.className = 'fmai-sv-badge' + (isOn ? ' on' : '');
+  });
+  renderFmaiChart();
+  renderFmaiMilestones();
+  renderFmaiAdvice();
+}
+
+function fmaiPreset(mode) {
+  const presets = {
+    conservative: { sav: 300, spend: 0, inv: 5 },
+    balanced:     { sav: 700, spend: 0, inv: 10 },
+    aggressive:   { sav: 1500, spend: 0, inv: 20 },
+    reset:        { sav: 0, spend: 0, inv: 0 }
+  };
+  const p = presets[mode];
+  document.getElementById('fmaiSliderSav').value = p.sav;
+  document.getElementById('fmaiSliderSpend').value = p.spend;
+  document.getElementById('fmaiSliderInv').value = p.inv;
+  fmaiHandleSlider();
+}
+
+function renderFmaiChart() {
+  const months = FMAI.timeline;
+  const net = FMAI.income - FMAI.expenses + FMAI.savingsBoost - FMAI.extraSpend;
+  const invest = FMAI.income * FMAI.investPct / 100;
+  const monthlyGain = net - invest;
+  const labels = [], data = [];
+  let bal = FMAI.balance;
+  const now = new Date();
+  for (let i = 0; i <= months; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    labels.push(d.toLocaleString('en-US', { month: 'short' }));
+    data.push(Math.round(bal));
+    bal += monthlyGain + (invest * 1.02);
+  }
+  const projEnd = data[data.length - 1];
+  const growth = ((projEnd - FMAI.balance) / FMAI.balance * 100).toFixed(0);
+  document.getElementById('fmaiProjEnd').textContent = projEnd.toLocaleString() + ' EGP';
+  document.getElementById('fmaiProjEnd').className = 'fmai-ps-val ' + (projEnd > FMAI.balance ? 'up' : 'down');
+  document.getElementById('fmaiProjNet').textContent = (monthlyGain >= 0 ? '+' : '') + monthlyGain.toLocaleString() + ' EGP';
+  document.getElementById('fmaiProjGrowth').textContent = (growth >= 0 ? '+' : '') + growth + '%';
+  document.getElementById('fmaiProjGrowth').className = 'fmai-ps-val ' + (growth >= 0 ? 'up' : 'down');
+  document.getElementById('fmaiProjSubtext').innerHTML = `At this rate, your savings will reach <strong>${projEnd.toLocaleString()} EGP</strong> in ${months} months`;
+  const outlook = projEnd > FMAI.balance * 1.15 ? '🟢 Great' : projEnd > FMAI.balance ? '🟡 Good' : '🔴 Needs Work';
+  document.getElementById('fmaiGoal').textContent = projEnd.toLocaleString();
+  document.getElementById('fmaiOutlook').textContent = outlook;
+  const msgs = {
+    '🟢 Great': `Excellent trajectory! In ${months} months you'll have ${projEnd.toLocaleString()} EGP — that's a ${growth}% growth. Your future self is proud!`,
+    '🟡 Good': `You're on a stable path. In ${months} months: ${projEnd.toLocaleString()} EGP. Increase savings by 500 EGP/month to accelerate.`,
+    '🔴 Needs Work': `Warning — your balance is projected to shrink to ${projEnd.toLocaleString()} EGP. Reduce discretionary spending immediately.`
+  };
+  document.getElementById('fmaiHeroMsg').textContent = msgs[outlook] || msgs['🟡 Good'];
+  document.getElementById('fmaiAvatar').textContent = outlook.includes('Great') ? '😄' : outlook.includes('Good') ? '🙂' : '😟';
+  drawFmaiCanvas(labels, data);
+}
+
+function drawFmaiCanvas(labels, data) {
+  const canvas = document.getElementById('fmaiChart');
+  if (!canvas) return;
+  canvas.width = canvas.parentElement.offsetWidth || 400;
+  canvas.height = 220;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 20, right: 16, bottom: 28, left: 60 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  const minV = Math.min(...data) * 0.95;
+  const maxV = Math.max(...data) * 1.05;
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#EDE9E0'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (cH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    const val = Math.round(maxV - (maxV - minV) / 4 * i);
+    ctx.fillStyle = '#898A8D'; ctx.font = '9px DM Sans'; ctx.textAlign = 'right';
+    ctx.fillText(val >= 1000 ? (val/1000).toFixed(0)+'k' : val, pad.left - 4, y + 3);
+  }
+  const pts = data.map((v, i) => ({ x: pad.left + (i / (data.length - 1)) * cW, y: pad.top + (1 - (v - minV) / (maxV - minV)) * cH }));
+  const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+  grad.addColorStop(0, 'rgba(11,70,80,0.15)');
+  grad.addColorStop(1, 'rgba(11,70,80,0)');
+  ctx.beginPath(); ctx.moveTo(pts[0].x, H - pad.bottom);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length-1].x, H - pad.bottom); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = '#0B4650'; ctx.lineWidth = 2.5; ctx.stroke();
+  pts.forEach((p, i) => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI*2);
+    ctx.fillStyle = i === pts.length-1 ? '#E6FF2B' : 'white';
+    ctx.strokeStyle = '#0B4650'; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+  });
+  ctx.fillStyle = '#898A8D'; ctx.font = '9px DM Sans'; ctx.textAlign = 'center';
+  labels.forEach((l, i) => {
+    const x = pad.left + (i / (labels.length - 1)) * cW;
+    ctx.fillText(l, x, H - 4);
+  });
+}
+
+function renderFmaiMilestones() {
+  const net = FMAI.income - FMAI.expenses + FMAI.savingsBoost - FMAI.extraSpend;
+  const container = document.getElementById('fmaiMilestones');
+  if (!container) return;
+  const milestones = [6000, 10000, 15000, 25000];
+  let bal = FMAI.balance;
+  const now = new Date();
+  container.innerHTML = milestones.map((target, idx) => {
+    let months = 0;
+    let tmp = bal;
+    while (tmp < target && months < 60) { tmp += net; months++; }
+    const reached = bal >= target;
+    const soon = months <= 3;
+    const date = new Date(now.getFullYear(), now.getMonth() + months, 1);
+    const label = date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+    const dotClass = reached ? 'reached' : soon ? 'soon' : '';
+    return `<div class="fmai-ms-item" style="animation-delay:${idx*0.08}s">
+      <div class="fmai-ms-dot ${dotClass}">${reached ? '✓' : soon ? '!' : (idx+1)}</div>
+      <div class="fmai-ms-month">${label}</div>
+      <div class="fmai-ms-amount">${target.toLocaleString()} EGP</div>
+      <div style="font-size:11px;color:var(--gray);margin-top:2px">${reached ? 'Reached ✅' : `~${months} months away`}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderFmaiAdvice() {
+  const list = document.getElementById('fmaiAdviceList');
+  if (!list) return;
+  const net = FMAI.income - FMAI.expenses + FMAI.savingsBoost;
+  const advices = [];
+  if (net < 1000) advices.push({ type:'warn', icon:'⚠️', title:'Low monthly surplus', text:`Your monthly surplus of ${net.toLocaleString()} EGP is tight. Try reducing discretionary expenses by 10%.`, save:null });
+  else advices.push({ type:'succ', icon:'✅', title:'Healthy surplus', text:`You're saving ${net.toLocaleString()} EGP/month — great discipline!`, save:'+' + net.toLocaleString() + ' EGP/mo' });
+  if (FMAI.investPct < 5) advices.push({ type:'warn', icon:'📈', title:'Consider investing', text:'Allocating even 5% of your income to T-bills would earn significantly more than keeping cash idle.', save:null });
+  else advices.push({ type:'succ', icon:'📈', title:'Investing actively', text:`You're investing ${FMAI.investPct}% of income. At T-bill rates, that's ~${Math.round(FMAI.income*FMAI.investPct/100*0.275/12*12).toLocaleString()} EGP/year in returns.`, save:null });
+  advices.push({ type:'info', icon:'🎯', title:'Europe Trip Goal', text:"At current pace you'll reach your 15,000 EGP travel goal by mid-2027. Increase monthly contribution by 200 EGP to hit it 5 months earlier.", save:'-5 months' });
+  list.innerHTML = advices.map(a => `<div class="fmai-advice-card ${a.type}">
+    <div class="fmai-adv-icon">${a.icon}</div>
+    <div>
+      <div class="fmai-adv-title">${a.title}</div>
+      <div class="fmai-adv-text">${a.text}</div>
+      ${a.save ? `<span class="fmai-adv-save">${a.save}</span>` : ''}
+    </div>
+  </div>`).join('');
+}
+
 </script>
 </body>
 </html>
